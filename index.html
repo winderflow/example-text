@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="按学科、来源与许可证检索可下载的开放科研绘图素材，保留逐图来源与署名信息。">
+  <meta name="color-scheme" content="light">
+  <title>科研绘图开放素材库</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#gallery">跳转到素材检索</a>
+  <header class="site-header wrap">
+    <a class="brand" href="./" aria-label="科研绘图开放素材库首页"><span class="brand-symbol" aria-hidden="true">✳</span><span>开放科研图谱<span class="brand-en">OPEN SCIENCE VISUALS</span></span></a>
+    <nav aria-label="主导航"><a href="#gallery">素材检索</a><a href="#sources">来源目录</a><a href="docs/LICENSES.md">使用与署名 <span aria-hidden="true">↗</span></a></nav>
+  </header>
+
+  <main>
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy"><p class="eyebrow"><span aria-hidden="true"></span> 为论文、教学与科学传播而收集</p><h1 id="hero-title">让科学，<br>更清晰地被看见<span class="teal">。</span></h1><p class="hero-description">从细胞到星空，从实验装置到数据流程。<br class="desktop-break">跨学科开放素材，分类检索，保留每一张图的出处。</p><div class="hero-tags"><span>逐图授权</span><span>原始文件下载</span><span>综合学科分类</span></div></div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="art-center">✳</div><span class="art-token token-one">DNA</span><span class="art-token token-two">H₂O</span><span class="art-token token-three">↗</span><span class="art-note">IDEAS → VISUALS</span></div>
+    </section>
+
+    <section class="stats-strip" aria-label="素材库统计"><div class="wrap stats-inner"><div><strong id="asset-total">—</strong><span>本地素材</span></div><div><strong id="source-total">—</strong><span>收录来源</span></div><div><strong id="category-total">—</strong><span>学科分类</span></div><p>开放素材，也需要正确署名。<a href="docs/LICENSES.md">查看许可证说明 <span aria-hidden="true">↗</span></a></p></div></section>
+
+    <section id="gallery" class="gallery-section wrap" aria-labelledby="gallery-title">
+      <div class="section-heading"><div><p class="eyebrow">EXPLORE THE COLLECTION</p><h2 id="gallery-title">找到你的下一张科学插图</h2></div><p>下载前，请核对该素材的许可证与署名要求。</p></div>
+      <form id="filter-form" class="search-panel" role="search" aria-label="搜索科研素材">
+        <label class="search-box" for="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索名称、作者或关键词 · 例如 cell、DNA、显微镜" autocomplete="off"><kbd aria-hidden="true">/</kbd></label>
+        <div class="filter-row"><div><label for="source-filter">素材来源</label><select id="source-filter"><option value="">全部来源</option></select></div><div><label for="license-filter">许可证</label><select id="license-filter"><option value="">全部许可证</option></select></div><button type="button" id="reset-filters" class="text-button">重置筛选 <span aria-hidden="true">↺</span></button></div>
+      </form>
+      <div id="category-tabs" class="category-tabs" role="group" aria-label="按学科筛选"><button type="button" class="category-tab active" data-category="" aria-pressed="true">全部学科</button></div>
+      <div class="results-bar"><p id="result-count" role="status" aria-live="polite">正在载入素材目录…</p><span>点击素材查看详情与下载</span></div>
+      <div id="load-state" class="load-state"><span class="loading-dot" aria-hidden="true"></span><p>正在准备开放素材目录</p></div>
+      <div id="asset-grid" class="asset-grid" aria-label="素材检索结果"></div>
+      <nav id="pagination" class="pagination" aria-label="检索结果分页" hidden><button id="previous-page" type="button" class="secondary-button">← 上一页</button><span id="page-status"></span><button id="next-page" type="button" class="secondary-button">下一页 →</button></nav>
+    </section>
+
+    <section id="sources" class="sources-section" aria-labelledby="sources-title"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">CREDIT WHERE IT BELONGS</p><h2 id="sources-title">站在开放社区的肩膀上</h2></div><p>来源、授权与版本记录，让每一份素材有据可查。</p></div><div id="source-grid" class="source-grid"></div><p class="source-footnote">各来源可能采用不同许可证；聚合平台的代码许可不等于其中每张图片的许可。请以素材详情中的逐图记录为准。<a href="README.md">查看项目说明 ↗</a></p></div></section>
+  </main>
+  <footer class="site-footer wrap"><p><span class="footer-mark" aria-hidden="true">✳</span> 科研绘图开放素材库</p><p>尊重创作者 · 保留来源 · 让知识自由流动</p><p id="updated-at"></p></footer>
+
+  <dialog id="asset-dialog" aria-labelledby="detail-title"><div class="dialog-shell"><button id="close-dialog" class="close-button" type="button" aria-label="关闭素材详情">×</button><div class="detail-preview"><img id="detail-image" alt=""></div><div class="detail-content"><p id="detail-category" class="eyebrow"></p><h2 id="detail-title"></h2><p id="detail-subcategory" class="muted"></p><dl class="detail-metadata"><div><dt>作者</dt><dd id="detail-author"></dd></div><div><dt>来源</dt><dd id="detail-source"></dd></div><div><dt>许可证</dt><dd id="detail-license"></dd></div></dl><p id="license-note" class="license-note"></p><label for="attribution">署名文本</label><textarea id="attribution" readonly rows="4"></textarea><button id="copy-attribution" type="button" class="text-button">复制署名文本 <span aria-hidden="true">⧉</span></button><p id="copy-status" class="copy-status" role="status"></p><div class="detail-actions"><a id="download-asset" class="primary-button" download>下载原始文件 <span aria-hidden="true">↓</span></a><a id="original-source" class="secondary-button" target="_blank" rel="noopener noreferrer">查看上游来源 ↗</a></div><p class="detail-footnote">如修改素材，需按适用许可证注明修改；涉及商标、肖像或其他权利时，另行确认相应用途。</p></div></div></dialog>
+  <noscript><p class="noscript wrap">此素材检索界面需要 JavaScript。你仍可在仓库的 assets 目录浏览原始素材，并通过 data/catalog.json 查询来源和授权。</p></noscript>
+</body>
+</html>
