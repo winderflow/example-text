@@ -73,10 +73,35 @@ def read_lucide_metadata(directory, stem, stack=()):
             else:result[key].append(value)
     return result
 
+def check_svg(raw, allow_static_html=False):
+    """Keep passive SVG/metadata links; reject executable or missing external content."""
+    root=ET.fromstring(raw)
+    if root.tag.split('}')[-1]!='svg':raise ValueError('not SVG root')
+    for node in root.iter():
+        tag=node.tag.split('}')[-1].lower()
+        if tag in {'script','iframe','object','embed'}:raise ValueError('active SVG content')
+        if tag=='foreignobject' and not allow_static_html:raise ValueError('unreviewed foreignObject content')
+        for key,value in node.attrib.items():
+            key=key.split('}')[-1].lower()
+            # Inkscape's `only_selected` is an export preference, not an event handler.
+            if re.fullmatch(r'on[a-z]+',key):raise ValueError('event handler')
+            if key in {'href','src'} and value:
+                passive=value.startswith(('#','data:image/'))
+                passive|=tag=='a' and value.startswith(('https://','http://'))
+                passive|=tag=='color-profile' and value.startswith('data:application/vnd.iccprofile')
+                if not passive:raise ValueError('external resource reference')
+    return root
+
 def main():
     parser=argparse.ArgumentParser(); parser.add_argument('--sources',type=Path,required=True); args=parser.parse_args()
     lock=json.loads((ROOT/'data/sources.lock.json').read_text()); assets=[]; sources=[]; excluded=[]
     previous=json.loads((ROOT/'data/catalog.json').read_text())['assets'] if (ROOT/'data/catalog.json').exists() else []
+    static=json.loads((ROOT/'data/bioicons-static-allowlist.json').read_text()) if (ROOT/'data/bioicons-static-allowlist.json').exists() else {}
+    static_hashes={a['path']:a['sha256'] for a in static.get('assets',[])}
+    if static:
+        assert hashlib.sha256((ROOT/static['audit_file']).read_bytes()).hexdigest()==static['audit_sha256'],'Static SVG audit mismatch'
+        assert next(s['commit'] for s in lock['sources'] if s['id']=='bioicons')==static['commit'],'Static allowlist requires re-audit for new upstream commit'
+    renders=json.loads((ROOT/'data/ppt-renders.json').read_text()).get('renders',{}) if (ROOT/'data/ppt-renders.json').exists() else {}
     for s in lock['sources']:
         sid=s['id']; p=args.sources/sid
         actual=subprocess.check_output(['git','-C',str(p),'rev-parse','HEAD'],text=True).strip()
@@ -227,14 +252,10 @@ def main():
         before=len(assets)
         for f,cat,sub,lic,author,title,tags,author_url,metadata in entries:
             raw=f.read_bytes()
+            raw_hash=hashlib.sha256(raw).hexdigest()
+            static_approved=sid=='bioicons' and static_hashes.get(f.relative_to(p).as_posix())==raw_hash
             try:
-                root=ET.fromstring(raw)
-                if root.tag.split('}')[-1]!='svg':raise ValueError('not SVG root')
-                for node in root.iter():
-                    if node.tag.split('}')[-1] in ['script','foreignObject']:raise ValueError('active SVG content')
-                    for k,v in node.attrib.items():
-                        if k.lower().startswith('on'):raise ValueError('event handler')
-                        if k.split('}')[-1]=='href' and v and not v.startswith(('#','data:image/')):raise ValueError('external reference')
+                root=check_svg(raw,allow_static_html=static_approved)
             except (ET.ParseError,ValueError) as e:
                 excluded.append({'source':sid,'path':str(f.relative_to(p)),'reason':str(e)});continue
             rel=f.relative_to(p); dest=Path('assets')/cat/sid/rel
@@ -245,7 +266,16 @@ def main():
             aid=hashlib.sha256((sid+'/'+str(rel)).encode()).hexdigest()[:20]
             keywords=' '.join([title,sub]+tags).lower();tags=list(tags)+[SUB.get(sub,sub)]+[zh for term,zh in ALIASES.items() if term in keywords]
             attribution=f'{title} — {author}. Source: {src}. License: {license_name} ({license_url}). Original file redistributed without modification; see licenses/{sid}/ for upstream notices.'
-            assets.append(dict(id=aid,name=title,category=cat,subcategory=sub,source=sid,path=dest.as_posix(),license=license_name,license_url=license_url,author=author,author_url=author_url,source_url=src,attribution=attribution,tags=tags,sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw),original_path=rel.as_posix(),commit=s['commit']))
+            asset=dict(id=aid,name=title,category=cat,subcategory=sub,source=sid,path=dest.as_posix(),license=license_name,license_url=license_url,author=author,author_url=author_url,source_url=src,attribution=attribution,tags=tags,sha256=raw_hash,bytes=len(raw),original_path=rel.as_posix(),commit=s['commit'])
+            if static_approved:asset['requires_png_fallback']=True
+            if aid in renders:
+                r=renders[aid];png=(ROOT/r['png_path']).resolve()
+                assert png.is_relative_to(ROOT/'assets/ppt-png')
+                assert r['source_sha256']==raw_hash,'Regenerate stale PPT render'
+                assert hashlib.sha256(png.read_bytes()).hexdigest()==r['sha256'],'PPT PNG checksum mismatch'
+                asset.update(ppt_png_path=r['png_path'],ppt_png_width=r['width'],ppt_png_height=r['height'],ppt_png_sha256=r['sha256'],ppt_png_bytes=r['bytes'])
+                if static_approved:asset['preview_path']=r['png_path']
+            assets.append(asset)
         supporting={'lucide','fontawesome','bootstrap','iconpark','tabler','game-icons','openmoji','scienceicons','carbon-pictograms'}
         sources.append(dict(id=sid,name=name,homepage=homepage,repository=s['repository'],license=summary,license_url=s['repository']+'/tree/'+s['commit'],count=len(assets)-before,description=desc,commit=s['commit'],kind='supporting' if sid in supporting else 'specialist',retrieved_at=s.get('retrieved_at','2026-11-02')))
         print(sid,len(assets)-before,flush=True)
@@ -262,7 +292,7 @@ def main():
     (ROOT/'data/catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,separators=(',',':'))+'\n')
     (ROOT/'data/excluded.json').write_text(json.dumps(excluded,ensure_ascii=False,indent=2)+'\n')
     with (ROOT/'data/manifest.csv').open('w',newline='',encoding='utf-8-sig') as fp:
-        fields=['id','name','category','subcategory','source','path','license','license_url','author','author_url','source_url','sha256','bytes','commit','attribution'];w=csv.DictWriter(fp,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(assets)
+        fields=['id','name','category','subcategory','source','path','license','license_url','author','author_url','source_url','sha256','bytes','commit','attribution','ppt_png_path','ppt_png_width','ppt_png_height','ppt_png_sha256','requires_png_fallback'];w=csv.DictWriter(fp,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(assets)
     print(f'Total: {len(assets)} SVGs, {sum(x["bytes"] for x in assets)/1e6:.1f} MB; excluded {len(excluded)}')
 
 if __name__=='__main__': main()

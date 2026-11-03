@@ -1,10 +1,14 @@
 # 科研绘图开放素材库
 
-为论文示意图、实验流程图、科研海报和课件整理的开放 SVG 素材库。已实际下载 **15,918 个 SVG 文件，来自 23 个上游仓库，分为七大学科，原始 SVG 合计约 388.3 MB**。彩色、单色、线框等独立样式分别计数，数量不等于独立科学概念数。
+为论文示意图、实验流程图、科研海报和课件整理的开放素材库。已实际收录 **16,136 个原始 SVG，来自23个上游仓库，分为七大学科**；另有 **418 张长边2400像素 PNG**及**72张精选图片的 PowerPoint 素材板**。PNG 是原 SVG 的兼容导出，不重复计为新的科研插画。
 
-首批检索：2026-11-02；本轮扩展：2026-11-03。素材原始字节保持不变，逐图保存作者、许可证、固定版本来源及 SHA-256。**本库没有统一的素材许可证**；详见 [许可与署名指南](docs/LICENSES.md)。
+首批检索：2026-11-02；本轮扩展及 PPT 质量整理：2026-11-03。素材原始字节保持不变，逐图保存作者、许可证、固定版本来源及 SHA-256。**本库没有统一的素材许可证**；详见 [许可与署名指南](docs/LICENSES.md)。
 
 ## 浏览与下载
+
+- **[直接下载 PowerPoint 素材板](downloads/ppt-illustrations.pptx)**：72 张图片可逐张复制，每页备注保留完整署名。GitHub 文件页可点击 Download raw 下载。
+- **[按名称和学科查找高清 PNG](docs/PPT-INDEX.md)**：418 张原图的2400像素兼容版本；[PPT 使用指南](docs/PPT-GUIDE.md)。
+- 在图库的“文件格式”中选择“PPT 高清 PNG”，可按学科查找并查看具体像素尺寸。
 
 - 打开 [在线图库（Pages 启用后可用）](https://winderflow.github.io/example-text/)，按学科、素材库、许可证和中英文关键词筛选；点击卡片可下载原始 SVG、查看来源和复制署名。
 - 直接在下方分类目录下载单图；批量获取可使用 GitHub 的 **Code → Download ZIP** 或 `git clone https://github.com/winderflow/example-text.git`。
@@ -13,19 +17,19 @@
 
 | 学科分类 | SVG 文件数 |
 | --- | ---: |
-| [生物医学](assets/biomedical/) | 6,795 |
+| [生物医学](assets/biomedical/) | 7,003 |
 | [化学与分子](assets/chemistry/) | 684 |
-| [生态与物种](assets/ecology/) | 1,054 |
+| [生态与物种](assets/ecology/) | 1,062 |
 | [地理、气象与空间](assets/earth-space/) | 3,379 |
 | [工程与物理](assets/engineering/) | 1,061 |
-| [计算与数据流程](assets/computing/) | 2,507 |
+| [计算与数据流程](assets/computing/) | 2,509 |
 | [科研交流与通用](assets/general/) | 438 |
 
 ## 已下载来源
 
 | 素材库 | 类型 | SVG 文件数 | 许可概览 | 收录范围 |
 | --- | --- | ---: | --- | --- |
-| [Bioicons（含 Servier / Togo）](https://github.com/duerrsimon/bioicons) | 科研专题 | 2,601 | 逐图授权 | 生物、医学、植物、实验器材；含经 Bioicons 分发的 Servier 与 DBCLS 素材，保留其历史逐图许可。 |
+| [Bioicons（含 Servier / Togo）](https://github.com/duerrsimon/bioicons) | 科研专题 | 2,819 | 逐图授权 | 生物、医学、植物、实验器材；含经 Bioicons 分发的 Servier 与 DBCLS 素材，保留其历史逐图许可。 |
 | [ID & Immunology Icons](https://github.com/apsmunro/bioicons-id) | 科研专题 | 347 | CC0-1.0 | 病原体、免疫细胞、器官与感染传播，含彩色和单色版本。 |
 | [Reactome Illustrations](https://github.com/reactome/reactome_illustrations) | 科研专题 | 2,257 | Apache-2.0 | Reactome 官方蛋白、化合物、细胞、组织和通路组件；保留原始 XML 元数据。 |
 | [EMBL-EBI Science Icons](https://github.com/ebiwd/EBI-Icon-fonts) | 科研专题 | 80 | CC-BY-SA-4.0 | 仅选 chemistry、conceptual、species 科学符号，不含第三方品牌和通用字库。 |
@@ -49,15 +53,26 @@
 | [FGDC Geologic Patterns](https://github.com/davenquinn/geologic-patterns) | 科研专题 | 471 | CC0-1.0 | USGS / FGDC 地质、岩性、冰川和地层剖面填充图案；可用于地学论文制图。 |
 | [GISsymbology 专题地图符号](https://github.com/GISsymbology/symbols) | 科研专题 | 453 | CC-BY-SA-4.0 | 选取地震微区划、地质图、FGDC 地质符号和水利防护四个许可明确的子库。 |
 
-Bioicons 子集中含 **1,374 个署名 Servier**、**473 个署名 DBCLS** 的文件；这是通过 Bioicons 取得的具体历史素材，不是对 Servier / Togo 当前官网的全站镜像或完整性声明。上游原始说明、完整许可及元数据见 [licenses/](licenses/)。
+Bioicons 子集中含 **1,374 个署名 Servier**、**630 个署名 DBCLS** 的文件；这是通过 Bioicons 取得的具体历史素材，不是对 Servier / Togo 当前官网的全站镜像或完整性声明。上游原始说明、完整许可及元数据见 [licenses/](licenses/)。
 
-部分来源只选择科研相关主题：不把全站通用、娱乐或品牌图标计为全库下载。Reactome 遵循上游 `skip=true` 标记；不收录解析失败、活动内容或依赖外部资源的 SVG。具体排除文件和原因见 [excluded.json](data/excluded.json)；它只记录候选集的技术及明确许可筛选，不枚举所有未选中的主题。
+部分来源只选择科研相关主题：不把全站通用、娱乐或品牌图标计为全库下载。Reactome 遵循上游 `skip=true` 标记；不收录解析失败、活动脚本或依赖缺失外部图片的 SVG；只允许经逐图哈希核验的静态HTML标签及普通署名链接。具体排除文件和原因见 [excluded.json](data/excluded.json)；它只记录候选集的技术及明确许可筛选，不枚举所有未选中的主题。
 
 ## 2026-11-03 扩展
 
 在首批 14 库、11,846 个 SVG 的基础上，本轮实际增加 **9 个来源、4,072 个 SVG**。其中四个是电气、地质和 GIS 科研专题库，五个提供科学、工业及数据流程绘图符号；网页的来源卡片也会标明两类用途。未把单纯字体、缺少图片许可或许可版本冲突的候选凑入已下载数量。
 
 完整的新增范围、许可与排除依据见 [本轮扩展记录](docs/EXPANSION-2026-11-03.md)。
+
+## 2026-11-03 科研插画与 PPT 质量整理
+
+本轮不继续用通用图标增加来源数，而是按用户指定的 Bioicons / Servier / Togo / Wellcome / Commons / RCSB 方向整理：
+
+- 从原有 Bioicons 固定版本恢复 **218 张**此前被兼容性检查误排的原始 SVG，其中包含 **30 张 SwissBioPics**、**157 张 DBCLS** 图形。原始字节、作者和历史许可证保持不变，不计作另一个新图库。
+- 为恢复的218张和另外200张专题精选图（181张Servier、19张DBCLS）制作长边2400像素 PNG，共418张。SVG含静态HTML排版时使用PNG预览及PPT兼容版本，避免文字丢失。
+- 提供72张图片的PPTX素材板；图片独立可复制，逐图来源与许可放在对应页备注中。`data/ppt-deck.json` 和 `data/ppt-renders.json` 记录素材及导出校验值。
+- Wellcome、Wikimedia Commons、RCSB以及Servier/Togo官网的新原件仍被当前云环境网络策略以403阻塞；这些尚未下载的图片不计入任何数量。官方GitHub可取得的Bioicons原图已实际处理。
+
+访问范围、恢复依据和后续官方接口见 [质量核验记录](docs/QUALITY-SOURCES-2026-11-03.md)、[Wellcome / Commons 说明](docs/WELLCOME-COMMONS-NOTES.md)、[RCSB 说明](docs/RCSB-SOURCE-NOTES.md)。所需公开站点与图片接口已保存至云环境网络配置草稿；保存草稿不会立即更新当前运行机器。
 
 ## 更多资源与检索边界
 
@@ -96,10 +111,12 @@ python3 scripts/build_site.py
 
 ## GitHub Pages 部署
 
-仓库提供 [.github/workflows/pages.yml](.github/workflows/pages.yml)：向 `main` 推送时自动校验并部署，亦可在 Actions 手动运行。首次使用需在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，再运行 **Validate and deploy research gallery**。是否已上线以 Actions 的部署成功记录及实际站点响应为准；提交工作流不等于已完成线上部署。
+仓库提供 [.github/workflows/pages.yml](.github/workflows/pages.yml)：普通推送只校验素材、PNG、PPTX 和脚本，不要求启用 Pages。需要网站时，先在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，再手动运行 **Validate gallery (Pages optional)** 并勾选 `deploy_pages`。是否已上线以部署成功记录及实际站点响应为准；校验成功不等于网页已发布。
 
 站点地址：`https://winderflow.github.io/example-text/`。若 GitHub 套餐或仓库可见性不支持 Pages，仓库内的原图和本地页面仍可使用。
 
 ## 许可
+
+高清 PNG 与 PPT 素材板的图像继续采用各自原许可；PPT备注与清单保留逐图署名，合集不替代对原作者的引用。
 
 本项目自行编写的网页和脚本采用 [MIT](LICENSE)。`assets/`、`licenses/` 内的第三方文件保持原始许可，**不受本站代码 MIT 许可重新授权**。CC BY / CC BY-SA 素材使用时需要署名，SA 素材发布改编作品时还有相同方式共享要求；参见 [许可指南](docs/LICENSES.md)。

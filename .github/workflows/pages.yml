@@ -1,8 +1,14 @@
-name: Validate and deploy research gallery
+name: Validate gallery (Pages optional)
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      deploy_pages:
+        description: 'Publish website (enable Settings > Pages > GitHub Actions first)'
+        required: false
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -17,12 +23,17 @@ jobs:
         with:
           python-version: '3.12'
       - run: python scripts/validate.py
+      - run: python -m unittest discover -s tests -p 'test_*.py'
+      - run: python scripts/collect_web_images.py --self-test
       - run: node --check app.js
       - run: python scripts/build_site.py
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy_pages
       - uses: actions/upload-pages-artifact@v3
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy_pages
         with:
           path: dist
   deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy_pages
     needs: validate
     runs-on: ubuntu-latest
     permissions:

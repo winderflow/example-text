@@ -3,12 +3,12 @@
 (() => {
   const PAGE_SIZE = 60;
   const byId = id => document.getElementById(id);
-  const state = { catalog: null, orderedAssets: [], category: '', query: '', source: '', license: '', page: 1, filtered: [] };
+  const state = { catalog: null, orderedAssets: [], category: '', query: '', source: '', license: '', format: '', page: 1, filtered: [] };
   const sources = new Map();
   const categories = new Map();
   const elements = {
     grid: byId('asset-grid'), loading: byId('load-state'), count: byId('result-count'),
-    search: byId('search'), source: byId('source-filter'), license: byId('license-filter'),
+    search: byId('search'), source: byId('source-filter'), license: byId('license-filter'), format: byId('format-filter'),
     pagination: byId('pagination'), previous: byId('previous-page'), next: byId('next-page'),
     dialog: byId('asset-dialog')
   };
@@ -33,6 +33,24 @@
     if (!path.startsWith('assets/') || path.split('/').some(part => part === '..') || /[\\\u0000-\u001f?#]/.test(path)) return '';
     return path.split('/').map(encodeURIComponent).join('/');
   };
+  const originalFormat = asset => text(asset.path).split('.').pop().toUpperCase();
+  const hasPptPng = asset => Boolean(safeAsset(asset.ppt_png_path));
+  const previewPath = asset => safeAsset(asset.preview_path) || (asset.requires_png_fallback ? safeAsset(asset.ppt_png_path) : '') || safeAsset(asset.path);
+  function roundRobin(items, key) {
+    const buckets = new Map();
+    items.forEach(asset => {
+      const group = key(asset);
+      if (!buckets.has(group)) buckets.set(group, []);
+      buckets.get(group).push(asset);
+    });
+    const values = [...buckets.values()];
+    const longest = Math.max(0, ...values.map(bucket => bucket.length));
+    const ordered = [];
+    for (let index = 0; index < longest; index++) {
+      values.forEach(bucket => { if (bucket[index]) ordered.push(bucket[index]); });
+    }
+    return ordered;
+  }
   function link(label, href) {
     const url = safeRemote(href);
     if (!url) return node('span', '', label);
@@ -72,19 +90,18 @@
       tabs.append(button);
     });
     catalog.assets.forEach(asset => {
-      asset._search = normalize([asset.name, asset.author, asset.subcategory, asset.license, sourceName(asset.source), categoryName(asset.category), ...(Array.isArray(asset.tags) ? asset.tags : [])].join(' '));
+      asset._search = normalize([asset.name, asset.author, asset.subcategory, asset.license, asset.collection, sourceName(asset.source), categoryName(asset.category), hasPptPng(asset) ? 'ppt png 高清 演示' : '', ...(Array.isArray(asset.tags) ? asset.tags : [])].join(' '));
     });
-    // Round-robin sources so the opening page represents the collection's breadth.
-    const buckets = new Map(catalog.sources.map(source => [source.id, []]));
-    catalog.assets.forEach(asset => {
-      if (!buckets.has(asset.source)) buckets.set(asset.source, []);
-      buckets.get(asset.source).push(asset);
-    });
-    const sourceBuckets = [...buckets.values()];
-    const longest = Math.max(0, ...sourceBuckets.map(bucket => bucket.length));
-    for (let index = 0; index < longest; index++) {
-      sourceBuckets.forEach(bucket => { if (bucket[index]) state.orderedAssets.push(bucket[index]); });
-    }
+    // Lead with presentation-ready illustrations, then established biomedical art.
+    const ppt = catalog.assets.filter(hasPptPng);
+    const featured = catalog.assets.filter(asset => !hasPptPng(asset) && /servier|dbcls|swissbiopics/i.test(`${asset.author} ${asset.author_url} ${asset.source}`));
+    const prioritized = new Set([...ppt, ...featured]);
+    state.orderedAssets = [
+      ...roundRobin(ppt, asset => asset.category),
+      ...roundRobin(featured, asset => asset.author),
+      ...roundRobin(catalog.assets.filter(asset => !prioritized.has(asset)), asset => asset.source)
+    ];
+    elements.format.querySelector('[value="ppt-png"]').textContent = `PPT 高清 PNG (${number(ppt.length)})`;
     renderSources();
     restoreFilters();
     filterAssets();
@@ -97,9 +114,11 @@
     state.source = sources.has(params.get('source')) ? params.get('source') : '';
     const license = params.get('license') || '';
     state.license = [...elements.license.options].some(item => item.value === license) ? license : '';
+    state.format = ['svg', 'ppt-png'].includes(params.get('format')) ? params.get('format') : '';
     elements.search.value = state.query;
     elements.source.value = state.source;
     elements.license.value = state.license;
+    elements.format.value = state.format;
   }
 
   function filterAssets() {
@@ -108,6 +127,7 @@
       (!state.category || asset.category === state.category) &&
       (!state.source || asset.source === state.source) &&
       (!state.license || asset.license === state.license) &&
+      (!state.format || (state.format === 'svg' ? originalFormat(asset) === 'SVG' : hasPptPng(asset))) &&
       terms.every(term => asset._search.includes(term))
     );
     state.page = 1;
@@ -121,6 +141,7 @@
     if (state.category) params.set('category', state.category);
     if (state.source) params.set('source', state.source);
     if (state.license) params.set('license', state.license);
+    if (state.format) params.set('format', state.format);
     try { history.replaceState(null, '', `${location.pathname}${params.size ? '?' + params : ''}${location.hash}`); } catch { /* File previews can deny history updates. */ }
     renderAssets();
   }
@@ -142,10 +163,11 @@
     state.filtered.slice((state.page - 1) * PAGE_SIZE, state.page * PAGE_SIZE).forEach(asset => {
       const card = node('button', 'asset-card');
       card.type = 'button';
+      card.dataset.assetId = text(asset.id);
       card.setAttribute('aria-label', `${asset.name}，${sourceName(asset.source)}，查看详情`);
       const preview = node('span', 'card-preview');
       const image = document.createElement('img');
-      image.src = safeAsset(asset.path);
+      image.src = previewPath(asset);
       image.alt = text(asset.name).replace(/_/g, ' ');
       image.loading = 'lazy';
       image.decoding = 'async';
@@ -154,7 +176,7 @@
       const info = node('span', 'card-info');
       info.append(node('span', 'card-title', text(asset.name).replace(/_/g, ' ')), node('span', 'card-source', sourceName(asset.source)));
       const bottom = node('span', 'card-bottom');
-      bottom.append(node('span', 'card-license', asset.license), node('span', 'card-type', text(asset.path).split('.').pop().toUpperCase()));
+      bottom.append(node('span', 'card-license', asset.license), node('span', hasPptPng(asset) ? 'card-type card-type-ppt' : 'card-type', hasPptPng(asset) ? `PNG + ${originalFormat(asset)}` : originalFormat(asset)));
       info.append(bottom);
       card.append(preview, info);
       card.addEventListener('click', () => showDetail(asset));
@@ -188,9 +210,11 @@
         state.category = '';
         state.query = '';
         state.license = '';
+        state.format = '';
         elements.source.value = state.source;
         elements.search.value = '';
         elements.license.value = '';
+        elements.format.value = '';
         filterAssets();
         byId('gallery').scrollIntoView({ block: 'start' });
       });
@@ -206,11 +230,18 @@
     byId('detail-title').textContent = text(asset.name).replace(/_/g, ' ');
     byId('detail-category').textContent = categoryName(asset.category);
     byId('detail-subcategory').textContent = asset.subcategory || '';
-    byId('detail-image').src = safeAsset(asset.path);
+    byId('detail-image').src = previewPath(asset);
     byId('detail-image').alt = text(asset.name);
     byId('detail-author').replaceChildren(link(asset.author || '详见来源', asset.author_url));
     byId('detail-source').replaceChildren(link(source.name || asset.source, source.homepage || source.repository));
     byId('detail-license').replaceChildren(link(asset.license || '详见来源', asset.license_url));
+    const pngAvailable = hasPptPng(asset);
+    byId('detail-png-row').hidden = !pngAvailable;
+    const dimensions = Number(asset.ppt_png_width) > 0 && Number(asset.ppt_png_height) > 0;
+    byId('detail-png-size').textContent = pngAvailable && dimensions ? `${number(asset.ppt_png_width)} × ${number(asset.ppt_png_height)} px` : '详见下载文件';
+    const previewNote = byId('preview-note');
+    previewNote.hidden = !asset.requires_png_fallback;
+    previewNote.textContent = asset.requires_png_fallback ? '这张 SVG 含复杂文字排版，部分演示软件可能无法完整显示。请在 PowerPoint 中使用配套高清 PNG，以保留文字和标注。' : '';
     const license = text(asset.license).toUpperCase();
     byId('license-note').textContent = license.includes('SA')
       ? '需署名：保留作者、来源和许可证链接；修改时注明修改。改编素材还需遵守相同方式共享（ShareAlike）要求。'
@@ -224,6 +255,16 @@
     const download = byId('download-asset');
     download.href = safeAsset(asset.path);
     download.download = text(asset.path).split('/').pop();
+    download.textContent = `下载 ${originalFormat(asset)} 原图 ↓`;
+    const pngDownload = byId('download-ppt-png');
+    pngDownload.hidden = !pngAvailable;
+    if (pngAvailable) {
+      pngDownload.href = safeAsset(asset.ppt_png_path);
+      pngDownload.download = text(asset.ppt_png_path).split('/').pop();
+    } else {
+      pngDownload.removeAttribute('href');
+      pngDownload.removeAttribute('download');
+    }
     const original = byId('original-source');
     const upstream = safeRemote(asset.source_url || source.repository || source.homepage);
     original.hidden = !upstream;
@@ -233,10 +274,11 @@
 
   function resetFilters() {
     if (!state.catalog) return;
-    Object.assign(state, { query: '', source: '', license: '', category: '' });
+    Object.assign(state, { query: '', source: '', license: '', category: '', format: '' });
     elements.search.value = '';
     elements.source.value = '';
     elements.license.value = '';
+    elements.format.value = '';
     filterAssets();
   }
   function changePage(direction) {
@@ -254,6 +296,7 @@
   byId('filter-form').addEventListener('submit', event => { event.preventDefault(); clearTimeout(debounce); if (state.catalog) { state.query = elements.search.value; filterAssets(); } });
   elements.source.addEventListener('change', () => { if (state.catalog) { state.source = elements.source.value; filterAssets(); } });
   elements.license.addEventListener('change', () => { if (state.catalog) { state.license = elements.license.value; filterAssets(); } });
+  elements.format.addEventListener('change', () => { if (state.catalog) { state.format = elements.format.value; filterAssets(); } });
   byId('category-tabs').addEventListener('click', event => { const button = event.target.closest('[data-category]'); if (button && state.catalog) { state.category = button.dataset.category; filterAssets(); } });
   byId('reset-filters').addEventListener('click', resetFilters);
   elements.previous.addEventListener('click', () => changePage(-1));

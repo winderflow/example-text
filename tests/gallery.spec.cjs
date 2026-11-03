@@ -12,7 +12,7 @@ const crypto = require('node:crypto');
 const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '..');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'data/catalog.json'), 'utf8'));
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg' };
 
 const server = http.createServer((request, response) => {
   try {
@@ -85,7 +85,7 @@ const server = http.createServer((request, response) => {
       }
       tested.push(source.id);
     }
-    console.log(`Original SVG rendering verified for ${tested.length} sources: ${tested.join(', ')}.`);
+    console.log(`Asset preview rendering verified for ${tested.length} sources: ${tested.join(', ')}.`);
     await page.locator('#reset-filters').click();
 
     const license = catalog.assets[0].license;
@@ -114,6 +114,49 @@ const server = http.createServer((request, response) => {
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('dialog[open]').count(), 0);
 
+    const pptAssets = catalog.assets.filter(item => item.ppt_png_path);
+    await page.locator('#format-filter').selectOption('svg');
+    assert.ok((await page.locator('.card-type').allTextContents()).every(value => value.includes('SVG')), 'SVG format filter only shows SVG originals');
+    await page.locator('#reset-filters').click();
+    await page.locator('#format-filter').selectOption('ppt-png');
+    assert.match(new URL(page.url()).searchParams.get('format'), /^ppt-png$/);
+    assert.equal(await page.locator('.asset-card').count(), Math.min(60, pptAssets.length));
+    assert.ok((await page.locator('.card-type').allTextContents()).every(value => value.includes('PNG')), 'PPT filter requires actual PNG derivatives');
+    if (pptAssets.length) {
+      const samples = [pptAssets.find(item => !item.requires_png_fallback) || pptAssets[0]];
+      const fallback = pptAssets.find(item => item.requires_png_fallback);
+      if (fallback && fallback.id !== samples[0].id) samples.push(fallback);
+      for (const item of samples) {
+        const params = new URLSearchParams({ q: item.name, source: item.source, format: 'ppt-png' });
+        await page.goto(url + '?' + params);
+        // Asset ids avoid confusing similarly named variants when present on the first page.
+        const exact = page.locator(`[data-asset-id="${item.id}"]`);
+        await exact.waitFor();
+        const preview = item.preview_path || (item.requires_png_fallback ? item.ppt_png_path : item.path);
+        assert.equal(decodeURIComponent(new URL(await exact.locator('img').getAttribute('src'), url).pathname).slice(1), preview);
+        await exact.locator('img').evaluate(image => image.decode());
+        await exact.click();
+        await page.waitForSelector('dialog[open]');
+        assert.equal(decodeURIComponent(new URL(await page.locator('#download-asset').getAttribute('href'), url).pathname).slice(1), item.path, 'Original SVG link remains unchanged');
+        assert.ok(await page.locator('#download-ppt-png').isVisible());
+        assert.match(await page.locator('#detail-png-size').textContent(), new RegExp(Number(item.ppt_png_width).toLocaleString('zh-CN')));
+        assert.equal(await page.locator('#preview-note').isVisible(), Boolean(item.requires_png_fallback));
+        const pngReady = page.waitForEvent('download');
+        await page.locator('#download-ppt-png').click();
+        const pngDownload = await pngReady;
+        const downloaded = fs.readFileSync(await pngDownload.path());
+        const original = fs.readFileSync(path.join(root, item.ppt_png_path));
+        assert.deepEqual(downloaded, original, 'PPT PNG download matches local derivative byte-for-byte');
+        assert.equal(downloaded.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+        assert.equal(downloaded.readUInt32BE(16), item.ppt_png_width);
+        assert.equal(downloaded.readUInt32BE(20), item.ppt_png_height);
+        await page.keyboard.press('Escape');
+      }
+      console.log(`PPT PNG filter, original SVG links, PNG downloads/dimensions and foreignObject fallback verified (${pptAssets.length} derivatives).`);
+    } else {
+      console.log('PPT PNG filter correctly returns no results; derivative-specific checks not run (no derivatives in catalog).');
+    }
+
     await page.locator('#reset-filters').click();
     await page.evaluate(() => scrollTo(0, 0));
     await page.screenshot({ path: '/tmp/science-gallery-real.png', fullPage: true });
@@ -121,7 +164,7 @@ const server = http.createServer((request, response) => {
     await page.screenshot({ path: '/tmp/science-gallery-real-mobile.png', fullPage: true });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'Mobile layout does not overflow');
     assert.deepEqual(errors, [], 'No JavaScript page errors');
-    console.log('PASS: Chinese keyword search, per-source SVG rendering, license/category filters, pagination, original-file download SHA-256, attribution, Escape, responsive layout, zero page errors.');
+    console.log('PASS: Chinese keyword search, per-source previews, license/category/format filters, pagination, original-file download SHA-256, attribution, optional PPT PNGs, Escape, responsive layout, zero page errors.');
   } finally {
     if (browser) await browser.close();
     await new Promise(resolve => server.close(resolve));
