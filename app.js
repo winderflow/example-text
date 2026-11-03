@@ -35,6 +35,10 @@
   };
   const originalFormat = asset => text(asset.path).split('.').pop().toUpperCase();
   const hasPptPng = asset => Boolean(safeAsset(asset.ppt_png_path));
+  const hasNativeDimensions = asset => Number(asset.pixel_width) > 0 && Number(asset.pixel_height) > 0;
+  const isNativeBitmap = asset => ['PNG', 'JPG', 'JPEG'].includes(originalFormat(asset));
+  const isHighresNative = asset => isNativeBitmap(asset) && hasNativeDimensions(asset) && Math.max(Number(asset.pixel_width), Number(asset.pixel_height)) >= 1600;
+  const matchesFormat = asset => !state.format || (state.format === 'svg' && originalFormat(asset) === 'SVG') || (state.format === 'ppt-png' && hasPptPng(asset)) || (state.format === 'highres-native' && isHighresNative(asset));
   const previewPath = asset => safeAsset(asset.preview_path) || (asset.requires_png_fallback ? safeAsset(asset.ppt_png_path) : '') || safeAsset(asset.path);
   function roundRobin(items, key) {
     const buckets = new Map();
@@ -90,18 +94,22 @@
       tabs.append(button);
     });
     catalog.assets.forEach(asset => {
-      asset._search = normalize([asset.name, asset.author, asset.subcategory, asset.license, asset.collection, sourceName(asset.source), categoryName(asset.category), hasPptPng(asset) ? 'ppt png 高清 演示' : '', ...(Array.isArray(asset.tags) ? asset.tags : [])].join(' '));
+      asset._search = normalize([asset.name, asset.author, asset.subcategory, asset.license, asset.collection, sourceName(asset.source), categoryName(asset.category), originalFormat(asset), hasPptPng(asset) ? 'ppt png 高清 演示' : '', isHighresNative(asset) ? '高清 原图 PowerPoint' : '', ...(Array.isArray(asset.tags) ? asset.tags : [])].join(' '));
     });
     // Lead with presentation-ready illustrations, then established biomedical art.
     const ppt = catalog.assets.filter(hasPptPng);
-    const featured = catalog.assets.filter(asset => !hasPptPng(asset) && /servier|dbcls|swissbiopics/i.test(`${asset.author} ${asset.author_url} ${asset.source}`));
-    const prioritized = new Set([...ppt, ...featured]);
+    const native = catalog.assets.filter(asset => isHighresNative(asset) && !hasPptPng(asset));
+    const ready = [...native, ...ppt];
+    const readySet = new Set(ready);
+    const featured = catalog.assets.filter(asset => !readySet.has(asset) && /servier|dbcls|swissbiopics/i.test(`${asset.author} ${asset.author_url} ${asset.source}`));
+    const prioritized = new Set([...ready, ...featured]);
     state.orderedAssets = [
-      ...roundRobin(ppt, asset => asset.category),
+      ...roundRobin(ready, asset => `${asset.category}:${asset.source}`),
       ...roundRobin(featured, asset => asset.author),
       ...roundRobin(catalog.assets.filter(asset => !prioritized.has(asset)), asset => asset.source)
     ];
     elements.format.querySelector('[value="ppt-png"]').textContent = `PPT 高清 PNG (${number(ppt.length)})`;
+    elements.format.querySelector('[value="highres-native"]').textContent = `高清原图 PNG/JPG (${number(catalog.assets.filter(isHighresNative).length)})`;
     renderSources();
     restoreFilters();
     filterAssets();
@@ -114,7 +122,7 @@
     state.source = sources.has(params.get('source')) ? params.get('source') : '';
     const license = params.get('license') || '';
     state.license = [...elements.license.options].some(item => item.value === license) ? license : '';
-    state.format = ['svg', 'ppt-png'].includes(params.get('format')) ? params.get('format') : '';
+    state.format = ['svg', 'ppt-png', 'highres-native'].includes(params.get('format')) ? params.get('format') : '';
     elements.search.value = state.query;
     elements.source.value = state.source;
     elements.license.value = state.license;
@@ -127,7 +135,7 @@
       (!state.category || asset.category === state.category) &&
       (!state.source || asset.source === state.source) &&
       (!state.license || asset.license === state.license) &&
-      (!state.format || (state.format === 'svg' ? originalFormat(asset) === 'SVG' : hasPptPng(asset))) &&
+      matchesFormat(asset) &&
       terms.every(term => asset._search.includes(term))
     );
     state.page = 1;
@@ -176,7 +184,9 @@
       const info = node('span', 'card-info');
       info.append(node('span', 'card-title', text(asset.name).replace(/_/g, ' ')), node('span', 'card-source', sourceName(asset.source)));
       const bottom = node('span', 'card-bottom');
-      bottom.append(node('span', 'card-license', asset.license), node('span', hasPptPng(asset) ? 'card-type card-type-ppt' : 'card-type', hasPptPng(asset) ? `PNG + ${originalFormat(asset)}` : originalFormat(asset)));
+      const type = node('span', hasPptPng(asset) || isHighresNative(asset) ? 'card-type card-type-ppt' : 'card-type', hasPptPng(asset) ? `PNG + ${originalFormat(asset)}` : `${isHighresNative(asset) ? '高清 ' : ''}${originalFormat(asset)}`);
+      if (isHighresNative(asset)) type.title = `${number(asset.pixel_width)} × ${number(asset.pixel_height)} px`;
+      bottom.append(node('span', 'card-license', asset.license), type);
       info.append(bottom);
       card.append(preview, info);
       card.addEventListener('click', () => showDetail(asset));
@@ -236,12 +246,17 @@
     byId('detail-source').replaceChildren(link(source.name || asset.source, source.homepage || source.repository));
     byId('detail-license').replaceChildren(link(asset.license || '详见来源', asset.license_url));
     const pngAvailable = hasPptPng(asset);
+    byId('detail-original-row').hidden = !isNativeBitmap(asset) || !hasNativeDimensions(asset);
+    byId('detail-original-size').textContent = hasNativeDimensions(asset) ? `${number(asset.pixel_width)} × ${number(asset.pixel_height)} px · ${originalFormat(asset)}` : '';
     byId('detail-png-row').hidden = !pngAvailable;
     const dimensions = Number(asset.ppt_png_width) > 0 && Number(asset.ppt_png_height) > 0;
     byId('detail-png-size').textContent = pngAvailable && dimensions ? `${number(asset.ppt_png_width)} × ${number(asset.ppt_png_height)} px` : '详见下载文件';
     const previewNote = byId('preview-note');
     previewNote.hidden = !asset.requires_png_fallback;
     previewNote.textContent = asset.requires_png_fallback ? '这张 SVG 含复杂文字排版，部分演示软件可能无法完整显示。请在 PowerPoint 中使用配套高清 PNG，以保留文字和标注。' : '';
+    byId('detail-format-note').textContent = isNativeBitmap(asset)
+      ? 'PNG/JPG 原图可直接插入 PowerPoint。它是位图图片，放大后的细节取决于原始像素，不能拆分为 SVG 矢量路径。'
+      : '高清 PNG 可直接插入 PowerPoint；SVG 可保持矢量缩放，是否能拆分编辑取决于图形与软件版本。';
     const license = text(asset.license).toUpperCase();
     byId('license-note').textContent = license.includes('SA')
       ? '需署名：保留作者、来源和许可证链接；修改时注明修改。改编素材还需遵守相同方式共享（ShareAlike）要求。'

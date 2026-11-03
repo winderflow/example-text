@@ -12,6 +12,7 @@ import xml.etree.ElementTree as ET
 from collections import Counter
 from pathlib import Path
 from urllib.parse import quote
+from collect_web_images import dimensions
 
 ROOT = Path(__file__).resolve().parents[1]
 CATEGORIES = {'biomedical':'生物医学','chemistry':'化学与分子','ecology':'生态与物种','earth-space':'地理、气象与空间','engineering':'工程与物理','computing':'计算与数据流程','general':'科研交流与通用'}
@@ -20,7 +21,7 @@ LICENSES = {'cc-0':('CC0-1.0','https://creativecommons.org/publicdomain/zero/1.0
 INFO = {
  'bioicons':('Bioicons（含 Servier / Togo）','https://bioicons.com/','逐图授权','生物、医学、植物、实验器材；含经 Bioicons 分发的 Servier 与 DBCLS 素材，保留其历史逐图许可。'),
  'bioicons-id':('ID & Immunology Icons','https://github.com/apsmunro/bioicons-id','CC0-1.0','病原体、免疫细胞、器官与感染传播，含彩色和单色版本。'),
- 'reactome':('Reactome Illustrations','https://reactome.org/','Apache-2.0','Reactome 官方蛋白、化合物、细胞、组织和通路组件；保留原始 XML 元数据。'),
+ 'reactome':('Reactome Illustrations','https://reactome.org/','Apache-2.0','Reactome 官方蛋白、细胞、组织和通路组件，以及完整生物通路插画；图标保留原始 XML 元数据。'),
  'ebi-icons':('EMBL-EBI Science Icons','https://www.ebi.ac.uk/','CC-BY-SA-4.0','仅选 chemistry、conceptual、species 科学符号，不含第三方品牌和通用字库。'),
  'healthicons':('Health Icons','https://healthicons.org/','CC0-1.0','公共卫生、症状、医疗设备、人体与医疗服务图标，保留上游样式。'),
  'openmoji':('OpenMoji 科研选集','https://openmoji.org/','CC-BY-SA-4.0','动物、植物、地理天气、科学与技术主题彩色符号；逐图作者信息。'),
@@ -40,7 +41,9 @@ INFO = {
  'electrical-symbol-library':('Electrical Symbol Library','https://github.com/basverdoes/ElectricalSymbolLibrary','CC0-1.0','仅收 src/symbols 独立电气符号；其余文件的非商业许可不用于这些单图。'),
  'electricalsymbols':('Electricalsymbols 工业电气符号','https://github.com/chille/electricalsymbols','CC-BY-SA-3.0','IEC 工业电气元件、开关、保护、传感器和电机；排除空白文档模板。'),
  'geologic-patterns':('FGDC Geologic Patterns','https://github.com/davenquinn/geologic-patterns','CC0-1.0','USGS / FGDC 地质、岩性、冰川和地层剖面填充图案；可用于地学论文制图。'),
- 'gissymbology':('GISsymbology 专题地图符号','https://github.com/GISsymbology/symbols','CC-BY-SA-4.0','选取地震微区划、地质图、FGDC 地质符号和水利防护四个许可明确的子库。')}
+ 'gissymbology':('GISsymbology 专题地图符号','https://github.com/GISsymbology/symbols','CC-BY-SA-4.0','选取地震微区划、地质图、FGDC 地质符号和水利防护四个许可明确的子库。'),
+ 'openstax-anatomy':('OpenStax 人体解剖与生理历史开放插画','https://github.com/openstax/osbooks-anatomy-physiology','CC-BY-4.0','只收录固定历史 CC BY 4.0 版本中逐图核验的高清人体解剖与生理插画；不套用当前非商业版本许可。'),
+ 'justfig-icons':('JustFig 原创科研图形','https://github.com/BooneAndrewsLab/justfig-icons','CC0-1.0','仅收原创 house 集合中的实验室、细胞、蛋白、免疫和微生物图形，不收聚合库其他来源。')}
 KEYWORDS = {
  'chemistry':'atom molecule molecular chemistry chemical flask beaker test-tube test_pipe vial dna acid nucleic peptides compound amino nanotechnology',
  'ecology':'animal plant algae tree leaf flower forest fish bird insect butterfly bee bacteria mushroom ecology seed crop sprout paw bug cat dog turtle rabbit whale dolphin fossil deer biohazard',
@@ -93,9 +96,20 @@ def check_svg(raw, allow_static_html=False):
     return root
 
 def main():
-    parser=argparse.ArgumentParser(); parser.add_argument('--sources',type=Path,required=True); args=parser.parse_args()
+    parser=argparse.ArgumentParser(); parser.add_argument('--sources',type=Path,required=True);parser.add_argument('--only',nargs='+',help='Reimport selected source IDs and preserve other verified inventory'); args=parser.parse_args()
     lock=json.loads((ROOT/'data/sources.lock.json').read_text()); assets=[]; sources=[]; excluded=[]
-    previous=json.loads((ROOT/'data/catalog.json').read_text())['assets'] if (ROOT/'data/catalog.json').exists() else []
+    previous_catalog=json.loads((ROOT/'data/catalog.json').read_text()) if (ROOT/'data/catalog.json').exists() else {}
+    previous=previous_catalog.get('assets',[])
+    if args.only:
+        if not previous_catalog:raise SystemExit('--only requires an existing verified catalog')
+        if set(args.only)-{s['id'] for s in lock['sources']}:raise SystemExit('Unknown source ID in --only')
+        for a in previous:
+            if a['source'] not in args.only:
+                file=ROOT/a['path']
+                if hashlib.sha256(file.read_bytes()).hexdigest()!=a['sha256']:raise SystemExit(f'Preserved original has changed: {file}')
+                assets.append(a)
+        sources=[s for s in previous_catalog['sources'] if s['id'] not in args.only]
+        if (ROOT/'data/excluded.json').exists():excluded=[x for x in json.loads((ROOT/'data/excluded.json').read_text()) if x['source'] not in args.only]
     static=json.loads((ROOT/'data/bioicons-static-allowlist.json').read_text()) if (ROOT/'data/bioicons-static-allowlist.json').exists() else {}
     static_hashes={a['path']:a['sha256'] for a in static.get('assets',[])}
     if static:
@@ -103,6 +117,7 @@ def main():
         assert next(s['commit'] for s in lock['sources'] if s['id']=='bioicons')==static['commit'],'Static allowlist requires re-audit for new upstream commit'
     renders=json.loads((ROOT/'data/ppt-renders.json').read_text()).get('renders',{}) if (ROOT/'data/ppt-renders.json').exists() else {}
     for s in lock['sources']:
+        if args.only and s['id'] not in args.only:continue
         sid=s['id']; p=args.sources/sid
         actual=subprocess.check_output(['git','-C',str(p),'rev-parse','HEAD'],text=True).strip()
         if actual!=s['commit']: raise SystemExit(f'Commit mismatch: {sid}')
@@ -113,8 +128,27 @@ def main():
             if sid=='electrical-symbol-library' and f.name=='README.md':continue
             if f.is_file() and (f.name.lower().startswith(('license','licence','notice','readme','copying','authors'))): shutil.copyfile(f,licdir/f.name)
         entries=[]
-        def add(f,cat,sub='',lic='mit',author=None,title=None,tags=None,author_url='',metadata=None):
-            entries.append((f,cat,sub,lic,author or name,title or f.stem.replace('_',' ').replace('-',' '),tags or [],author_url,metadata))
+        def add(f,cat,sub='',lic='mit',author=None,title=None,tags=None,author_url='',metadata=None,details=None):
+            entries.append((f,cat,sub,lic,author or name,title or f.stem.replace('_',' ').replace('-',' '),tags or [],author_url,metadata,details or {}))
+        def selected_figures(selection_file):
+            selection=json.loads(selection_file.read_text())
+            assert selection['commit']==s['commit'],'Selection and source commit mismatch'
+            lookup={v[0]:k for k,v in LICENSES.items()}
+            for x in selection['assets']:
+                f=(p/x['path']).resolve();assert f.is_relative_to(p.resolve()),'Selection escapes checkout'
+                assert hashlib.sha256(f.read_bytes()).hexdigest()==x['sha256'],'Selected original checksum mismatch'
+                key=x['license'] if x['license'] in LICENSES else lookup[x['license']]
+                details={k:x[k] for k in ['caption','figure_id','credit','reference_url'] if x.get(k)}
+                if x.get('evidence_path'):details['evidence_url']=s['repository']+'/blob/'+s['commit']+'/'+quote(x['evidence_path'],safe='/')
+                add(f,x.get('category','biomedical'),x.get('subcategory','科研插画'),key,x['author'],x.get('title',x.get('name')),x.get('tags',[]),details=details)
+            evidence=set(x['evidence_path'] for x in selection['assets'] if x.get('evidence_path'))
+            license_paths=selection.get('license_evidence',[])
+            for path in license_paths if isinstance(license_paths,list) else []:
+                if isinstance(path,str) and (p/path).is_file():evidence.add(path)
+            for path in evidence:
+                original=(p/path).resolve();assert original.is_relative_to(p.resolve())
+                target=licdir/'evidence'/path;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(original,target)
+            shutil.copyfile(selection_file,licdir/'selected-figures.json')
         if sid=='bioicons':
             authors=json.loads((p/'static/icons/authors.json').read_text())
             for folder in (p/'static/icons').iterdir():
@@ -144,6 +178,8 @@ def main():
                     excluded.append({'source':sid,'path':str(f.relative_to(p)),'reason':'upstream skip=true'});continue
                 designers=meta.findall("person[@role='designer']");author='; '.join(x.text or '' for x in designers) or 'Reactome contributors'
                 add(f,'chemistry' if 'compound' in cats else 'biomedical',' / '.join(SUB.get(c,c) for c in cats),'apache',author,meta.findtext('name') or f.stem,cats+[meta.findtext('description') or ''],designers[0].get('url','') if designers else '',xml)
+            selection=ROOT/'data/source-selections/reactome-pathways.json'
+            if selection.exists():selected_figures(selection)
         elif sid=='ebi-icons':
             for sub in ['chemistry','conceptual','species']:
                 for f in sorted((p/'source'/sub).glob('*.svg')):add(f,'chemistry' if sub=='chemistry' else 'ecology' if sub=='species' else 'biomedical',sub,'cc-by-sa-4.0','EMBL-EBI')
@@ -249,13 +285,25 @@ def main():
                 folder=p/'collections'/collection;notice=licdir/collection;notice.mkdir(exist_ok=True);shutil.copyfile(folder/'license',notice/'license')
                 assert 'https://creativecommons.org/licenses/by-sa/4.0/' in (folder/'license').read_text()
                 for f in sorted((folder/'svg').rglob('*.svg')):add(f,'earth-space',sub,'cc-by-sa-4.0',meta[collection]['author'],f'{f.stem} · {sub}',[meta[collection].get('tags',''),meta[collection].get('description',''),sub,'地质','GIS'])
+        elif sid in {'openstax-anatomy','justfig-icons'}:
+            selected_figures(ROOT/'data/source-selections'/(sid+'.json'))
+            if sid=='openstax-anatomy':
+                assert 'Attribution 4.0 International' in (p/'LICENSE').read_text(), 'Historical CC BY license evidence required'
+            else:
+                for path in ['house/meta.yaml','house/STYLE.md','sources/house/source.yaml']:
+                    target=licdir/path;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p/path,target)
         before=len(assets)
-        for f,cat,sub,lic,author,title,tags,author_url,metadata in entries:
+        for f,cat,sub,lic,author,title,tags,author_url,metadata,details in entries:
             raw=f.read_bytes()
             raw_hash=hashlib.sha256(raw).hexdigest()
             static_approved=sid=='bioicons' and static_hashes.get(f.relative_to(p).as_posix())==raw_hash
+            fmt=f.suffix.lower().lstrip('.');pixel_size=None
             try:
-                root=check_svg(raw,allow_static_html=static_approved)
+                if fmt=='svg':root=check_svg(raw,allow_static_html=static_approved)
+                elif fmt in {'png','jpg','jpeg'}:
+                    pixel_size=dimensions(raw)
+                    if max(pixel_size)<1600:raise ValueError('Native bitmap below 1600px long-edge threshold')
+                else:raise ValueError('Unsupported original image format')
             except (ET.ParseError,ValueError) as e:
                 excluded.append({'source':sid,'path':str(f.relative_to(p)),'reason':str(e)});continue
             rel=f.relative_to(p); dest=Path('assets')/cat/sid/rel
@@ -266,7 +314,8 @@ def main():
             aid=hashlib.sha256((sid+'/'+str(rel)).encode()).hexdigest()[:20]
             keywords=' '.join([title,sub]+tags).lower();tags=list(tags)+[SUB.get(sub,sub)]+[zh for term,zh in ALIASES.items() if term in keywords]
             attribution=f'{title} — {author}. Source: {src}. License: {license_name} ({license_url}). Original file redistributed without modification; see licenses/{sid}/ for upstream notices.'
-            asset=dict(id=aid,name=title,category=cat,subcategory=sub,source=sid,path=dest.as_posix(),license=license_name,license_url=license_url,author=author,author_url=author_url,source_url=src,attribution=attribution,tags=tags,sha256=raw_hash,bytes=len(raw),original_path=rel.as_posix(),commit=s['commit'])
+            asset=dict(id=aid,name=title,category=cat,subcategory=sub,source=sid,path=dest.as_posix(),license=license_name,license_url=license_url,author=author,author_url=author_url,source_url=src,attribution=attribution,tags=tags,sha256=raw_hash,bytes=len(raw),original_path=rel.as_posix(),commit=s['commit'],format=fmt,**details)
+            if pixel_size:asset.update(pixel_width=pixel_size[0],pixel_height=pixel_size[1])
             if static_approved:asset['requires_png_fallback']=True
             if aid in renders:
                 r=renders[aid];png=(ROOT/r['png_path']).resolve()
@@ -288,11 +337,13 @@ def main():
             oldpath.unlink(missing_ok=True)
             oldpath.with_suffix('.xml').unlink(missing_ok=True)
     counts=Counter(x['category'] for x in assets)
-    catalog=dict(generated_at=lock['retrieved_at'],sources=sources,categories=[dict(id=k,name=v,count=counts[k]) for k,v in CATEGORIES.items()],assets=assets)
+    rank={s['id']:i for i,s in enumerate(lock['sources'])};sources.sort(key=lambda s:rank[s['id']]);assets.sort(key=lambda a:(rank[a['source']],a['original_path']))
+    for a in assets:a.setdefault('format',Path(a['path']).suffix.lower().lstrip('.'))
+    catalog=dict(generated_at=lock['retrieved_at'],sources=sources,categories=[dict(id=k,name=v,count=counts[k]) for k,v in CATEGORIES.items()],format_counts=dict(Counter(a['format'] for a in assets)),assets=assets)
     (ROOT/'data/catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,separators=(',',':'))+'\n')
     (ROOT/'data/excluded.json').write_text(json.dumps(excluded,ensure_ascii=False,indent=2)+'\n')
     with (ROOT/'data/manifest.csv').open('w',newline='',encoding='utf-8-sig') as fp:
-        fields=['id','name','category','subcategory','source','path','license','license_url','author','author_url','source_url','sha256','bytes','commit','attribution','ppt_png_path','ppt_png_width','ppt_png_height','ppt_png_sha256','requires_png_fallback'];w=csv.DictWriter(fp,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(assets)
-    print(f'Total: {len(assets)} SVGs, {sum(x["bytes"] for x in assets)/1e6:.1f} MB; excluded {len(excluded)}')
+        fields=['id','name','category','subcategory','source','path','format','pixel_width','pixel_height','license','license_url','author','author_url','source_url','sha256','bytes','commit','attribution','ppt_png_path','ppt_png_width','ppt_png_height','ppt_png_sha256','requires_png_fallback','evidence_url'];w=csv.DictWriter(fp,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(assets)
+    print(f'Total: {len(assets)} original images, {sum(x["bytes"] for x in assets)/1e6:.1f} MB; excluded {len(excluded)}')
 
 if __name__=='__main__': main()

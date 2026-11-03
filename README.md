@@ -1,23 +1,25 @@
 # 科研绘图开放素材库
 
-为论文示意图、实验流程图、科研海报和课件整理的开放素材库。已实际收录 **16,136 个原始 SVG，来自23个上游仓库，分为七大学科**；另有 **418 张长边2400像素 PNG**及**72张精选图片的 PowerPoint 素材板**。PNG 是原 SVG 的兼容导出，不重复计为新的科研插画。
+为论文示意图、实验流程图、科研海报和课件整理的开放素材库。现有 **16,452 张原始图片，来自25个上游仓库**：16,335个SVG和117张原生高清JPEG。另保留418张长边2400像素的PNG兼容版本，以及72图、20页的PowerPoint素材板；格式转换不重复计为新图片。
 
-首批检索：2026-11-02；本轮扩展及 PPT 质量整理：2026-11-03。素材原始字节保持不变，逐图保存作者、许可证、固定版本来源及 SHA-256。**本库没有统一的素材许可证**；详见 [许可与署名指南](docs/LICENSES.md)。
+首批检索：2026-11-02；PPT质量整理：2026-11-03；本轮新图扩展：2026-11-04。素材原始字节保持不变，逐图保存作者、许可证、固定版本来源及 SHA-256。**本库没有统一的素材许可证**；详见 [许可与署名指南](docs/LICENSES.md)。
 
 ## 浏览与下载
 
+- **[本轮新增316张科研图片：按图名直接下载](docs/NEW-OPEN-ART-2026-11-04.md)**，包括117张原生高清解剖图、164张完整生物通路图和35张实验室原创图形。
+
 - **[直接下载 PowerPoint 素材板](downloads/ppt-illustrations.pptx)**：72 张图片可逐张复制，每页备注保留完整署名。GitHub 文件页可点击 Download raw 下载。
 - **[按名称和学科查找高清 PNG](docs/PPT-INDEX.md)**：418 张原图的2400像素兼容版本；[PPT 使用指南](docs/PPT-GUIDE.md)。
-- 在图库的“文件格式”中选择“PPT 高清 PNG”，可按学科查找并查看具体像素尺寸。
+- 在图库的“文件格式”中选择“PPT 高清 PNG”或“高清原图 PNG/JPG”，可按学科查找并查看实际像素尺寸。
 
 - 打开 [在线图库（Pages 启用后可用）](https://winderflow.github.io/example-text/)，按学科、素材库、许可证和中英文关键词筛选；点击卡片可下载原始 SVG、查看来源和复制署名。
 - 直接在下方分类目录下载单图；批量获取可使用 GitHub 的 **Code → Download ZIP** 或 `git clone https://github.com/winderflow/example-text.git`。
 - 全量目录与逐图署名：[manifest.csv](data/manifest.csv)（可用 Excel 打开）、[catalog.json](data/catalog.json)。下载 SVG 时同时保留对应的署名和许可记录。
 - SVG 可导入 Inkscape、Illustrator、PowerPoint 等软件；电路符号库为一张整图，可在矢量编辑器中选取元件。SVG 不是位图照片库。
 
-| 学科分类 | SVG 文件数 |
+| 学科分类 | 原图文件数 |
 | --- | ---: |
-| [生物医学](assets/biomedical/) | 7,003 |
+| [生物医学](assets/biomedical/) | 7,319 |
 | [化学与分子](assets/chemistry/) | 684 |
 | [生态与物种](assets/ecology/) | 1,062 |
 | [地理、气象与空间](assets/earth-space/) | 3,379 |
@@ -27,11 +29,11 @@
 
 ## 已下载来源
 
-| 素材库 | 类型 | SVG 文件数 | 许可概览 | 收录范围 |
+| 素材库 | 类型 | 原图文件数 | 许可概览 | 收录范围 |
 | --- | --- | ---: | --- | --- |
 | [Bioicons（含 Servier / Togo）](https://github.com/duerrsimon/bioicons) | 科研专题 | 2,819 | 逐图授权 | 生物、医学、植物、实验器材；含经 Bioicons 分发的 Servier 与 DBCLS 素材，保留其历史逐图许可。 |
 | [ID & Immunology Icons](https://github.com/apsmunro/bioicons-id) | 科研专题 | 347 | CC0-1.0 | 病原体、免疫细胞、器官与感染传播，含彩色和单色版本。 |
-| [Reactome Illustrations](https://github.com/reactome/reactome_illustrations) | 科研专题 | 2,257 | Apache-2.0 | Reactome 官方蛋白、化合物、细胞、组织和通路组件；保留原始 XML 元数据。 |
+| [Reactome Illustrations](https://github.com/reactome/reactome_illustrations) | 科研专题 | 2,421 | Apache-2.0 | Reactome 官方蛋白、细胞、组织和通路组件，以及完整生物通路插画；图标保留原始 XML 元数据。 |
 | [EMBL-EBI Science Icons](https://github.com/ebiwd/EBI-Icon-fonts) | 科研专题 | 80 | CC-BY-SA-4.0 | 仅选 chemistry、conceptual、species 科学符号，不含第三方品牌和通用字库。 |
 | [Health Icons](https://github.com/resolvetosavelives/healthicons) | 科研专题 | 2,128 | CC0-1.0 | 公共卫生、症状、医疗设备、人体与医疗服务图标，保留上游样式。 |
 | [OpenMoji 科研选集](https://github.com/hfg-gmuend/openmoji) | 通用绘图符号 | 419 | CC-BY-SA-4.0 | 动物、植物、地理天气、科学与技术主题彩色符号；逐图作者信息。 |
@@ -52,6 +54,8 @@
 | [Electricalsymbols 工业电气符号](https://github.com/chille/electricalsymbols) | 科研专题 | 32 | CC-BY-SA-3.0 | IEC 工业电气元件、开关、保护、传感器和电机；排除空白文档模板。 |
 | [FGDC Geologic Patterns](https://github.com/davenquinn/geologic-patterns) | 科研专题 | 471 | CC0-1.0 | USGS / FGDC 地质、岩性、冰川和地层剖面填充图案；可用于地学论文制图。 |
 | [GISsymbology 专题地图符号](https://github.com/GISsymbology/symbols) | 科研专题 | 453 | CC-BY-SA-4.0 | 选取地震微区划、地质图、FGDC 地质符号和水利防护四个许可明确的子库。 |
+| [OpenStax 人体解剖与生理历史开放插画](https://github.com/openstax/osbooks-anatomy-physiology) | 科研专题 | 117 | CC-BY-4.0 | 只收录固定历史 CC BY 4.0 版本中逐图核验的高清人体解剖与生理插画；不套用当前非商业版本许可。 |
+| [JustFig 原创科研图形](https://github.com/BooneAndrewsLab/justfig-icons) | 科研专题 | 35 | CC0-1.0 | 仅收原创 house 集合中的实验室、细胞、蛋白、免疫和微生物图形，不收聚合库其他来源。 |
 
 Bioicons 子集中含 **1,374 个署名 Servier**、**630 个署名 DBCLS** 的文件；这是通过 Bioicons 取得的具体历史素材，不是对 Servier / Togo 当前官网的全站镜像或完整性声明。上游原始说明、完整许可及元数据见 [licenses/](licenses/)。
 
@@ -73,6 +77,12 @@ Bioicons 子集中含 **1,374 个署名 Servier**、**630 个署名 DBCLS** 的�
 - Wellcome、Wikimedia Commons、RCSB以及Servier/Togo官网的新原件仍被当前云环境网络策略以403阻塞；这些尚未下载的图片不计入任何数量。官方GitHub可取得的Bioicons原图已实际处理。
 
 访问范围、恢复依据和后续官方接口见 [质量核验记录](docs/QUALITY-SOURCES-2026-11-03.md)、[Wellcome / Commons 说明](docs/WELLCOME-COMMONS-NOTES.md)、[RCSB 说明](docs/RCSB-SOURCE-NOTES.md)。所需公开站点与图片接口已保存至云环境网络配置草稿；保存草稿不会立即更新当前运行机器。
+
+## 2026-11-04 新增开放科研原图
+
+本轮新增316张原图：OpenStax历史CC BY4版本的117张高清解剖与生理JPEG、Reactome164张完整通路SVG、JustFig35张原创科研SVG。现有原图16,452张，来源25个；原生JPEG按实际像素尺寸展示，不称为可编辑矢量。
+
+[新增图片下载索引](docs/NEW-OPEN-ART-2026-11-04.md) 提供预览、名称、专题、尺寸和逐图下载。OpenStax当前非商业版本没有混入本库，历史授权证据与章节图注保存在 `licenses/openstax-anatomy/`。原有418张PNG及PPT文件保持不变。
 
 ## 更多资源与检索边界
 
@@ -106,6 +116,8 @@ python3 scripts/build_site.py
 ```
 
 只需下载单个上游包时可用 `python3 scripts/fetch_sources.py --only carbon-pictograms`；`sparse_paths` 会限制大型单仓库实际检出的目录，已验证固定提交的独立下载。
+
+只重建本轮来源时可用 `python3 scripts/build_catalog.py --sources .cache/sources --only reactome openstax-anatomy justfig-icons`，其余已验证原图会保留。
 
 重建不自动跟随上游最新版本。修改锁文件前应重新核实许可和导入范围；构建器拒绝脏的上游工作区，并只移除上次清单管理且未被用户修改的旧素材。`dist/` 是可直接部署的静态站点。
 

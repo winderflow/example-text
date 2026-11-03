@@ -8,6 +8,7 @@ import zipfile
 import xml.etree.ElementTree as ET
 from collections import Counter
 from pathlib import Path
+from collect_web_images import dimensions
 
 root=Path(__file__).resolve().parents[1]
 data=json.loads((root/'data/catalog.json').read_text())
@@ -21,12 +22,20 @@ for asset in data['assets']:
     file=(root/asset['path']).resolve();assert file.is_relative_to(root/'assets')
     raw=file.read_bytes();assert len(raw)==asset['bytes']
     assert hashlib.sha256(raw).hexdigest()==asset['sha256'],file
-    assert ET.fromstring(raw).tag.split('}')[-1]=='svg',file
+    fmt=file.suffix.lower().lstrip('.')
+    if fmt=='svg':assert ET.fromstring(raw).tag.split('}')[-1]=='svg',file
+    elif fmt in {'png','jpg','jpeg'}:
+        w,h=dimensions(raw);assert (w,h)==(asset['pixel_width'],asset['pixel_height']);assert max(w,h)>=1600
+    else:raise AssertionError('Unsupported original image format')
     assert asset['author'] and asset['license'] and asset['license_url'] and asset['attribution']
     source=locks[asset['source']];assert asset['commit']==source['commit']
     assert asset['source_url'].startswith(source['repository']+'/blob/'+source['commit']+'/')
     assert (root/'licenses'/asset['source']).is_dir()
-    if asset['source']=='reactome':assert file.with_suffix('.xml').exists()
+    if asset['source']=='reactome' and asset['original_path'].startswith('icons/'):assert file.with_suffix('.xml').exists()
+    if asset['source']=='openstax-anatomy':
+        assert asset['commit']=='b0058a743bdd2cc08196abaaa7d5469970c0d80c'
+        assert asset['license']=='CC-BY-4.0' and asset.get('evidence_url')
+        assert (root/'licenses/openstax-anatomy/evidence').is_dir()
     if asset['source']=='lucide' and file.stem in {'database','triangle-alert','circle-arrow-up'}:
         assert asset['license']=='ISC AND MIT','Missing inherited Feather MIT conditions'
         assert 'Cole Bemis' in asset['author']
@@ -48,8 +57,8 @@ for asset in data['assets']:
         assert hashlib.sha256(raw_png).hexdigest()==asset['ppt_png_sha256']
         png_paths.add(asset['ppt_png_path'])
     counts[asset['source']]+=1;categories[asset['category']]+=1
-actual={f.relative_to(root).as_posix() for f in (root/'assets').rglob('*.svg')}
-assert actual==paths,'Unindexed or missing SVG'
+actual={f.relative_to(root).as_posix() for f in (root/'assets').rglob('*') if f.is_file() and f.suffix.lower() in {'.svg','.png','.jpg','.jpeg'} and not f.is_relative_to(root/'assets/ppt-png')}
+assert actual==paths,'Unindexed or missing original image'
 assert counts==Counter({s['id']:s['count'] for s in data['sources']})
 assert categories==Counter({c['id']:c['count'] for c in data['categories']})
 with (root/'data/manifest.csv').open(encoding='utf-8-sig',newline='') as fp:
@@ -72,4 +81,5 @@ if (root/'data/ppt-deck.json').exists():
         assert images=={x['sha256'] for x in deck['images']}
         notes='\n'.join(archive.read(n).decode() for n in archive.namelist() if n.startswith('ppt/notesSlides/notesSlide') and n.endswith('.xml'))
         assert all(x['asset_id'] in seen and x['attribution'].split('Source: ')[1].split('. License:')[0].replace('&','&amp;') in notes for x in deck['images'])
-print(f'PASS: {len(seen)} SVGs, {len(png_paths)} PPT PNGs, {len(counts)} sources; hashes, dimensions, XML, licenses, provenance, counts and CSV verified')
+assert data.get('format_counts',{})==dict(Counter(Path(a['path']).suffix.lower().lstrip('.') for a in data['assets']))
+print(f'PASS: {len(seen)} original images, {len(png_paths)} PPT PNGs, {len(counts)} sources; hashes, dimensions, XML, licenses, provenance, counts and CSV verified')
