@@ -171,9 +171,14 @@
     const fragment = document.createDocumentFragment();
     state.catalog.sources.forEach(source => {
       const card = node('article', 'source-card');
+      const heading = node('div', 'source-card-heading');
       const title = node('h3');
       title.append(link(source.name, source.homepage || source.repository));
-      card.append(title, node('p', '', source.description));
+      heading.append(title);
+      if (source.kind === 'specialist' || source.kind === 'supporting') {
+        heading.append(node('span', `source-kind source-kind-${source.kind}`, source.kind === 'specialist' ? '科研专题库' : '通用绘图符号'));
+      }
+      card.append(heading, node('p', '', source.description));
       const bottom = node('div', 'source-card-bottom');
       bottom.append(node('span', '', `${number(source.count)} 张素材 · ${source.license || '逐图授权'}`));
       const browse = node('button', 'text-button', '浏览此来源 →');

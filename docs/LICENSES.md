@@ -10,7 +10,8 @@
 | --- | --- |
 | CC0 1.0 | 在适用法律允许的范围内放弃著作权及相关权利，允许复制、修改、再分发与商业使用。著作权许可不强制署名，但论文中保留来源有助于科研可追溯性。 |
 | CC BY 3.0 / 4.0 | 允许复制、修改、再分发与商业使用。按具体版本保留作者及其他指定署名信息，提供来源与许可链接；原作提供标题时保留标题，标明自己的修改。不要暗示原作者认可你的研究。 |
-| CC BY-SA 4.0 | 除 CC BY 的署名义务外，将改编素材分享给他人时，还需按该许可允许的相同或兼容许可提供改编部分。单纯将原图作为独立作品放入合集，不等于把无关文字或整篇论文自动变成 CC BY-SA；若整幅复合图构成改编作品，需进一步判断共享方式。 |
+| CC BY-SA 3.0 / 4.0 | 除 CC BY 的署名义务外，将改编素材分享给他人时，还需按该许可允许的相同或兼容许可提供改编部分。单纯将原图作为独立作品放入合集，不等于把无关文字或整篇论文自动变成 CC BY-SA；若整幅复合图构成改编作品，需进一步判断共享方式。 |
+| ISC / ISC AND MIT | Lucide 新增图标适用 ISC；继承 Feather 的图标还保留 MIT 条件。清单中的 `ISC AND MIT` 表示两个条件共同保留，不表示可任选其一；完整原始声明保存于 `licenses/lucide/LICENSE`。 |
 | MIT | 保留上游著作权声明与许可文本；在再分发副本或重要部分时随附。不要只写“MIT”而删除原声明。 |
 | BSD | 按具体 BSD 版本保留著作权声明、许可条件与免责声明；涉及二进制再分发时在随附文档中保留要求的信息。若为 BSD 3-Clause，不得未经许可利用作者或组织名称背书。 |
 | Apache 2.0 | 保留许可文本和适用声明；上游存在相关 NOTICE 时一并保留。修改文件需作显著说明。其专利授权仅在条款范围内适用，不表示图示技术均可自由实施，也不授权使用商标。 |
@@ -31,17 +32,17 @@
 
 素材是绘图组件，不是医学结论或解剖准确性的保证。发表前应由研究者检查科学含义、适用性和原作说明。
 
-## 更多已核实许可的官方资源（仅链接，未在本次下载）
+## 其他官方资源及收录状态
 
-以下项目可补充科研流程图、计算机架构图和数据示意图。本节仅提供官方入口和许可依据，不计入已下载素材数量。
+以下项目可补充科研流程图、计算机架构图和数据示意图。2026-11-03 已将 Lucide、Font Awesome、Bootstrap 和 IconPark 的科研相关选集实际入库；Google Material 与 Simple Icons 仍仅列链接，未计入下载数量。具体文件数量以目录清单为准。
 
-| 官方项目 | 可用于科研绘图的内容 | 许可依据与注意事项 |
+| 官方项目 | 可用于科研绘图的内容及状态 | 许可依据与注意事项 |
 | --- | --- | --- |
-| [Lucide](https://github.com/lucide-icons/lucide) | 显微镜、原子、数据库、网络、仪器等线性图标 | [完整 LICENSE](https://github.com/lucide-icons/lucide/blob/main/LICENSE)：ISC；继承自 Feather 的部分图标还保留 MIT 声明。 |
-| [Font Awesome Free](https://github.com/FortAwesome/Font-Awesome) | 实验器材、化学、医学、工程与流程图标 | [LICENSE.txt](https://github.com/FortAwesome/Font-Awesome/blob/7.x/LICENSE.txt)：SVG/JS 图标 CC BY 4.0；字体另用 OFL，代码另用 MIT。品牌图标另注意商标。 |
+| [Lucide](https://github.com/lucide-icons/lucide) | 显微镜、原子、数据库、网络、仪器等线性图标；已收科研选集 | [完整 LICENSE](https://github.com/lucide-icons/lucide/blob/main/LICENSE)：ISC；继承自 Feather 的部分图标还保留 MIT 声明。 |
+| [Font Awesome Free](https://github.com/FortAwesome/Font-Awesome) | 实验器材、化学、医学、工程与流程图标；已收非品牌科研选集 | [LICENSE.txt](https://github.com/FortAwesome/Font-Awesome/blob/7.x/LICENSE.txt)：SVG/JS 图标 CC BY 4.0；字体另用 OFL，代码另用 MIT。品牌图标另注意商标。 |
 | [Google Material Icons / Symbols](https://github.com/google/material-design-icons) | 科学、教育、设备、环境、地图与数据图标 | [LICENSE](https://github.com/google/material-design-icons/blob/master/LICENSE)：Apache 2.0。仓库体积较大，宜按主题和样式筛选。 |
-| [Bootstrap Icons](https://github.com/twbs/icons) | 图表、数据库、设备与科研工作流图标 | [LICENSE](https://github.com/twbs/icons/blob/main/LICENSE)：MIT。 |
-| [IconPark](https://github.com/bytedance/IconPark) | 多色设备、数据、交通、工业与通用图标 | [LICENSE](https://github.com/bytedance/IconPark/blob/master/LICENSE)：Apache 2.0。 |
+| [Bootstrap Icons](https://github.com/twbs/icons) | 图表、数据库、设备与科研工作流图标；已收科研选集 | [LICENSE](https://github.com/twbs/icons/blob/main/LICENSE)：MIT。 |
+| [IconPark](https://github.com/bytedance/IconPark) | 设备、数据、交通、工业图标；已收含中文元数据的选集 | [LICENSE](https://github.com/bytedance/IconPark/blob/master/LICENSE)：Apache 2.0。 |
 | [Simple Icons](https://github.com/simple-icons/simple-icons) | 科研软件、编程工具和计算平台的品牌标志 | [LICENSE.md](https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md)：CC0；品牌商标权仍需另查，不代表获得品牌背书。 |
 
 本说明是使用辅助，不替代具体许可证原文。若清单、上游文件或素材内声明存在冲突，应先回到上游核实，再决定是否使用或再发布。

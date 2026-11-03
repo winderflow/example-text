@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Import pinned upstream SVGs without modifying their bytes; standard library only."""
 import argparse
+import configparser
 import csv
 import hashlib
 import json
@@ -15,7 +16,7 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 CATEGORIES = {'biomedical':'生物医学','chemistry':'化学与分子','ecology':'生态与物种','earth-space':'地理、气象与空间','engineering':'工程与物理','computing':'计算与数据流程','general':'科研交流与通用'}
 SUB = {'Animals':'动物','Plants_Algae':'植物与藻类','Viruses':'病毒','Microbiology':'微生物','Lab_apparatus':'实验仪器','Blood_Immunology':'血液与免疫','Human_physiology':'人体生理','Cell_types':'细胞类型','Cell_membrane':'细胞膜','Intracellular_components':'细胞内组分','Genetics':'遗传学','Genomics':'基因组学','Nucleic_acids':'核酸','Neuroscience':'神经科学','Chemistry':'化学','Amino-Acids':'氨基酸','Molecular_modelling':'分子建模','Computer_hardware':'计算机硬件','Machine_Learning':'机器学习','Scientific_graphs':'科学图表','protein':'蛋白质','compound':'化合物','cell_element':'细胞组分','receptor':'受体','cell_type':'细胞类型','transporter':'转运蛋白','human_tissue':'人体组织','therapeutic':'治疗','bacteria':'细菌','viruses':'病毒','fungi':'真菌','parasites':'寄生虫与媒介','immune-cells':'免疫细胞','molecules':'分子','organs':'器官','clinical':'临床与实验室'}
-LICENSES = {'cc-0':('CC0-1.0','https://creativecommons.org/publicdomain/zero/1.0/'),'cc-by-3.0':('CC-BY-3.0','https://creativecommons.org/licenses/by/3.0/'),'cc-by-4.0':('CC-BY-4.0','https://creativecommons.org/licenses/by/4.0/'),'cc-by-sa-3.0':('CC-BY-SA-3.0','https://creativecommons.org/licenses/by-sa/3.0/'),'cc-by-sa-4.0':('CC-BY-SA-4.0','https://creativecommons.org/licenses/by-sa/4.0/'),'mit':('MIT','https://opensource.org/license/mit/'),'bsd':('BSD-3-Clause','https://opensource.org/license/bsd-3-clause/'),'apache':('Apache-2.0','https://www.apache.org/licenses/LICENSE-2.0')}
+LICENSES = {'cc-0':('CC0-1.0','https://creativecommons.org/publicdomain/zero/1.0/'),'cc-by-3.0':('CC-BY-3.0','https://creativecommons.org/licenses/by/3.0/'),'cc-by-4.0':('CC-BY-4.0','https://creativecommons.org/licenses/by/4.0/'),'cc-by-sa-3.0':('CC-BY-SA-3.0','https://creativecommons.org/licenses/by-sa/3.0/'),'cc-by-sa-4.0':('CC-BY-SA-4.0','https://creativecommons.org/licenses/by-sa/4.0/'),'mit':('MIT','https://opensource.org/license/mit/'),'bsd':('BSD-3-Clause','https://opensource.org/license/bsd-3-clause/'),'apache':('Apache-2.0','https://www.apache.org/licenses/LICENSE-2.0'),'isc':('ISC','https://opensource.org/license/isc/'),'isc-mit':('ISC AND MIT','https://github.com/lucide-icons/lucide/blob/main/LICENSE')}
 INFO = {
  'bioicons':('Bioicons（含 Servier / Togo）','https://bioicons.com/','逐图授权','生物、医学、植物、实验器材；含经 Bioicons 分发的 Servier 与 DBCLS 素材，保留其历史逐图许可。'),
  'bioicons-id':('ID & Immunology Icons','https://github.com/apsmunro/bioicons-id','CC0-1.0','病原体、免疫细胞、器官与感染传播，含彩色和单色版本。'),
@@ -30,7 +31,16 @@ INFO = {
  'tabler':('Tabler 科研与流程图选集','https://tabler.io/icons','MIT','科学、设备、网络、数据处理与流程图符号，outline / filled 样式。'),
  'engineering-symbols':('Equinor Engineering Symbols','https://github.com/equinor/engineering-symbols','MIT','工业过程与工程设备的标准化 SVG 符号，保留原始编号。'),
  'circuit-symbols':('Inkscape Circuit Symbols','https://github.com/keikawa/InkscapeCircuitSymbols','MIT','整张电路符号 SVG 图板；在 Inkscape 内打开后选取所需元件。'),
- 'scienceicons':('Scienceicons 开放科学选集','https://github.com/continuous-foundation/scienceicons','MIT','开放获取及科研交流基础符号；不收录第三方品牌。')}
+ 'scienceicons':('Scienceicons 开放科学选集','https://github.com/continuous-foundation/scienceicons','MIT','开放获取及科研交流基础符号；不收录第三方品牌。'),
+ 'lucide':('Lucide 科研符号选集','https://lucide.dev/','ISC / MIT','科研仪器、医学、生态、计算与流程符号；继承 Feather 的图标保留 MIT 条件。'),
+ 'fontawesome':('Font Awesome Free 科研选集','https://fontawesome.com/','CC-BY-4.0','选择非品牌的科学、仪器、医学、工程与数据图标；排除同名别名重复文件。'),
+ 'bootstrap':('Bootstrap 科研符号选集','https://icons.getbootstrap.com/','MIT','实验、医疗、环境、计算设备、数据和流程符号。'),
+ 'iconpark':('IconPark 科研与工程选集','https://iconpark.oceanengine.com/','Apache-2.0','包含上游中文名称、作者和标签的医学、动植物、能源、工业、测量、硬件与数据符号。'),
+ 'carbon-pictograms':('Carbon 科研与工业插图选集','https://carbondesignsystem.com/elements/pictograms/overview/','Apache-2.0','IBM Carbon 的科学、气候、工业、设备和数据概念插图；排除品牌标识。'),
+ 'electrical-symbol-library':('Electrical Symbol Library','https://github.com/basverdoes/ElectricalSymbolLibrary','CC0-1.0','仅收 src/symbols 独立电气符号；其余文件的非商业许可不用于这些单图。'),
+ 'electricalsymbols':('Electricalsymbols 工业电气符号','https://github.com/chille/electricalsymbols','CC-BY-SA-3.0','IEC 工业电气元件、开关、保护、传感器和电机；排除空白文档模板。'),
+ 'geologic-patterns':('FGDC Geologic Patterns','https://github.com/davenquinn/geologic-patterns','CC0-1.0','USGS / FGDC 地质、岩性、冰川和地层剖面填充图案；可用于地学论文制图。'),
+ 'gissymbology':('GISsymbology 专题地图符号','https://github.com/GISsymbology/symbols','CC-BY-SA-4.0','选取地震微区划、地质图、FGDC 地质符号和水利防护四个许可明确的子库。')}
 KEYWORDS = {
  'chemistry':'atom molecule molecular chemistry chemical flask beaker test-tube test_pipe vial dna acid nucleic peptides compound amino nanotechnology',
  'ecology':'animal plant algae tree leaf flower forest fish bird insect butterfly bee bacteria mushroom ecology seed crop sprout paw bug cat dog turtle rabbit whale dolphin fossil deer biohazard',
@@ -41,11 +51,27 @@ KEYWORDS = {
  'general':'book school education certificate research science open-access email website clipboard presentation report zoom search checklist notes writing microscope'}
 RX = {k:re.compile(r'(?<![a-z])(?:'+ '|'.join(map(re.escape,v.split())) +r')(?:s)?(?![a-z])', re.I) for k,v in KEYWORDS.items()}
 ALIASES={'dna':'DNA 脱氧核糖核酸','rna':'RNA 核糖核酸','protein':'蛋白质','virus':'病毒','bacter':'细菌','cell':'细胞','heart':'心脏','lung':'肺','brain':'大脑 神经','antibod':'抗体','blood':'血液','immun':'免疫','microscope':'显微镜','flask':'烧瓶','test-tube':'试管','atom':'原子','molecul':'分子','gene':'基因','tree':'树木','plant':'植物','fish':'鱼','bird':'鸟','cloud':'云','rain':'降雨','sun':'太阳','moon':'月亮','wind':'风','water':'水','earth':'地球','map':'地图','server':'服务器','database':'数据库','chart':'图表','network':'网络','circuit':'电路','pump':'泵','valve':'阀门','receptor':'受体','mitochond':'线粒体','neuron':'神经元','cancer':'癌症 肿瘤','tissue':'组织','lab':'实验室'}
+ALIASES.update({'resistor':'电阻','capacitor':'电容','diode':'二极管','transistor':'晶体管','inductor':'电感','transformer':'变压器','switch':'开关','relay':'继电器','motor':'电机','geolog':'地质','litholog':'岩性','stratigraph':'地层','seismic':'地震','hydrolog':'水文','sensor':'传感器','battery':'电池','solar':'太阳能','telescope':'望远镜','radiation':'辐射','magnet':'磁场 磁铁','flow':'流程','data':'数据'})
 
 def classify(text, default='general'):
     for c in KEYWORDS:
         if RX[c].search(text.replace('_',' ').replace('-',' ')): return c
     return default
+
+def read_lucide_metadata(directory, stem, stack=()):
+    """Resolve the upstream per-field $extends references without installing JS."""
+    if stem in stack:raise ValueError('Cyclic Lucide metadata inheritance')
+    file=directory/(stem+'.json')
+    if not file.exists():return {}
+    result={}
+    for key, values in json.loads(file.read_text()).items():
+        if not isinstance(values,list):continue
+        result[key]=[]
+        for value in values:
+            if isinstance(value,str) and value.startswith('$extends:'):
+                result[key].extend(read_lucide_metadata(directory,value.split(':',1)[1],stack+(stem,)).get(key,[]))
+            else:result[key].append(value)
+    return result
 
 def main():
     parser=argparse.ArgumentParser(); parser.add_argument('--sources',type=Path,required=True); args=parser.parse_args()
@@ -59,6 +85,7 @@ def main():
         name,homepage,summary,desc=INFO[sid]
         licdir=ROOT/'licenses'/sid;licdir.mkdir(parents=True,exist_ok=True)
         for f in p.iterdir():
+            if sid=='electrical-symbol-library' and f.name=='README.md':continue
             if f.is_file() and (f.name.lower().startswith(('license','licence','notice','readme','copying','authors'))): shutil.copyfile(f,licdir/f.name)
         entries=[]
         def add(f,cat,sub='',lic='mit',author=None,title=None,tags=None,author_url='',metadata=None):
@@ -130,6 +157,73 @@ def main():
         elif sid=='scienceicons':
             for f in sorted((p/'src').rglob('*.svg')):
                 if f.stem in ['open-access','email','website']:add(f,'general','开放科学与交流','mit','Continuous Science Foundation',f.stem+' · '+' / '.join(f.relative_to(p/'src').parts[:-1]))
+        elif sid=='lucide':
+            text=(p/'LICENSE').read_text();feather=set(x.strip() for x in text.split('project:',1)[1].split('The MIT License',1)[0].strip().split(','))
+            for f in sorted((p/'icons').glob('*.svg')):
+                meta=read_lucide_metadata(p/'icons',f.stem);cats=meta.get('categories',[]);tags=meta.get('tags',[])
+                named=f.stem.replace('-',' ')
+                if not any(r.search(named) for r in RX.values()) and not set(cats)&{'science','medical','nature','weather','math'}:continue
+                aliases={a.get('name','') if isinstance(a,dict) else a for a in meta.get('aliases',[])}
+                inherited=f.stem in feather or bool(aliases&feather)
+                license_key='isc-mit' if inherited else 'isc'
+                authors=['Lucide contributors']+meta.get('contributors',[])+(['Cole Bemis / Feather'] if inherited else [])
+                add(f,classify(named+' '+' '.join(tags)),' / '.join(cats),license_key,'; '.join(authors),tags=tags+cats)
+                shutil.copyfile(f.with_suffix('.json'),licdir/f.with_suffix('.json').name)
+        elif sid=='fontawesome':
+            meta=json.loads((p/'metadata/icons.json').read_text())
+            for style in ['solid','regular']:
+                for f in sorted((p/'svgs'/style).glob('*.svg')):
+                    if f.stem not in meta:continue
+                    x=meta[f.stem];text=f.stem.replace('-',' ')
+                    if not any(r.search(text) for r in RX.values()):continue
+                    add(f,classify(text),'科研符号 · '+style,'cc-by-4.0','Fonticons, Inc.',x['label']+' · '+style,x.get('search',{}).get('terms',[]))
+        elif sid=='bootstrap':
+            for f in sorted((p/'icons').glob('*.svg')):
+                text=f.stem.replace('-',' ')
+                if not any(r.search(text) for r in RX.values()):continue
+                add(f,classify(text),'科研与流程符号','mit','The Bootstrap Authors')
+        elif sid=='iconpark':
+            mapping={'Health':'biomedical','Animals':'ecology','Energy':'engineering','Industry':'engineering','Measurement':'engineering','Weather':'earth-space','Hardware':'computing','Charts':'computing','Datas':'computing','Connect':'computing','Components':'engineering','Graphics':'computing','Arrows':'computing','Build':'engineering','Abstract':'general','Travel':'earth-space'}
+            for x in json.loads((p/'source/icons.json').read_text()):
+                cat=x['category']
+                if cat not in mapping:continue
+                f=p/'source'/cat/(x['name']+'.svg')
+                if not f.exists():raise FileNotFoundError(f)
+                add(f,mapping[cat],x.get('categoryCN',cat),'apache',x.get('author') or 'IconPark contributors',x.get('title',x['name']),x.get('tag',[])+[x['name'],cat])
+        elif sid=='carbon-pictograms':
+            package=p/'packages/pictograms';shutil.copyfile(package/'README.md',licdir/'PICTOGRAMS-README.md')
+            for extra in ['pictograms.yml','categories.yml']:shutil.copyfile(package/extra,licdir/extra)
+            for f in sorted((package/'src/svg').glob('*.svg')):
+                text=f.stem.replace('-',' ')
+                if f.stem.startswith(('ibm','logo','brand')) or not any(r.search(text) for r in RX.values()):continue
+                add(f,classify(text),'科研与工业概念插图','apache','IBM / Carbon Design System contributors')
+        elif sid=='electrical-symbol-library':
+            # The repository's other files are NC-licensed; import only the explicitly CC0 symbols.
+            (licdir/'SCOPE.txt').write_text('Imported only src/symbols/**/*.svg. Upstream README license statement: "The individual symbols, which are found in the `src/symbols/` directory, are licensed under the CC0 1.0 Universal license." Every imported SVG retains its embedded CC0 license and creator metadata. Other repository files are not imported.\nEvidence: '+s['repository']+'/blob/'+s['commit']+'/README.md#license\n')
+            for f in sorted((p/'src/symbols').rglob('*.svg')):
+                root=ET.parse(f).getroot();ns={'dc':'http://purl.org/dc/elements/1.1/','cc':'http://creativecommons.org/ns#','rdf':'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
+                creators=root.findall('.//dc:creator',ns);creator='; '.join(' '.join(e.itertext()).strip() for e in creators)
+                licenses=root.findall('.//cc:license',ns)
+                assert any('creativecommons.org/publicdomain/zero/1.0' in e.get('{'+ns['rdf']+'}resource','') for e in licenses),f
+                add(f,'engineering','模拟与数字电路 · '+f.parent.name,'cc-0',creator or 'Filip Dominec and contributors')
+        elif sid=='electricalsymbols':
+            for f in sorted((p/'Symbols').glob('*.svg')):
+                if f.stem=='A4_landscape':
+                    excluded.append({'source':sid,'path':str(f.relative_to(p)),'reason':'blank A4 document template'});continue
+                add(f,'engineering','工业电气与传感器','cc-by-sa-3.0','Christian Antila')
+        elif sid=='geologic-patterns':
+            shutil.copyfile(p/'docs/data.yaml',licdir/'pattern-series.yaml')
+            series={'1':'地表沉积图案','2':'沉积岩图案','3':'火成岩图案','4':'变质岩与其他图案','5':'冰川与冰缘图案','6':'沉积岩性与地层剖面','7':'变质岩、火成岩与脉体岩性'}
+            for f in sorted((p/'assets/svg').glob('*.svg')):
+                sub=series.get(f.stem[:1],'地质填充图案')
+                add(f,'earth-space',sub,'cc-0','Daven Quinn; underlying USGS / FGDC symbology',f'FGDC {f.stem} · {sub}',['geology','lithology','stratigraphy','pattern','地质','岩性','地层','剖面','填充'])
+        elif sid=='gissymbology':
+            meta=configparser.ConfigParser();meta.read(p/'metadata.ini');shutil.copyfile(p/'metadata.ini',licdir/'metadata.ini')
+            titles={'microzonazione':'地震微区划','carg':'CARG 地质图','fdgc':'FGDC 地质符号','sicod':'水文与水利防护'}
+            for collection,sub in titles.items():
+                folder=p/'collections'/collection;notice=licdir/collection;notice.mkdir(exist_ok=True);shutil.copyfile(folder/'license',notice/'license')
+                assert 'https://creativecommons.org/licenses/by-sa/4.0/' in (folder/'license').read_text()
+                for f in sorted((folder/'svg').rglob('*.svg')):add(f,'earth-space',sub,'cc-by-sa-4.0',meta[collection]['author'],f'{f.stem} · {sub}',[meta[collection].get('tags',''),meta[collection].get('description',''),sub,'地质','GIS'])
         before=len(assets)
         for f,cat,sub,lic,author,title,tags,author_url,metadata in entries:
             raw=f.read_bytes()
@@ -152,7 +246,8 @@ def main():
             keywords=' '.join([title,sub]+tags).lower();tags=list(tags)+[SUB.get(sub,sub)]+[zh for term,zh in ALIASES.items() if term in keywords]
             attribution=f'{title} — {author}. Source: {src}. License: {license_name} ({license_url}). Original file redistributed without modification; see licenses/{sid}/ for upstream notices.'
             assets.append(dict(id=aid,name=title,category=cat,subcategory=sub,source=sid,path=dest.as_posix(),license=license_name,license_url=license_url,author=author,author_url=author_url,source_url=src,attribution=attribution,tags=tags,sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw),original_path=rel.as_posix(),commit=s['commit']))
-        sources.append(dict(id=sid,name=name,homepage=homepage,repository=s['repository'],license=summary,license_url=s['repository']+'/tree/'+s['commit'],count=len(assets)-before,description=desc,commit=s['commit']))
+        supporting={'lucide','fontawesome','bootstrap','iconpark','tabler','game-icons','openmoji','scienceicons','carbon-pictograms'}
+        sources.append(dict(id=sid,name=name,homepage=homepage,repository=s['repository'],license=summary,license_url=s['repository']+'/tree/'+s['commit'],count=len(assets)-before,description=desc,commit=s['commit'],kind='supporting' if sid in supporting else 'specialist',retrieved_at=s.get('retrieved_at','2026-11-02')))
         print(sid,len(assets)-before,flush=True)
     retained={a['path'] for a in assets}
     for old in previous:

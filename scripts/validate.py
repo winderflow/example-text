@@ -10,6 +10,8 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 data=json.loads((root/'data/catalog.json').read_text())
 locks={s['id']:s for s in json.loads((root/'data/sources.lock.json').read_text())['sources']}
+assert {s['id'] for s in data['sources']}==set(locks),'Missing source catalog entry'
+assert all(s.get('kind') in {'specialist','supporting'} for s in data['sources'])
 seen=set();paths=set();counts=Counter();categories=Counter()
 for asset in data['assets']:
     assert asset['id'] not in seen,asset['id'];seen.add(asset['id'])
@@ -23,6 +25,16 @@ for asset in data['assets']:
     assert asset['source_url'].startswith(source['repository']+'/blob/'+source['commit']+'/')
     assert (root/'licenses'/asset['source']).is_dir()
     if asset['source']=='reactome':assert file.with_suffix('.xml').exists()
+    if asset['source']=='lucide' and file.stem in {'database','triangle-alert','circle-arrow-up'}:
+        assert asset['license']=='ISC AND MIT','Missing inherited Feather MIT conditions'
+        assert 'Cole Bemis' in asset['author']
+    if asset['source']=='electrical-symbol-library':
+        assert asset['original_path'].startswith('src/symbols/'),'NC-licensed repository files must not be imported as CC0'
+        assert asset['license']=='CC0-1.0'
+    if asset['source']=='gissymbology':
+        collection=Path(asset['original_path']).parts[1]
+        assert collection in {'microzonazione','carg','fdgc','sicod'}
+        assert (root/'licenses'/asset['source']/collection/'license').exists()
     counts[asset['source']]+=1;categories[asset['category']]+=1
 actual={f.relative_to(root).as_posix() for f in (root/'assets').rglob('*.svg')}
 assert actual==paths,'Unindexed or missing SVG'

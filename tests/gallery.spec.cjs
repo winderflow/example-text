@@ -45,9 +45,11 @@ const server = http.createServer((request, response) => {
     assert.equal(await page.locator('.asset-card').count(), Math.min(60, catalog.assets.length));
     assert.match(await page.locator('#asset-total').textContent(), new RegExp(catalog.assets.length.toLocaleString('zh-CN')));
     assert.equal(await page.locator('.source-card').count(), catalog.sources.length);
+    assert.equal(await page.locator('.source-kind-specialist').count(), catalog.sources.filter(source => source.kind === 'specialist').length);
+    assert.equal(await page.locator('.source-kind-supporting').count(), catalog.sources.filter(source => source.kind === 'supporting').length);
     console.log(`Initial catalog rendered in ${Math.round(loadTime)} ms (${catalog.assets.length} assets; ${fs.statSync(path.join(root, 'data/catalog.json')).size} JSON bytes).`);
 
-    for (const query of ['细胞', '显微镜']) {
+    for (const query of ['细胞', '显微镜', '电阻', '岩性', '地震']) {
       await page.locator('#search').fill(query);
       await page.waitForTimeout(240);
       const count = await page.locator('.asset-card').count();
@@ -66,6 +68,20 @@ const server = http.createServer((request, response) => {
         await images.nth(index).scrollIntoViewIfNeeded();
         await images.nth(index).evaluate(image => image.decode());
         assert.ok(await images.nth(index).evaluate(image => image.naturalWidth > 0), `${source.id} image ${index} decodes`);
+        if (['geologic-patterns', 'gissymbology', 'electrical-symbol-library', 'electricalsymbols'].includes(source.id)) {
+          const visible = await images.nth(index).evaluate(image => {
+            const canvas = document.createElement('canvas');
+            canvas.width = canvas.height = 128;
+            const context = canvas.getContext('2d');
+            context.drawImage(image, 0, 0, 128, 128);
+            const pixels = context.getImageData(0, 0, 128, 128).data;
+            for (let p = 0; p < pixels.length; p += 4) {
+              if (pixels[p + 3] > 20 && Math.min(pixels[p], pixels[p + 1], pixels[p + 2]) < 240) return true;
+            }
+            return false;
+          });
+          assert.ok(visible, `${source.id} preview contains visible nonwhite geometry`);
+        }
       }
       tested.push(source.id);
     }

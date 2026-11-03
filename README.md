@@ -1,8 +1,8 @@
 # 科研绘图开放素材库
 
-为论文示意图、实验流程图、科研海报和课件整理的开放 SVG 素材库。已实际下载 **11,846 个 SVG 文件，来自 14 个上游仓库，分为七大学科，原始 SVG 合计约 364.6 MB**。彩色、单色、线框等独立样式分别计数，数量不等于独立科学概念数。
+为论文示意图、实验流程图、科研海报和课件整理的开放 SVG 素材库。已实际下载 **15,918 个 SVG 文件，来自 23 个上游仓库，分为七大学科，原始 SVG 合计约 388.3 MB**。彩色、单色、线框等独立样式分别计数，数量不等于独立科学概念数。
 
-检索与下载日期：2026-11-02。素材原始字节保持不变，逐图保存作者、许可证、固定版本来源及 SHA-256。**本库没有统一的素材许可证**；详见 [许可与署名指南](docs/LICENSES.md)。
+首批检索：2026-11-02；本轮扩展：2026-11-03。素材原始字节保持不变，逐图保存作者、许可证、固定版本来源及 SHA-256。**本库没有统一的素材许可证**；详见 [许可与署名指南](docs/LICENSES.md)。
 
 ## 浏览与下载
 
@@ -13,40 +13,55 @@
 
 | 学科分类 | SVG 文件数 |
 | --- | ---: |
-| [生物医学](assets/biomedical/) | 6,513 |
-| [化学与分子](assets/chemistry/) | 654 |
-| [生态与物种](assets/ecology/) | 927 |
-| [地理、气象与空间](assets/earth-space/) | 1,973 |
-| [工程与物理](assets/engineering/) | 520 |
-| [计算与数据流程](assets/computing/) | 1,092 |
-| [科研交流与通用](assets/general/) | 167 |
+| [生物医学](assets/biomedical/) | 6,795 |
+| [化学与分子](assets/chemistry/) | 684 |
+| [生态与物种](assets/ecology/) | 1,054 |
+| [地理、气象与空间](assets/earth-space/) | 3,379 |
+| [工程与物理](assets/engineering/) | 1,061 |
+| [计算与数据流程](assets/computing/) | 2,507 |
+| [科研交流与通用](assets/general/) | 438 |
 
 ## 已下载来源
 
-| 素材库 | SVG 文件数 | 许可概览 | 收录范围 |
-| --- | ---: | --- | --- |
-| [Bioicons（含 Servier / Togo）](https://github.com/duerrsimon/bioicons) | 2,601 | 逐图授权 | 生物、医学、植物、实验器材；含经 Bioicons 分发的 Servier 与 DBCLS 素材，保留其历史逐图许可。 |
-| [ID & Immunology Icons](https://github.com/apsmunro/bioicons-id) | 347 | CC0-1.0 | 病原体、免疫细胞、器官与感染传播，含彩色和单色版本。 |
-| [Reactome Illustrations](https://github.com/reactome/reactome_illustrations) | 2,257 | Apache-2.0 | Reactome 官方蛋白、化合物、细胞、组织和通路组件；保留原始 XML 元数据。 |
-| [EMBL-EBI Science Icons](https://github.com/ebiwd/EBI-Icon-fonts) | 80 | CC-BY-SA-4.0 | 仅选 chemistry、conceptual、species 科学符号，不含第三方品牌和通用字库。 |
-| [Health Icons](https://github.com/resolvetosavelives/healthicons) | 2,128 | CC0-1.0 | 公共卫生、症状、医疗设备、人体与医疗服务图标，保留上游样式。 |
-| [OpenMoji 科研选集](https://github.com/hfg-gmuend/openmoji) | 419 | CC-BY-SA-4.0 | 动物、植物、地理天气、科学与技术主题彩色符号；逐图作者信息。 |
-| [Maki](https://github.com/mapbox/maki) | 215 | CC0-1.0 | 地图兴趣点、自然环境、基础设施图标。 |
-| [Temaki](https://github.com/ideditor/temaki) | 557 | CC0-1.0 | 地理生态、交通、基础设施、土地利用地图符号。 |
-| [Meteocons / Weather Icons](https://github.com/basmilius/weather-icons) | 708 | MIT | 天气、风力、降水与天体符号，静态 fill / line / monochrome 三款。 |
-| [Game Icons 科研选集](https://github.com/game-icons/icons) | 721 | 逐图授权 | 从作者目录按公开关键词选取自然、生物、化学、物理和工程图标。 |
-| [Tabler 科研与流程图选集](https://github.com/tabler/tabler-icons) | 1,754 | MIT | 科学、设备、网络、数据处理与流程图符号，outline / filled 样式。 |
-| [Equinor Engineering Symbols](https://github.com/equinor/engineering-symbols) | 55 | MIT | 工业过程与工程设备的标准化 SVG 符号，保留原始编号。 |
-| [Inkscape Circuit Symbols](https://github.com/keikawa/InkscapeCircuitSymbols) | 1 | MIT | 整张电路符号 SVG 图板；在 Inkscape 内打开后选取所需元件。 |
-| [Scienceicons 开放科学选集](https://github.com/continuous-foundation/scienceicons) | 3 | MIT | 开放获取及科研交流基础符号；不收录第三方品牌。 |
+| 素材库 | 类型 | SVG 文件数 | 许可概览 | 收录范围 |
+| --- | --- | ---: | --- | --- |
+| [Bioicons（含 Servier / Togo）](https://github.com/duerrsimon/bioicons) | 科研专题 | 2,601 | 逐图授权 | 生物、医学、植物、实验器材；含经 Bioicons 分发的 Servier 与 DBCLS 素材，保留其历史逐图许可。 |
+| [ID & Immunology Icons](https://github.com/apsmunro/bioicons-id) | 科研专题 | 347 | CC0-1.0 | 病原体、免疫细胞、器官与感染传播，含彩色和单色版本。 |
+| [Reactome Illustrations](https://github.com/reactome/reactome_illustrations) | 科研专题 | 2,257 | Apache-2.0 | Reactome 官方蛋白、化合物、细胞、组织和通路组件；保留原始 XML 元数据。 |
+| [EMBL-EBI Science Icons](https://github.com/ebiwd/EBI-Icon-fonts) | 科研专题 | 80 | CC-BY-SA-4.0 | 仅选 chemistry、conceptual、species 科学符号，不含第三方品牌和通用字库。 |
+| [Health Icons](https://github.com/resolvetosavelives/healthicons) | 科研专题 | 2,128 | CC0-1.0 | 公共卫生、症状、医疗设备、人体与医疗服务图标，保留上游样式。 |
+| [OpenMoji 科研选集](https://github.com/hfg-gmuend/openmoji) | 通用绘图符号 | 419 | CC-BY-SA-4.0 | 动物、植物、地理天气、科学与技术主题彩色符号；逐图作者信息。 |
+| [Maki](https://github.com/mapbox/maki) | 科研专题 | 215 | CC0-1.0 | 地图兴趣点、自然环境、基础设施图标。 |
+| [Temaki](https://github.com/ideditor/temaki) | 科研专题 | 557 | CC0-1.0 | 地理生态、交通、基础设施、土地利用地图符号。 |
+| [Meteocons / Weather Icons](https://github.com/basmilius/weather-icons) | 科研专题 | 708 | MIT | 天气、风力、降水与天体符号，静态 fill / line / monochrome 三款。 |
+| [Game Icons 科研选集](https://github.com/game-icons/icons) | 通用绘图符号 | 721 | 逐图授权 | 从作者目录按公开关键词选取自然、生物、化学、物理和工程图标。 |
+| [Tabler 科研与流程图选集](https://github.com/tabler/tabler-icons) | 通用绘图符号 | 1,754 | MIT | 科学、设备、网络、数据处理与流程图符号，outline / filled 样式。 |
+| [Equinor Engineering Symbols](https://github.com/equinor/engineering-symbols) | 科研专题 | 55 | MIT | 工业过程与工程设备的标准化 SVG 符号，保留原始编号。 |
+| [Inkscape Circuit Symbols](https://github.com/keikawa/InkscapeCircuitSymbols) | 科研专题 | 1 | MIT | 整张电路符号 SVG 图板；在 Inkscape 内打开后选取所需元件。 |
+| [Scienceicons 开放科学选集](https://github.com/continuous-foundation/scienceicons) | 通用绘图符号 | 3 | MIT | 开放获取及科研交流基础符号；不收录第三方品牌。 |
+| [Lucide 科研符号选集](https://github.com/lucide-icons/lucide) | 通用绘图符号 | 659 | ISC / MIT | 科研仪器、医学、生态、计算与流程符号；继承 Feather 的图标保留 MIT 条件。 |
+| [Font Awesome Free 科研选集](https://github.com/FortAwesome/Font-Awesome) | 通用绘图符号 | 447 | CC-BY-4.0 | 选择非品牌的科学、仪器、医学、工程与数据图标；排除同名别名重复文件。 |
+| [Bootstrap 科研符号选集](https://github.com/twbs/icons) | 通用绘图符号 | 573 | MIT | 实验、医疗、环境、计算设备、数据和流程符号。 |
+| [IconPark 科研与工程选集](https://github.com/bytedance/IconPark) | 通用绘图符号 | 1,015 | Apache-2.0 | 包含上游中文名称、作者和标签的医学、动植物、能源、工业、测量、硬件与数据符号。 |
+| [Carbon 科研与工业插图选集](https://github.com/carbon-design-system/carbon) | 通用绘图符号 | 348 | Apache-2.0 | IBM Carbon 的科学、气候、工业、设备和数据概念插图；排除品牌标识。 |
+| [Electrical Symbol Library](https://github.com/basverdoes/ElectricalSymbolLibrary) | 科研专题 | 74 | CC0-1.0 | 仅收 src/symbols 独立电气符号；其余文件的非商业许可不用于这些单图。 |
+| [Electricalsymbols 工业电气符号](https://github.com/chille/electricalsymbols) | 科研专题 | 32 | CC-BY-SA-3.0 | IEC 工业电气元件、开关、保护、传感器和电机；排除空白文档模板。 |
+| [FGDC Geologic Patterns](https://github.com/davenquinn/geologic-patterns) | 科研专题 | 471 | CC0-1.0 | USGS / FGDC 地质、岩性、冰川和地层剖面填充图案；可用于地学论文制图。 |
+| [GISsymbology 专题地图符号](https://github.com/GISsymbology/symbols) | 科研专题 | 453 | CC-BY-SA-4.0 | 选取地震微区划、地质图、FGDC 地质符号和水利防护四个许可明确的子库。 |
 
 Bioicons 子集中含 **1,374 个署名 Servier**、**473 个署名 DBCLS** 的文件；这是通过 Bioicons 取得的具体历史素材，不是对 Servier / Togo 当前官网的全站镜像或完整性声明。上游原始说明、完整许可及元数据见 [licenses/](licenses/)。
 
 部分来源只选择科研相关主题：不把全站通用、娱乐或品牌图标计为全库下载。Reactome 遵循上游 `skip=true` 标记；不收录解析失败、活动内容或依赖外部资源的 SVG。具体排除文件和原因见 [excluded.json](data/excluded.json)；它只记录候选集的技术及明确许可筛选，不枚举所有未选中的主题。
 
+## 2026-11-03 扩展
+
+在首批 14 库、11,846 个 SVG 的基础上，本轮实际增加 **9 个来源、4,072 个 SVG**。其中四个是电气、地质和 GIS 科研专题库，五个提供科学、工业及数据流程绘图符号；网页的来源卡片也会标明两类用途。未把单纯字体、缺少图片许可或许可版本冲突的候选凑入已下载数量。
+
+完整的新增范围、许可与排除依据见 [本轮扩展记录](docs/EXPANSION-2026-11-03.md)。
+
 ## 更多资源与检索边界
 
-[检索记录](docs/RESEARCH.md) 列出 SciDraw、PhyloPic、IAN、NIH BioArt、Wikimedia Commons 等继续检索入口；[扩展库清单](docs/LICENSES.md#更多已核实许可的官方资源仅链接未在本次下载) 另含 Lucide、Font Awesome、Material Icons、Bootstrap、IconPark 和 Simple Icons。这些**仅列链接的资源未下载，不计入上述数量**。
+[检索记录](docs/RESEARCH.md) 列出 SciDraw、PhyloPic、IAN、NIH BioArt、Wikimedia Commons 等继续检索入口；[扩展库清单](docs/LICENSES.md#其他官方资源及收录状态) 仍列出 Material Icons 和 Simple Icons 等未导入来源。Lucide、Font Awesome、Bootstrap 和 IconPark 已在本轮从链接清单转为实际入库，具体范围见上表；**仅列链接的来源不计入下载数量**。
 
 本次采用公开仓库搜索、官方 README 与许可证核验，并沿引用链查找来源，覆盖生物医学、化学、生态、地学、物理工程和数据流程；不能保证穷尽全网。部分独立官网受运行环境网络限制，未取得可核实再分发依据的素材未镜像。后续新增时应继续逐件核对许可与作者。
 
@@ -74,6 +89,8 @@ python3 scripts/build_catalog.py --sources .cache/sources
 python3 scripts/validate.py
 python3 scripts/build_site.py
 ```
+
+只需下载单个上游包时可用 `python3 scripts/fetch_sources.py --only carbon-pictograms`；`sparse_paths` 会限制大型单仓库实际检出的目录，已验证固定提交的独立下载。
 
 重建不自动跟随上游最新版本。修改锁文件前应重新核实许可和导入范围；构建器拒绝脏的上游工作区，并只移除上次清单管理且未被用户修改的旧素材。`dist/` 是可直接部署的静态站点。
 
