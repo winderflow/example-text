@@ -13,7 +13,7 @@ from pathlib import Path
 from urllib.parse import quote, urlsplit
 
 
-LOCAL_IMAGE_LIMIT = 256 * 1024
+LOCAL_IMAGE_LIMIT = 128 * 1024
 MAX_SITE_BYTES = 700 * 1024 * 1024
 IMAGE_EXTENSIONS = {'.svg', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.tif', '.tiff', '.bmp', '.avif'}
 

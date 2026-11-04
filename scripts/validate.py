@@ -45,6 +45,13 @@ for asset in data['assets']:
         assert asset['license']=='CC-BY-4.0' and asset.get('evidence_url')
         assert asset['author_url'].startswith('https://orcid.org/')
         assert (root/'licenses'/asset['source']/'evidence/equipment/README.md').is_file()
+    if asset['source']=='wikipathways':
+        assert asset['license']=='CC0-1.0'
+        assert asset['pathway_id']==Path(asset['original_path']).stem
+        expected=source['repository']+'/blob/'+source['commit']+'/'+str(Path(asset['original_path']).with_suffix('.json'))
+        assert asset['metadata_url']==expected and len(asset['metadata_sha256'])==64
+        assert asset['organism'] and asset['pathway_revision']
+        assert 'CC0 1.0 Universal' in (root/'licenses/wikipathways/LICENSE').read_text()
     if asset['source']=='lucide' and file.stem in {'database','triangle-alert','circle-arrow-up'}:
         assert asset['license']=='ISC AND MIT','Missing inherited Feather MIT conditions'
         assert 'Cole Bemis' in asset['author']

@@ -1,5 +1,6 @@
 """Regression cases for scientific SVG safety and original bitmap resolution."""
 import contextlib
+import csv
 import hashlib
 import io
 import json
@@ -45,17 +46,19 @@ class NativeBitmapImportTests(unittest.TestCase):
         return b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', width, height, 8, 2, 0, 0, 0)) + chunk(b'IDAT', zlib.compress(rows)) + chunk(b'IEND', b'')
 
     @contextlib.contextmanager
-    def imported(self, cases, minimum_long_edge=600, minimum_short_edge=200):
+    def imported(self, cases, minimum_long_edge=600, minimum_short_edge=200, source_id='cpm-labicons', catalog_info=None, selection_present=True):
         commit = '1' * 40
         repository = 'https://github.com/fixture/labicons'
         with tempfile.TemporaryDirectory(prefix='native-bitmap-import-') as directory:
             root = Path(directory) / 'gallery'
-            upstream = Path(directory) / 'upstream' / 'cpm-labicons'
+            upstream = Path(directory) / 'upstream' / source_id
             (root / 'data/source-selections').mkdir(parents=True)
             (upstream / 'equipment/PNG').mkdir(parents=True)
             (upstream / 'LICENSE.md').write_text('Creative Commons Attribution 4.0 International')
             (upstream / 'equipment/README.md').write_text('Fixture author: https://orcid.org/0000-0002-1825-0097')
-            source = dict(id='cpm-labicons', repository=repository, commit=commit)
+            source = dict(id=source_id, repository=repository, commit=commit)
+            if catalog_info is not None:
+                source['catalog'] = catalog_info
             (root / 'data/sources.lock.json').write_text(json.dumps(dict(retrieved_at='2026-11-04', sources=[source])))
             selected = []
             originals = {}
@@ -66,7 +69,8 @@ class NativeBitmapImportTests(unittest.TestCase):
                 originals[path] = raw
                 selected.append(dict(path=path, sha256=hashlib.sha256(raw).hexdigest(), license='CC-BY-4.0', author='Fixture author', author_url='https://orcid.org/0000-0002-1825-0097', title=name, evidence_path='equipment/README.md'))
             selection = dict(commit=commit, minimum_long_edge=minimum_long_edge, minimum_short_edge=minimum_short_edge, assets=selected)
-            (root / 'data/source-selections/cpm-labicons.json').write_text(json.dumps(selection))
+            if selection_present:
+                (root / 'data/source-selections' / (source_id + '.json')).write_text(json.dumps(selection))
             with mock.patch.object(build_catalog, 'ROOT', root), mock.patch.object(sys, 'argv', ['build_catalog.py', '--sources', str(upstream.parent)]), mock.patch.object(build_catalog.subprocess, 'check_output', side_effect=[commit + '\n', '']), contextlib.redirect_stdout(io.StringIO()):
                 build_catalog.main()
             catalog = json.loads((root / 'data/catalog.json').read_text())
@@ -118,5 +122,41 @@ class NativeBitmapImportTests(unittest.TestCase):
             self.assertEqual(len(excluded), 1)
             self.assertEqual(catalog['assets'][0]['quality_tier'], 'native-highres')
             self.validate(root)
+
+    def test_self_described_source_preserves_metadata_credits_and_originals(self):
+        source_id = 'fixture-new-science-library'
+        self.assertNotIn(source_id, build_catalog.INFO)
+        info = dict(name='Fixture Scientific Figures', homepage='https://example.org/science', license='CC-BY-4.0', description='Original scientific figures with individual credit.', kind='supporting')
+        with self.imported([('new-library-original', 1200, 800)], source_id=source_id, catalog_info=info) as (root, catalog, excluded, originals):
+            self.assertEqual(excluded, [])
+            self.assertEqual(len(catalog['sources']), 1)
+            source = catalog['sources'][0]
+            for key in ['name', 'homepage', 'license', 'description', 'kind']:
+                self.assertEqual(source[key], info[key])
+            self.assertEqual((source['id'], source['count']), (source_id, 1))
+            asset = catalog['assets'][0]
+            self.assertEqual(asset['source'], source_id)
+            self.assertEqual((root / asset['path']).read_bytes(), originals[asset['original_path']])
+            self.assertEqual(asset['sha256'], hashlib.sha256(originals[asset['original_path']]).hexdigest())
+            self.assertIn('Fixture author', asset['attribution'])
+            self.assertIn('CC-BY-4.0', asset['attribution'])
+            self.assertEqual((root / 'licenses' / source_id / 'evidence/equipment/README.md').read_text(), 'Fixture author: https://orcid.org/0000-0002-1825-0097')
+            with (root / 'data/manifest.csv').open(encoding='utf-8-sig', newline='') as handle:
+                rows = list(csv.DictReader(handle))
+            self.assertEqual(len(rows), 1)
+            for key in ['source', 'author', 'author_url', 'license', 'license_url', 'source_url', 'evidence_url', 'attribution', 'sha256']:
+                self.assertEqual(rows[0][key], asset[key], key)
+            self.validate(root)
+
+    def test_self_described_source_requires_catalog_metadata(self):
+        with self.assertRaisesRegex(SystemExit, 'fixture-missing-catalog.*catalog metadata'):
+            with self.imported([('must-not-import', 1200, 800)], source_id='fixture-missing-catalog'):
+                self.fail('An unknown source without catalog metadata must fail before publishing inventory')
+
+    def test_self_described_source_requires_selection_before_publishing(self):
+        info = dict(name='Missing selection', license='CC-BY-4.0', description='An incomplete source must not appear as an empty collection.')
+        with self.assertRaisesRegex(SystemExit, 'fixture-missing-selection.*source-selections/fixture-missing-selection.json'):
+            with self.imported([('must-not-import', 1200, 800)], source_id='fixture-missing-selection', catalog_info=info, selection_present=False):
+                self.fail('A source without its reviewed selection must not publish empty inventory')
 
 if __name__=='__main__':unittest.main()

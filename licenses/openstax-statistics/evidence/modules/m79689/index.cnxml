@@ -1,0 +1,1431 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:m="http://www.w3.org/1998/Math/MathML">
+  <title>The Regression Equation</title>
+  <metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m79689</md:content-id>
+  <md:title>The Regression Equation</md:title>
+  <md:abstract/>
+  <md:uuid>0d8e52c2-a408-4484-8c1c-8f3ee630915a</md:uuid>
+</metadata>
+
+<content>
+<section id="fs-id1164566831456">
+<para id="eip-123456789">Data rarely fit a straight line exactly. Usually, you must be satisfied with rough
+predictions. Typically, you have a set of data with a scatter plot that appear to <emphasis effect="italics">fit</emphasis> a straight line. This is called a <emphasis effect="italics">line of best fit or least-squares regression line</emphasis>.</para><note id="fs-idm66386384" class="statistics collab"><label/> 
+<para id="element-900">If you know a person’s pinky (smallest) finger length, do you think you could predict that person’s height? Collect data from your class (pinky finger length, in inches). The independent variable, <emphasis effect="italics">x</emphasis>, is pinky finger length and the dependent variable, <emphasis effect="italics">y</emphasis>, is height. For each set of data, plot the points on graph paper. Make your graph big enough and <emphasis effect="italics">use a ruler</emphasis>. Then, <emphasis effect="italics">by eye</emphasis>, draw a line that appears to <emphasis effect="italics">fit</emphasis> the data. For your line, pick two convenient points and use them to find the slope of the line. Find the <emphasis effect="italics">y</emphasis>-intercept of the line by extending your line so it crosses the <emphasis effect="italics">y</emphasis>-axis. Using the slopes and the <emphasis effect="italics">y</emphasis>-intercepts, write your equation of <emphasis effect="italics">best fit</emphasis>. Do you think everyone will have the same equation? Why or why not? According to your equation, what is the predicted height for a pinky length of 2.5 inches?
+</para></note><example id="element-22">
+<para id="element-998">A random sample of 11 statistics students produced the data in <link target-id="element-50"/>, where <emphasis effect="italics">x</emphasis> is the third exam score out of 80 and <emphasis effect="italics">y</emphasis> is the final exam score out of 200. Can you predict the final exam score of a random student if you know the third exam score?</para><table id="element-50" summary="Table 1 has two columns: x (third exam score) and y (final exam score. The first row: 65 / 175. Second: 67 / 133. Third: 71 / 185. Fourth: 71 / 163. Fifth: 66 / 126. Sixth: 75 / 198. Seventh: 75 / 198. Eighth: 67 / 153. Ninth: 70 / 163. Tenth: 71 / 159. Eleventh: 69 / 151. Twelfth: 69 / 159.">
+<tgroup cols="2"><thead>
+  <row>
+    <entry><emphasis effect="italics">x</emphasis> (third exam score)</entry>
+    <entry><emphasis effect="italics">y</emphasis> (final exam score)</entry>
+  </row>
+</thead>
+<tbody>
+  <row>
+    <entry>65</entry>
+    <entry>175</entry>
+  </row>
+  <row>
+    <entry>67</entry>
+    <entry>133</entry>
+  </row>
+  <row>
+    <entry>71</entry>
+    <entry>185</entry>
+  </row>
+  <row>
+    <entry>71</entry>
+    <entry>163</entry>
+  </row>
+  <row>
+    <entry>66</entry>
+    <entry>126</entry>
+  </row>
+  <row>
+    <entry>75</entry>
+    <entry>198</entry>
+  </row>
+  <row>
+    <entry>67</entry>
+    <entry>153</entry>
+  </row>
+  <row>
+    <entry>70</entry>
+    <entry>163</entry>
+  </row>
+  <row>
+    <entry>71</entry>
+    <entry>159</entry>
+  </row>
+  <row>
+    <entry>69</entry>
+    <entry>151</entry>
+  </row>
+  <row>
+    <entry>69</entry>
+    <entry>159</entry>
+  </row>
+</tbody>
+
+
+</tgroup>
+</table><figure id="linrgs_regeq1"><media id="id1164262330756" alt="This is a scatter plot of the data provided. The third exam score is plotted on the x-axis, and the final exam score is plotted on the y-axis. The points form a strong, positive, linear pattern."><image src="../../media/fig-ch12_05_01.jpg" mime-type="image/jpeg" width="380"/></media>
+
+<caption>Using the <emphasis effect="italics">x</emphasis>- and <emphasis effect="italics">y</emphasis>-coordinates in the table, we plot the points on a graph to create the scatter plot showing the scores on the final exam based on scores from the third exam.</caption></figure></example>
+
+
+<note id="fs-idp122176240" class="statistics try finger">
+<label/>
+<title>Try It</title>
+<exercise id="eip-397"><problem id="eip-266">
+  <para id="eip-937">SCUBA divers have maximum dive times they cannot exceed when going to different depths. The data in <link target-id="eip-idm70490496" document=""/> show different depths in feet, with the maximum dive times in minutes. Use your calculator to find the least squares regression line and predict the maximum dive time for 110 feet.</para>
+<table id="eip-idm70490496" summary="Table 2 has two columns: x (depth) and y (maximum dive time) Row one: 50 / 80. Row two: 60 / 55. Row three: 70 / 45. Row four: 80 / 35. Row five: 90 / 25. Row six: 100 / 22">
+<tgroup cols="2">
+<thead><row><entry><emphasis effect="italics">x</emphasis> (depth)</entry>	<entry><emphasis effect="italics">y</emphasis> (maximum dive time)</entry></row></thead>
+<tbody>
+<row><entry>50</entry>	<entry>80</entry></row>
+<row><entry>60</entry>	<entry>55</entry></row>
+<row><entry>70</entry>	<entry>45</entry></row>
+<row><entry>80</entry>	<entry>35</entry></row>
+<row><entry>90</entry>	<entry>25</entry></row>
+<row><entry>100</entry>	<entry>22</entry></row>
+</tbody>
+</tgroup>
+</table>
+</problem>
+<solution id="eip-970">
+  <para id="eip-400"><emphasis effect="italics">ŷ</emphasis> = 127.24 – 1.11<emphasis effect="italics">x</emphasis></para>
+<para id="eip-idm71126704">At 110 feet, a diver could dive for only five minutes.</para>
+</solution>
+</exercise>
+
+</note>
+
+<para id="eip-892">The third exam score, <emphasis effect="italics">x</emphasis>, is the independent variable, and the final exam score, <emphasis effect="italics">y</emphasis>, is the dependent variable. We will plot a regression line that best <emphasis effect="italics">fits</emphasis> the data. If each of you were to fit a line <emphasis effect="italics">by eye</emphasis>, you would draw different lines. We can obtain a line of best fit using either the median-median line approach or by calculating the least-squares regression line.</para><para id="fs-id1170308142290">Let's first find the line of best fit for the relationship between the third exam score and the final exam score using the median-median line approach. Remember that this is the data from <link target-id="element-22"/> after the ordered pairs have been listed by ordering <emphasis effect="italics">x</emphasis> values. If multiple data points have the same <emphasis effect="italics">x</emphasis> values, then they are listed in order from least to greatest <emphasis effect="italics">x</emphasis> (see data values where <emphasis effect="italics">x</emphasis> = 71). We first divide our scores into three groups of approximately equal numbers of <emphasis effect="italics">x</emphasis> values per group. The first and third groups have the same number of <emphasis effect="italics">x</emphasis> values. We must remember first to put the <emphasis effect="italics">x</emphasis> values in ascending order. The corresponding <emphasis effect="italics">y</emphasis> values are then recorded. However, to find the median, we first must rearrange the <emphasis effect="italics">y</emphasis> values in each group from the least value to the greatest value. <link target-id="fs-id1170308472605"/> shows the correct ordering of the <emphasis effect="italics">x</emphasis> values but does not show a reordering of the <emphasis effect="italics">y</emphasis> values.</para><table id="fs-id1170308472605" summary="This table shows two columns. The left column is titled x third exam score. The right column is titled Y final exam score. The table shows the following X and Y data across its 11 rows. X is equal to 65, Y is equal to 175. X is equal to 66, Y is equal to 126. X is equal to 67, Y is equal to 133. X is equal to 69, Y is equal to 151. X is equal to 69, Y is equal to 159. X is equal to 70, Y is equal to 163. X is equal to 71, Y is equal to 159. X is equal to 71, Y is equal to 163. X is equal to 71, Y is equal to 185. X is equal to 75, Y is equal to 198.">
+<tgroup cols="2">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<thead>
+<row>
+<entry><emphasis effect="italics">x</emphasis> (third exam score)</entry>
+<entry><emphasis effect="italics">y</emphasis> (final exam score)</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>65</entry>
+<entry>175</entry>
+</row>
+<row>
+<entry>66</entry>
+<entry>126</entry>
+</row>
+<row>
+<entry>67</entry>
+<entry>133</entry>
+</row>
+<row>
+<entry>67</entry>
+<entry>153</entry>
+</row>
+<row>
+<entry>69</entry>
+<entry>151</entry>
+</row>
+<row>
+<entry>69</entry>
+<entry>159</entry>
+</row>
+<row>
+<entry>70</entry>
+<entry>163</entry>
+</row>
+<row>
+<entry>71</entry>
+<entry>159</entry>
+</row>
+<row>
+<entry>71</entry>
+<entry>163</entry>
+</row>
+<row>
+<entry>71</entry>
+<entry>185</entry>
+</row>
+<row>
+<entry>75</entry>
+<entry>198</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<para id="fs-id1170308964898">With this set of data, the first and last groups each have four <emphasis effect="italics">x</emphasis> values and four corresponding <emphasis effect="italics">y</emphasis> values. The second group has three <emphasis effect="italics">x</emphasis> values and three corresponding <emphasis effect="italics">y</emphasis> values. We need to organize the <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis> values per group and find the median <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis> values for each group. Let’s now write out our <emphasis effect="italics">y</emphasis> values for each group in ascending order. For group 1, the <emphasis effect="italics">y</emphasis> values in order are 126, 133, 153, and 175. For group 2, the <emphasis effect="italics">y</emphasis> values are already in order. For group 3, the <emphasis effect="italics">y</emphasis> values are also already in order. We can represent these data as shown in <link target-id="fs-id1170308944039"/>, but notice that we have <emphasis effect="italics">broken</emphasis> the ordered pairs; (65, 126) is not a data point in our original set:</para><table id="fs-id1170308944039" summary="This table shows the 3rd exam score, or x, final exam score, or y, median X value and median Y value for 3 groups. For group 1, the X values are 65, 66, 67, and 67. The Y values are 126, 133, 153, and 175. The median X value is 66.5. The median Y value is 143. For group to the X values are 69, 69, and 70. The Y values are 151, 159, and 163. The median X value is 69 and the median Y value is 159. The group 3 the X values are 71, 71, 71, and 75. The Y values are 159, 163, 185, and 198. The median X value is 71 and the median Y value is 174.">
+<tgroup cols="5">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<colspec colnum="3" colname="c3"/>
+<colspec colnum="4" colname="c4"/>
+<colspec colnum="5" colname="c5"/>
+<thead>
+<row>
+<entry>Group</entry>
+<entry><emphasis effect="italics">x</emphasis> (third exam score)</entry>
+<entry><emphasis effect="italics">y</emphasis> (final exam score)</entry>
+<entry>Median <emphasis effect="italics">x</emphasis> value</entry>
+<entry>Median <emphasis effect="italics">y</emphasis> value</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>1</entry>
+<entry>65<newline/>66<newline/>67<newline/>67</entry>
+<entry>126<newline/>133<newline/>153<newline/>175</entry>
+<entry>66.5<newline count="3"/></entry>
+<entry>143<newline/><newline/><newline/></entry>
+</row>
+<row>
+<entry>2</entry>
+<entry>69<newline/>69<newline/>70</entry>
+<entry>151<newline/>159<newline/>163</entry>
+<entry>69</entry>
+<entry>159</entry>
+</row>
+<row>
+<entry>3</entry>
+<entry>71<newline/>71<newline/>71<newline/>75</entry>
+<entry>159<newline/>163<newline/>185<newline/>198</entry>
+<entry>71</entry>
+<entry>174</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<para id="fs-id1170308203288">When this is completed, we can write the ordered pairs for the median values. This allows us to find the slope and <emphasis effect="italics">y</emphasis>-intercept of the median-median line.</para><para id="fs-id1170308789156">The ordered pairs are (66.5, 143), (69, 159), and (71, 174).</para>
+<!--<para id="fs-id1170308707727">The slope can be calculated using the formula <m:math>
+ <m:mrow>
+  <m:mi>m</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:msub>
+     <m:mi>y</m:mi>
+     <m:mn>3</m:mn>
+    </m:msub>
+    <m:mo>&#8722;</m:mo><m:msub>
+     <m:mi>y</m:mi>
+     <m:mn>1</m:mn>
+    </m:msub>
+
+   </m:mrow>
+   <m:mrow>
+    <m:msub>
+     <m:mi>x</m:mi>
+     <m:mn>3</m:mn>
+    </m:msub>
+    <m:mo>&#8722;</m:mo><m:msub>
+     <m:mi>x</m:mi>
+     <m:mn>1</m:mn>
+    </m:msub>
+
+   </m:mrow>
+  </m:mfrac>
+
+ </m:mrow>
+</m:math>. Substituting the median <emphasis effect="italics">x</emphasis>- and <emphasis effect="italics">y</emphasis>-values from the first and third groups gives <m:math>
+ <m:mrow>
+  <m:mi>m</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:mn>174</m:mn><m:mo>&#8722;</m:mo><m:mn>143</m:mn>
+   </m:mrow>
+   <m:mrow>
+    <m:mn>71</m:mn><m:mo>&#8722;</m:mo><m:mn>66.5</m:mn>
+   </m:mrow>
+  </m:mfrac>
+
+ </m:mrow>
+</m:math>, which simplifies to <m:math>
+ <m:mrow>
+  <m:mi>m</m:mi><m:mo>&#8776;</m:mo><m:mn>6.9</m:mn>
+ </m:mrow>
+</m:math>.</para>
+<para id="fs-id1170308219326">The <emphasis effect="italics">y</emphasis>-intercept may be found using the formula <m:math>
+ <m:mrow>
+  <m:mi>b</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:mstyle displaystyle="true">
+     <m:mo>&#8721;</m:mo> <m:mrow>
+      <m:mi>y</m:mi><m:mo>&#8722;</m:mo><m:mi>m</m:mi><m:mstyle displaystyle="true">
+       <m:mo>&#8721;</m:mo> <m:mi>x</m:mi>
+      </m:mstyle>
+     </m:mrow>
+    </m:mstyle>
+   </m:mrow>
+   <m:mn>3</m:mn>
+  </m:mfrac>
+
+ </m:mrow>
+</m:math>. The sum of the median <emphasis effect="italics">x</emphasis>-values is 206.5, and the sum of the median <emphasis effect="italics">y</emphasis>-values is 476. Substituting these sums and the slope into the formula gives <m:math>
+ <m:mrow>
+  <m:mi>b</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:mn>476</m:mn><m:mo>&#8722;</m:mo><m:mn>6.9</m:mn><m:mo stretchy="false">(</m:mo><m:mn>206.5</m:mn><m:mo stretchy="false">)</m:mo>
+   </m:mrow>
+   <m:mn>3</m:mn>
+  </m:mfrac>
+
+ </m:mrow>
+</m:math>, which simplifies to <m:math>
+ <m:mrow>
+  <m:mi>b</m:mi><m:mo>&#8776;</m:mo><m:mo>&#8722;</m:mo><m:mn>316.3</m:mn>
+ </m:mrow>
+</m:math>.</para>
+<para id="fs-id1170308855625">The line of best fit is represented as <m:math>
+ <m:mrow>
+  <m:mi>y</m:mi><m:mo>=</m:mo><m:mi>m</m:mi><m:mi>x</m:mi><m:mo>+</m:mo><m:mi>b</m:mi>
+ </m:mrow>
+</m:math>. Thus, the equation can be written as <m:math>
+ <m:mrow>
+  <m:mi>y</m:mi><m:mo>=</m:mo><m:mn>6.9</m:mn><m:mi>x</m:mi><m:mo>&#8722;</m:mo><m:mn>316.3</m:mn>
+ </m:mrow>
+</m:math>.</para>-->
+<para id="fs-id1164564894312">The slope can be calculated using the formula <m:math>
+ 
+  <m:mrow>
+   <m:mo> </m:mo><m:mi>m</m:mi><m:mo>−</m:mo><m:mfrac>
+    <m:mrow>
+     <m:msub>
+      <m:mi>y</m:mi>
+      <m:mn>2</m:mn>
+     </m:msub>
+     <m:mo>−</m:mo><m:msub>
+      <m:mi>y</m:mi>
+      <m:mn>1</m:mn>
+     </m:msub>
+
+    </m:mrow>
+    <m:mrow>
+     <m:msub>
+      <m:mi>x</m:mi>
+      <m:mn>2</m:mn>
+     </m:msub>
+     <m:mo>−</m:mo><m:msub>
+      <m:mi>x</m:mi>
+      <m:mn>1</m:mn>
+     </m:msub>
+
+    </m:mrow>
+   </m:mfrac>
+   <m:mtext>.</m:mtext>
+  </m:mrow>
+ 
+</m:math> Substituting the median <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis> values from the first and third groups gives <m:math>
+ 
+  <m:mrow>
+   <m:mi>m</m:mi><m:mo>=</m:mo><m:mfrac>
+    <m:mrow>
+     <m:mn>174</m:mn><m:mo>−</m:mo><m:mn>143</m:mn>
+    </m:mrow>
+    <m:mrow>
+     <m:mn>71</m:mn><m:mo>−</m:mo><m:mn>66.5</m:mn>
+    </m:mrow>
+   </m:mfrac>
+   <m:mtext>,</m:mtext>
+  </m:mrow>
+ 
+</m:math> which simplifies to <m:math>
+ 
+  <m:mrow>
+   <m:mi>m</m:mi><m:mo>≈</m:mo><m:mtext> </m:mtext><m:mn>6.9</m:mn>
+<m:mtext>.</m:mtext>
+  </m:mrow>
+ 
+</m:math></para>
+<para id="fs-id1164566859749">The <emphasis effect="italics">y</emphasis>-intercept may be found using the formula <m:math>
+ 
+  <m:mrow>
+   <m:mi>b</m:mi><m:mo>=</m:mo><m:mfrac>
+    <m:mrow>
+     <m:mi>Σ</m:mi><m:mi>y</m:mi><m:mo>−</m:mo><m:mi>m</m:mi><m:mi>Σ</m:mi><m:mi>x</m:mi>
+    </m:mrow>
+    <m:mn>3</m:mn>
+   </m:mfrac>
+
+  </m:mrow>
+ 
+</m:math>, which means the quantity of the sum of the median <emphasis effect="italics">y</emphasis> values minus the slope times the sum of the median <emphasis effect="italics">x</emphasis> values divided by three.</para><para id="fs-id1164564843422">The sum of the median <emphasis effect="italics">x</emphasis> values is 206.5, and the sum of the median <emphasis effect="italics">y</emphasis> values is 476. Substituting these sums and the slope into the formula gives <m:math>
+ 
+  <m:mrow>
+<m:mi>b</m:mi><m:mo>=</m:mo><m:mfrac>
+    <m:mrow>
+     <m:mn>476</m:mn><m:mo>−</m:mo><m:mn>6.9</m:mn><m:mo stretchy="false">(</m:mo><m:mn>206.5</m:mn><m:mo stretchy="false">)</m:mo>
+    </m:mrow>
+    <m:mn>3</m:mn>
+   </m:mfrac>
+  </m:mrow>
+ 
+</m:math>, which simplifies to <m:math>
+ 
+  <m:mrow>
+   <m:mi>b</m:mi><m:mo>≈</m:mo><m:mo>−</m:mo><m:mn>316.3</m:mn>
+<m:mtext>.</m:mtext>
+  </m:mrow>
+ 
+</m:math></para><para id="fs-id1164566948826">The line of best fit is represented as <m:math>
+ 
+  <m:mrow>
+   <m:mi>y</m:mi><m:mo>=</m:mo><m:mi>m</m:mi><m:mi>x</m:mi><m:mo>+</m:mo><m:mi>b</m:mi>
+<m:mtext>.</m:mtext>
+  </m:mrow>
+ 
+</m:math></para>
+<para id="fs-id1164562476525">Thus, the equation can be written as <emphasis effect="italics">y</emphasis> = 6.9<emphasis effect="italics">x</emphasis> − 316.3.</para>
+<para id="fs-id1170308141980">The median–median line may also be found using your graphing calculator. You can enter the <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis> values into two separate lists; choose Stat, Calc, Med-Med, and press Enter. The slope, <emphasis effect="italics">a</emphasis>, and <emphasis effect="italics">y</emphasis>-intercept, <emphasis effect="italics">b</emphasis>, will be provided. The calculator shows a slight deviation from the previous manual calculation as a result of rounding. Rounding to the nearest tenth, the calculator gives the median-median line of <m:math>
+ <m:mrow>
+  <m:mi>y</m:mi><m:mo>=</m:mo><m:mn>6.9</m:mn><m:mi>x</m:mi><m:mo>−</m:mo><m:mn>315.5</m:mn>
+<m:mtext>.</m:mtext>
+ </m:mrow>
+</m:math> Each point of data is of the the form (<emphasis effect="italics">x</emphasis>, <emphasis effect="italics">y</emphasis>), and each point of the line of best fit using least-squares linear regression has the form (<emphasis effect="italics">x</emphasis>, <emphasis effect="italics">ŷ</emphasis>).</para><para id="element-51">The <emphasis effect="italics">ŷ</emphasis> is read <emphasis effect="italics">y hat</emphasis> and is the <emphasis effect="italics">estimated value of y</emphasis>. It is the value of <emphasis effect="italics">y</emphasis> obtained using the regression line. It is not generally equal to <emphasis effect="italics">y</emphasis> from data, but it is still important because it can help make predictions for other values.</para><para id="element-530"><figure id="linrgs_regeq2"><media id="id1164271221679" alt="The scatter plot of exam scores with a line of best fit. One data point is highlighted along with the corresponding point on the line of best fit. Both points have the same x-coordinate. The distance between these two points illustrates how to compute the sum of squared errors."><image src="../../media/fig-ch12_05_02.jpg" mime-type="image/jpeg" width="380"/></media></figure></para>
+<para id="element-621">The term <emphasis effect="italics">y</emphasis><sub>0</sub> – <emphasis effect="italics">ŷ</emphasis><sub>0</sub> = <emphasis effect="italics">ε</emphasis><sub>0</sub> is called the <emphasis effect="italics">error</emphasis> or <emphasis effect="italics">residual</emphasis>. It is not an error in the sense of a mistake. The <emphasis effect="italics">absolute value of a residual</emphasis> measures the vertical distance between the actual value of <emphasis effect="italics">y</emphasis> and the estimated value of <emphasis effect="italics">y</emphasis>. In other words, it measures the vertical distance between the actual data point and the predicted point on the line, or it measures how far the estimate is from the actual data value.</para><para id="eip-462">If the observed data point lies above the line, the residual is positive and the line underestimates the actual data value for <emphasis effect="italics">y</emphasis>. If the observed data point lies below the line, the residual is negative and the line overestimates that actual data value for <emphasis effect="italics">y</emphasis>.</para>
+<para id="eip-104">In <link target-id="linrgs_regeq2" document=""/>, <emphasis effect="italics">y</emphasis><sub>0</sub> – <emphasis effect="italics">ŷ</emphasis><sub>0</sub> = ε<sub>0</sub> is the residual for the point shown. Here the point lies above the line and the residual is positive.</para><para id="element-756"><emphasis effect="italics">ε</emphasis> = the Greek letter epsilon</para>
+<para id="element-15">For each data point, you can calculate the residuals or errors, <emphasis effect="italics">y</emphasis><sub>i</sub>  <emphasis effect="italics">ŷ</emphasis><sub>i</sub> = <emphasis effect="italics">ε</emphasis><sub>i</sub> for <emphasis effect="italics">i</emphasis> = 1, 2, 3, . . . , 11.</para><para id="element-670">Each |<emphasis effect="italics">ε</emphasis>| is a vertical distance.</para><para id="element-610">For the example about the third exam scores and the final exam scores for the 11 statistics students, there are 11 data points. Therefore, there are 11 <emphasis effect="italics">ε</emphasis> values. If you square each <emphasis effect="italics">ε</emphasis> and add them, you get the sum of <emphasis effect="italics">ε</emphasis> squared from <emphasis effect="italics">i</emphasis> = 1 to <emphasis effect="italics">i</emphasis> = 11, as shown below.</para><para id="element-575"><m:math display="block">
+ <m:mrow>
+  <m:msup>
+   <m:mrow>
+    <m:mo stretchy="false">(</m:mo><m:msub>
+     <m:mi>ε</m:mi>
+     <m:mn>1</m:mn>
+    </m:msub>
+    <m:mo stretchy="false">)</m:mo>
+   </m:mrow>
+   <m:mn>2</m:mn>
+  </m:msup>
+  <m:mo>+</m:mo><m:msup>
+   <m:mrow>
+    <m:mo stretchy="false">(</m:mo><m:msub>
+     <m:mi>ε</m:mi>
+     <m:mn>2</m:mn>
+    </m:msub>
+    <m:mo stretchy="false">)</m:mo>
+   </m:mrow>
+   <m:mn>2</m:mn>
+  </m:msup>
+  <m:mo>+</m:mo><m:mn>...</m:mn><m:mo>+</m:mo><m:msup>
+   <m:mrow>
+    <m:mo stretchy="false">(</m:mo><m:msub>
+     <m:mi>ε</m:mi>
+     <m:mrow>
+      <m:mn>11</m:mn>
+     </m:mrow>
+    </m:msub>
+    <m:mo stretchy="false">)</m:mo>
+   </m:mrow>
+   <m:mn>2</m:mn>
+  </m:msup>
+  <m:mo>=</m:mo><m:mover>
+   <m:mrow>
+    <m:munder>
+     <m:mi>Σ</m:mi>
+     <m:mrow>
+      <m:mi>i</m:mi><m:mtext> </m:mtext><m:mo>=</m:mo><m:mtext> </m:mtext><m:mn>1</m:mn>
+     </m:mrow>
+    </m:munder>
+
+   </m:mrow>
+   <m:mrow>
+    <m:mn>11</m:mn>
+   </m:mrow>
+  </m:mover>
+  <m:msup>
+   <m:mi>ε</m:mi>
+   <m:mn>2</m:mn>
+  </m:msup>
+  <m:mtext>.</m:mtext>
+ </m:mrow>
+</m:math></para>
+<para id="element-215">This is called the <term id="term-00001">sum of squared errors (SSE)</term>.</para><para id="element-640">Using calculus, you can determine the values of <emphasis effect="italics">a</emphasis> and <emphasis effect="italics">b</emphasis> that make the SSE a minimum. When you make the SSE a minimum, you have determined the points that are on the line of best fit. It turns out that the line of best fit has the equation
+</para>
+
+<equation class="unnumbered" id="element-710"><label/><m:math>
+ <m:mrow>
+   <m:mi>ŷ</m:mi>
+  <m:mo>=</m:mo><m:mi>a</m:mi><m:mo>+</m:mo><m:mi>b</m:mi><m:mi>x</m:mi>
+ </m:mrow>
+</m:math>
+</equation>
+<!--<para id="element-716">where <m:math>
+ <m:mrow>
+  <m:mi>a</m:mi><m:mo>=</m:mo><m:mover accent="true">
+   <m:mi>y</m:mi>
+   <m:mo>&#175;</m:mo>
+  </m:mover>
+  <m:mo>&#8722;</m:mo><m:mi>b</m:mi><m:mover accent="true">
+   <m:mi>x</m:mi>
+   <m:mo>&#175;</m:mo>
+  </m:mover>
+   </m:mrow>
+</m:math> and <m:math>
+ <m:mrow>
+  <m:mi>b</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:mi>&#931;</m:mi><m:mo stretchy="false">(</m:mo><m:mi>x</m:mi><m:mo>&#8722;</m:mo><m:mover accent="true">
+     <m:mi>x</m:mi>
+     <m:mo>&#175;</m:mo>
+    </m:mover>
+    <m:mo stretchy="false">)</m:mo><m:mo stretchy="false">(</m:mo><m:mi>y</m:mi><m:mo>&#8722;</m:mo><m:mover accent="true">
+     <m:mi>y</m:mi>
+     <m:mo>&#175;</m:mo>
+    </m:mover>
+    <m:mo stretchy="false">)</m:mo>
+   </m:mrow>
+   <m:mrow>
+    <m:mi>&#931;</m:mi><m:msup>
+     <m:mrow>
+      <m:mo stretchy="false">(</m:mo><m:mi>x</m:mi><m:mo>&#8722;</m:mo><m:mover accent="true">
+       <m:mi>x</m:mi>
+       <m:mo>&#175;</m:mo>
+      </m:mover>
+      <m:mo stretchy="false">)</m:mo>
+     </m:mrow>
+     <m:mn>2</m:mn>
+    </m:msup>
+
+   </m:mrow>
+  </m:mfrac>
+
+ </m:mrow>
+</m:math>.</para>-->
+<para id="fs-id1164564830109">where</para>
+<para id="fs-id1164566504168"><m:math>
+ 
+  <m:mrow>
+   <m:mi>a</m:mi><m:mo>=</m:mo><m:mover accent="true">
+    <m:mi>y</m:mi>
+    <m:mo>¯</m:mo>
+   </m:mover>
+   <m:mo>−</m:mo><m:mi>b</m:mi><m:mover accent="true">
+    <m:mi>x</m:mi>
+    <m:mo>¯</m:mo>
+   </m:mover>
+
+  </m:mrow>
+ 
+</m:math></para>
+<para id="fs-id1164564832447">and <m:math>
+ 
+  <m:mrow>
+   <m:mi>b</m:mi><m:mo>=</m:mo><m:mfrac>
+    <m:mrow>
+     <m:mo>∑</m:mo><m:mrow><m:mo>(</m:mo>
+      <m:mrow>
+       <m:mi>x</m:mi><m:mo>−</m:mo><m:mover accent="true">
+        <m:mi>x</m:mi>
+        <m:mo>¯</m:mo>
+       </m:mover>
+
+      </m:mrow>
+     <m:mo>)</m:mo></m:mrow><m:mrow><m:mo>(</m:mo>
+      <m:mrow>
+       <m:mi>y</m:mi><m:mo>−</m:mo><m:mover accent="true">
+        <m:mi>y</m:mi>
+        <m:mo>¯</m:mo>
+       </m:mover>
+
+      </m:mrow>
+     <m:mo>)</m:mo></m:mrow>
+    </m:mrow>
+    <m:mrow>
+     <m:mo>∑</m:mo><m:msup>
+      <m:mrow>
+       <m:mrow><m:mo>(</m:mo>
+        <m:mrow>
+         <m:mi>x</m:mi><m:mo>−</m:mo><m:mover accent="true">
+          <m:mi>x</m:mi>
+          <m:mo>¯</m:mo>
+         </m:mover>
+
+        </m:mrow>
+       <m:mo>)</m:mo></m:mrow>
+      </m:mrow>
+      <m:mn>2</m:mn>
+     </m:msup>
+
+    </m:mrow>
+   </m:mfrac>
+
+  </m:mrow>
+ 
+</m:math>.</para><para id="element-153">The sample means of the <emphasis effect="italics">x</emphasis> values and the <emphasis effect="italics">y</emphasis> values are <m:math>
+ <m:mover accent="true">
+  <m:mi>x</m:mi>
+  <m:mo>¯</m:mo>
+ </m:mover>
+
+</m:math> and <m:math>
+ <m:mover accent="true">
+  <m:mi>y</m:mi>
+  <m:mo>¯</m:mo>
+ </m:mover>
+
+</m:math>, respectively. The best-fit line always passes through the point <m:math>
+ <m:mrow>
+  <m:mo stretchy="false">(</m:mo><m:mover accent="true">
+   <m:mi>x</m:mi>
+   <m:mo>¯</m:mo>
+  </m:mover>
+  <m:mo>,</m:mo><m:mover accent="true">
+   <m:mi>y</m:mi>
+   <m:mo>¯</m:mo>
+  </m:mover>
+  <m:mo stretchy="false">)</m:mo>
+ </m:mrow>
+</m:math>.</para>
+<para id="element-414">The slope (<emphasis effect="italics">b</emphasis>) can be written as <m:math>
+ <m:mrow>
+  <m:mi>b</m:mi><m:mo>=</m:mo><m:mi>r</m:mi><m:mrow><m:mo>(</m:mo>
+   <m:mrow>
+    <m:mfrac>
+     <m:mrow>
+      <m:msub>
+       <m:mi>s</m:mi>
+       <m:mi>y</m:mi>
+      </m:msub>
+
+     </m:mrow>
+     <m:mrow>
+      <m:msub>
+       <m:mi>s</m:mi>
+       <m:mi>x</m:mi>
+      </m:msub>
+
+     </m:mrow>
+    </m:mfrac>
+
+   </m:mrow>
+  <m:mo>)</m:mo></m:mrow>
+ </m:mrow>
+</m:math> where <emphasis effect="italics">s</emphasis><sub><emphasis effect="italics">y</emphasis></sub> = the standard deviation of the <emphasis effect="italics">y</emphasis> values and <emphasis effect="italics">s</emphasis><sub><emphasis effect="italics">x</emphasis></sub> = the standard deviation of the <emphasis effect="italics">x</emphasis> values. <emphasis effect="italics">r</emphasis> is the correlation coefficient, which shows the relationship between the <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis> values. This will be discussed in more detail in the next section.</para></section>
+
+<section id="fs-idm120169264">
+<title>Least-Squares Criteria for Best Fit</title>
+<!--<para id="eip-996">The process of fitting the best-fit line is called <emphasis>linear regression</emphasis>. The idea behind finding the best-fit line is based on the assumption that the data are scattered about a straight line. The criteria for the best fit line is that the sum of the squared errors (SSE) is minimized, that is, made as small as possible. Any other line you might choose would have a higher SSE than the best fit line. This best fit line is called the <emphasis> least-squares regression line</emphasis>.</para>-->
+<para id="fs-id1164564915405">The process of fitting the best-fit line is called <emphasis>linear regression</emphasis>. We assume that the data are scattered about a straight line. To find that line, we minimize the sum of the squared errors (SSE), or make it as small as possible. Any other line you might choose would have a higher SSE than the best-fit line. This best-fit line is called the <emphasis effect="italics">least-squares regression line</emphasis>.</para><note id="id1164273503037" class="finger"><label/><title>Note</title>
+<para id="fs-idp15798576">Computer spreadsheets, statistical software, and many calculators can quickly calculate the best-fit line and create the graphs. The calculations tend to be tedious if done by hand. Instructions to use the TI-83, TI-83+, and TI-84+ calculators to find the best-fit line and create a scatter plot are shown at the end of this section.</para></note>
+</section>
+<section id="fs-id1164561137123">
+<title>Third Exam vs. Final Exam Example</title><para id="element-27">The graph of the line of best fit for the third exam/final exam example is as follows:</para>
+
+<figure id="linrgs_regeq3"><media id="id1164250764889" alt="The scatter plot of exam scores with a line of best fit. One data point is highlighted along with the corresponding point on the line of best fit."><image src="../../media/fig-ch12_05_03.jpg" mime-type="image/jpeg" width="380"/></media></figure><para id="element-689">The least-squares regression line (best-fit line) for the third exam/final exam example has the equation</para><equation class="unnumbered" id="element-643"><label/><m:math>
+ <m:mrow>
+     <m:mi>ŷ</m:mi>
+    <m:mo>=</m:mo><m:mn>−173.51</m:mn><m:mo>+</m:mo><m:mn>4.83</m:mn><m:mi>x</m:mi>
+<m:mtext>.</m:mtext>
+ </m:mrow>
+</m:math></equation>
+
+<!--<note id="eip-923"><label/><title>Reminder</title>
+
+<para id="fs-idp965680">Remember, it is always important to plot a scatter diagram first. If the scatter plot indicates that there is a linear relationship between the variables, then it is reasonable to use a best fit line to make predictions for <emphasis effect="italics">y</emphasis> given <emphasis effect="italics">x</emphasis> within the domain of <emphasis effect="italics">x</emphasis>-values in the sample data, <emphasis>but not necessarily for <emphasis effect="italics">x</emphasis>-values outside that domain.</emphasis> You could use the line to predict the final exam score for a student who earned a grade of 73 on the third exam. You should NOT use the line to predict the final exam score for a student who earned a grade of 50 on the third exam, because 50 is not within the domain of the <emphasis effect="italics">x</emphasis>-values in the sample data, which are between 65 and 75.</para>
+</note>--></section>
+<section id="fs-id1170308568879">
+<title>Understanding and Interpreting the <emphasis effect="italics">y</emphasis>-intercept</title>
+<!--<para id="fs-id1170308528502">The <emphasis effect="italics">y</emphasis>-intercept, <emphasis effect="italics">a</emphasis>, of the line describes where the plot line intersects, or crosses, the <emphasis effect="italics">y</emphasis>-axis. The <emphasis effect="italics">y</emphasis>-intercept of the best-fit line tells us the value of the relationship when the independent variable is zero. In some cases, extrapolation to zero does not make sense. For example, in the Third Exam vs. Final Exam example, the <emphasis effect="italics">y</emphasis>-intercept occurs when the Third Exam score is zero. Since all the scores are clustered around a passing grade, however, it is not reasonable to extrapolate the scores all the way to zero.</para>-->
+<para id="fs-id1164563420951">The <emphasis effect="italics">y</emphasis>-intercept, <emphasis effect="italics">a</emphasis>, of the line describes where the plot line crosses the <emphasis effect="italics">y</emphasis>-axis. The <emphasis effect="italics">y</emphasis>-intercept of the best-fit line tells us the best value of the relationship when <emphasis effect="italics">x</emphasis> is zero. In some cases, it does not make sense to figure out what <emphasis effect="italics">y</emphasis> is when <emphasis effect="italics">x</emphasis> = 0. For example, in the third exam vs. final exam example, the <emphasis effect="italics">y</emphasis>-intercept occurs when the third exam score, or <emphasis effect="italics">x</emphasis>, is zero. Since all the scores are grouped around a passing grade, there is no need to figure out what the final exam score, or <emphasis effect="italics">y</emphasis>, would be when the third exam was zero.</para><para id="fs-id1170308494668">However, the <emphasis effect="italics">y</emphasis>-intercept is very useful in many cases. For many examples in science, the <emphasis effect="italics">y</emphasis>-intercept gives the baseline reading when the experimental conditions aren't applied to an experimental system. This baseline indicates how much the experimental condition affects the system. It could also be used to ensure that equipment and measurements are calibrated properly before starting the experiment.</para><para id="eip-890">In biology, the concentration of proteins in a sample can be measured using a chemical assay that changes color depending on how much protein is present. The more protein present, the darker the color. The amount of color can be measured by the absorbance reading. <link target-id="fs-id1170308505621"/> shows the expected absorbance readings at different protein concentrations. This is called a <emphasis effect="italics">standard curve</emphasis> for the assay.</para><table id="fs-id1170308505621" summary="This table shows 2 columns: concentration millimoles and absorbance in milliabsorbance units. The first row is a concentration of 125 and absorbance of 0.021. The second row has a concentration of 250 and an absorbance of 0.023. The third row has a concentration of 500 and absorbency of 0.068. The fourth row has a concentration of 750 and absorbance of 0.086. The 5th row has a concentration of 1000 and absorbance of 0.105. The 6th row has a concentration of 1500 and an absorbance of 0.124. The 7th row has a concentration of 2000 and absorbance of 0.146.">
+<tgroup cols="2">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<thead>
+<row>
+<entry>Concentration (mM)</entry>
+<entry>Absorbance (mAU)</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>125</entry>
+<entry>0.021</entry>
+</row>
+<row>
+<entry>250</entry>
+<entry>0.023</entry>
+</row>
+<row>
+<entry>500</entry>
+<entry>0.068</entry>
+</row>
+<row>
+<entry>750</entry>
+<entry>0.086</entry>
+</row>
+<row>
+<entry>1,000</entry>
+<entry>0.105</entry>
+</row>
+<row>
+<entry>1,500</entry>
+<entry>0.124</entry>
+</row>
+<row>
+<entry>2,000</entry>
+<entry>0.146</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<para id="fs-id1170308327038">The scatter plot <link target-id="figure_12_03_01"/> includes the line of best fit.</para>
+<figure id="figure_12_03_01">
+<media id="fs-id1170308759845" alt="This shows a scatter plot with a line of best fit. The scatter plot has points plotted at (0.021, 125), (0.023, 250), (0.068, 500), (0.086, 750), (0.105, 1000), (0.124, 1500), and (0.146, 2000), and is labeled y = 7E-05x + 0.0226.">
+<image src="../../media/fig_12_03_01.jpg" mime-type="image/jpeg" width="380"/>
+</media></figure>
+<!--<para id="fs-id1170308176206">The <emphasis effect="italics">y</emphasis>-intercept of this line occurs at 0.0226 mAU. This is the reading that the assay will give when there is no protein present. That is, it is the baseline reading that can be attributed to &#147;noise,&#148; which, in this case, is other, non-protein chemicals that are absorbing light. We can tell that this line of best fit is reasonable because the <emphasis effect="italics">y</emphasis>-intercept is very small, close to zero. When there is no protein present in the sample, we expect the absorbance to be very small.</para>-->
+<para id="fs-id1164562112266">The <emphasis effect="italics">y</emphasis>-intercept of this line occurs at 0.0226 mAU. This means the assay gives a reading of 0.0226 mAU when there is no protein present. That is, it is the baseline reading that can be attributed to something else, which, in this case, is some other non-protein chemicals that are absorbing light. We can tell that this line of best fit is reasonable because the <emphasis effect="italics">y</emphasis>-intercept is small, close to zero. When there is no protein present in the sample, we expect the absorbance to be very small, or close to zero, as well.</para></section>
+<section id="fs-idp153906304">
+<title>Understanding Slope</title>
+<para id="element-39">The slope of the line, <emphasis effect="italics">b</emphasis>, describes how changes in the variables are related. It is important to interpret the slope of the line in the context of the situation represented by the data. You should be able to write a sentence interpreting the slope in plain English.</para>
+
+<para id="element-725">
+<emphasis>Interpretation of the Slope:</emphasis> The slope of the best-fit line tells us how the dependent variable (<emphasis effect="italics">y</emphasis>) changes for every one unit increase in the independent (<emphasis effect="italics">x</emphasis>) variable, on average.</para>
+
+<para id="fs-idm33827856"><title>Third Exam vs. Final Exam Example</title>Slope: The slope of the line is <emphasis effect="italics">b</emphasis> = 4.83.
+<newline/>Interpretation: For a 1-point increase in the score on the third exam, the final exam score increases by 4.83 points, on average.
+</para><note id="fs-idm68284544" class="statistics calculator">
+<label/>
+<para id="eip-772">Using the Linear Regression T Test: <code>LinRegTTest</code></para><list id="eip-480" list-type="enumerated" number-style="arabic"><item> In the <code>STAT</code> list editor, enter the <emphasis effect="italics">x</emphasis> data in list <code>L1</code> and the <emphasis effect="italics">y</emphasis> data in list <code>L2</code>, paired so that the corresponding (<emphasis effect="italics">x</emphasis>, <emphasis effect="italics">y</emphasis>) values are next to each other in the lists. (If a particular pair of values is repeated, enter it as many times as it appears in the data.)</item>
+<item> On the <code>STAT TESTS</code> menu, scroll down and select <code>LinRegTTest</code>. (Be careful to select <code>LinRegTTest</code>. Some calculators may also have a different item called <code>LinRegTInt</code>.)</item>
+<item>On the <code>LinRegTTest</code> input screen, enter <code>Xlist: L1</code>, <code>Ylist: L2</code>, and <code>Freq: 1</code>.</item>
+<item>On the next line, at the prompt <emphasis effect="italics">β</emphasis> or <emphasis effect="italics">ρ</emphasis>, highlight <code>≠ 0</code> and press <code>ENTER</code>.</item>
+<item>Leave the line for <code>RegEQ:</code> blank.</item>
+<item>Highlight <code>Calculate</code> and press <code>ENTER</code>.</item>
+</list><figure id="linregttestscreens"><media id="id53013501" alt="1. Image of calculator input screen for LinRegTTest with input matching the instructions above. 2.Image of corresponding output calculator output screen for LinRegTTest: Output screen shows: Line 1. LinRegTTest; Line 2. y = a + bx; Line 3. beta does not equal 0 and rho does not equal 0; Line 4. t = 2.657560155; Line 5. df = 9; Line 6. a = 173.513363; Line 7. b = 4.827394209; Line 8. s = 16.41237711; Line 9. r squared = .4396931104; Line 10. r = .663093591"><image src="../../media/fig-ch12_05_04.jpg" mime-type="image/jpeg" width="380"/></media></figure>
+
+<para id="eip-640">The output screen contains a lot of information. For now, let’s focus on a few items from the output and return to the other items later.
+<newline/>The second line says <emphasis effect="italics">y</emphasis> = <emphasis effect="italics">a</emphasis> + <emphasis effect="italics">bx</emphasis>. Scroll down to find the values <emphasis effect="italics">a</emphasis> = –173.513 and <emphasis effect="italics">b</emphasis> = 4.8273. </para><para id="eip-110">The equation of the best-fit line is <emphasis effect="italics">ŷ</emphasis> = –173.51 + 4.83<emphasis effect="italics">x</emphasis>.
+<newline/>The two items at the bottom are <emphasis effect="italics">r</emphasis><sup>2</sup> = .43969 and <emphasis effect="italics">r</emphasis> = .663. For now, just note where to find these values; we examine them in the next two sections.
+</para><para id="eip-630">Graphing the Scatter Plot and Regression Line</para><list id="eip-763" list-type="enumerated" number-style="arabic"><item>We are assuming the <emphasis effect="italics">x</emphasis> data are already entered in list <code>L1</code> and the <emphasis effect="italics">y</emphasis> data are in list <code>L2</code>.</item>
+<item>Press <code>2nd STATPLOT ENTER</code> to use <code>Plot 1</code>.</item>
+<item>On the input screen for <code>PLOT 1</code>, highlight <code>On</code>, and press <code>ENTER</code>.</item>
+<item>For <code>TYPE</code>, highlight the first icon, which is the scatter plot, and press <code>ENTER</code>.</item>
+<item>Indicate <code>Xlist: L1</code> and <code>Ylist: L2</code>.</item>
+<item>For <code>Mark</code>, it does not matter which symbol you highlight.</item>
+<item>Press the <code>ZOOM</code> key and then the number <code>9</code> (for menu item <code>ZoomStat</code>); the calculator fits the window to the data.</item>
+<item>To graph the best-fit line, press the <code>Y=</code> key and type the equation –173.5 + 4.83X into equation Y1. (The <code>X</code> key is immediately left of the <code>STAT</code> key.) Press <code>ZOOM 9</code> again to graph it.</item>
+<item>Optional: If you want to change the viewing window, press the <code>WINDOW</code> key. Enter your desired window using <code>Xmin</code>, <code>Xmax</code>, <code>Ymin</code>, and <code>Ymax</code>.</item></list></note>
+
+<note id="fs-idm135623232"><label/><title>NOTE</title>
+<para id="fs-idm70635232">Another way to graph the line after you create a scatter plot is to use <code>LinRegTTest</code>.
+<list id="eip-idm46438656" list-type="enumerated" number-style="arabic">
+<item>Make sure you have done the scatter plot. Check it on your screen.</item>
+<item>Go to <code>LinRegTTest</code> and enter the lists.</item>
+<item>At <code>RegEq</code>, press <code>VARS</code> and arrow over to <code>Y-VARS</code>. Press 1 for <code>1:Function</code>. Press 1 for <code>1:Y1</code>. Then, arrow down to <code>Calculate</code> and do the calculation for the line of best fit.</item>
+<item>Press <code>Y=</code> (you will see the regression equation).</item>
+<item>Press <code>GRAPH</code>, and the line will be drawn.</item>
+</list></para></note></section>
+
+<section id="eip-737">
+<title>The Correlation Coefficient <emphasis effect="italics">r</emphasis></title>
+<para id="element-12345">Besides looking at the scatter plot and seeing that a line seems reasonable, how can you determine whether the line is a good predictor? Use the correlation coefficient as another indicator (besides the scatter plot) of the strength of the relationship between <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis>.</para>
+<para id="eip-357">The <emphasis>correlation coefficient, <emphasis effect="italics">r</emphasis>,</emphasis> developed by Karl Pearson during the early 1900s, is numeric and provides a measure of the strength and direction of the linear association between the independent variable <emphasis effect="italics">x</emphasis> and the dependent variable <emphasis effect="italics">y</emphasis>.
+</para><para id="element-447">If you suspect a linear relationship between <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis>, then <emphasis effect="italics">r</emphasis> can measure the strength of the linear relationship.</para><para id="fs-idm19432640"><title>What the Value of <emphasis effect="italics">r</emphasis> Tells Us</title>
+<list id="eip-828">
+<item>The value of <emphasis effect="italics">r</emphasis> is always between –1 and +1. In other words, –1 ≤ <emphasis effect="italics">r</emphasis> ≤ 1.</item>
+<item>The size of the correlation <emphasis effect="italics">r</emphasis> indicates the strength of the linear relationship between <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis>. Values of <emphasis effect="italics">r</emphasis> close to –1 or to +1 indicate a stronger linear relationship between <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis>.</item>
+
+<item>If <emphasis effect="italics">r</emphasis> = 0, there is absolutely no linear relationship between <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis> (no linear correlation).</item>
+<item>If <emphasis effect="italics">r</emphasis> = 1, there is perfect positive correlation. If <emphasis effect="italics">r</emphasis> = –1, there is perfect negative correlation. In both these cases, all the original data points lie on a straight line. Of course, in the real world, this does not generally happen.</item>
+</list></para>
+
+<para id="fs-idp154948544">
+<title>What the Sign of <emphasis effect="italics">r</emphasis> Tells Us</title>
+<list id="eip-269"><item>A positive value of <emphasis effect="italics">r</emphasis> means that when <emphasis effect="italics">x</emphasis> increases, <emphasis effect="italics">y</emphasis> tends to increase and when <emphasis effect="italics">x</emphasis> decreases, <emphasis effect="italics">y</emphasis> tends to decrease (positive correlation).</item>
+<item>A negative value of <emphasis effect="italics">r</emphasis> means that when <emphasis effect="italics">x</emphasis> increases, <emphasis effect="italics">y</emphasis> tends to decrease and when <emphasis effect="italics">x</emphasis> decreases, <emphasis effect="italics">y</emphasis> tends to increase (negative correlation).</item>
+<item>The sign of <emphasis effect="italics">r</emphasis> is the same as the sign of the slope, <emphasis effect="italics">b</emphasis>, of the best-fit line.</item>
+</list>
+</para>
+
+<note id="eip-131"><label/><title>Note</title>
+A strong correlation does not suggest that <emphasis effect="italics">x</emphasis> causes <emphasis effect="italics">y</emphasis> or <emphasis effect="italics">y</emphasis> causes <emphasis effect="italics">x</emphasis>. We say correlation does not imply causation.
+</note><para id="eip-344">The correlation coefficient is calculated as the quantity of data points times the sum of the quantity of the <emphasis effect="italics">x</emphasis>-coordinates times the <emphasis effect="italics">y</emphasis>-coordinates, minus the quantity of the sum of the <emphasis effect="italics">x</emphasis>-coordinates times the sum of the <emphasis effect="italics">y</emphasis>-coordinates, all divided by the square root of the quantity of data points times the sum of the <emphasis effect="italics">x</emphasis>-coordinates squared minus the square of the sum of the <emphasis effect="italics">x</emphasis>-coordinates, times the number of data points times the sum of the <emphasis effect="italics">y</emphasis>-coordinates squared minus the square of the sum of the <emphasis effect="italics">y</emphasis>-coordinates. It can be summarized by the following equation:</para><para id="element-48"><equation class="unnumbered" id="eip-id4561593"><label/><m:math display="block">
+ <m:mrow>
+  <m:mi>r</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:mi>n</m:mi><m:mi>Σ</m:mi><m:mo stretchy="false">(</m:mo><m:mi>x</m:mi><m:mi>y</m:mi><m:mo stretchy="false">)</m:mo><m:mo>−</m:mo><m:mo stretchy="false">(</m:mo><m:mi>Σ</m:mi><m:mi>x</m:mi><m:mo stretchy="false">)</m:mo><m:mo stretchy="false">(</m:mo><m:mi>Σ</m:mi><m:mi>y</m:mi><m:mo stretchy="false">)</m:mo>
+   </m:mrow>
+   <m:mrow>
+    <m:msqrt>
+     <m:mrow>
+      <m:mrow><m:mo>[</m:mo> <m:mrow>
+       <m:mi>n</m:mi><m:mi>Σ</m:mi><m:msup>
+        <m:mi>x</m:mi>
+        <m:mn>2</m:mn>
+       </m:msup>
+       <m:mo>−</m:mo><m:msup>
+        <m:mrow>
+         <m:mo stretchy="false">(</m:mo><m:mi>Σ</m:mi><m:mi>x</m:mi><m:mo stretchy="false">)</m:mo>
+        </m:mrow>
+        <m:mn>2</m:mn>
+       </m:msup>
+
+      </m:mrow> <m:mo>]</m:mo></m:mrow><m:mrow><m:mo>[</m:mo> <m:mrow>
+       <m:mi>n</m:mi><m:mi>Σ</m:mi><m:msup>
+        <m:mi>y</m:mi>
+        <m:mn>2</m:mn>
+       </m:msup>
+       <m:mo>−</m:mo><m:msup>
+        <m:mrow>
+         <m:mo stretchy="false">(</m:mo><m:mi>Σ</m:mi><m:mi>y</m:mi><m:mo stretchy="false">)</m:mo>
+        </m:mrow>
+        <m:mn>2</m:mn>
+       </m:msup>
+
+      </m:mrow> <m:mo>]</m:mo></m:mrow>
+     </m:mrow>
+    </m:msqrt>
+
+   </m:mrow>
+  </m:mfrac>
+
+ </m:mrow>
+</m:math>
+</equation></para>
+<para id="element-363">where <emphasis effect="italics">n</emphasis> is the number of data points.</para>
+<figure id="linrgs_facts_pics"><media id="eip-idp8185984" alt="Three scatter plots with lines of best fit. The first scatterplot shows points ascending from the lower left to the upper right. The line of best fit has positive slope. The second scatter plot shows points descending from the upper left to the lower right. The line of best fit has negative slope. The third scatter plot of points form a horizontal pattern. The line of best fit is a horizontal line.">
+<image src="../../media/fig-ch12_06_01.jpg" mime-type="image/jpeg" width="380"/>
+</media>
+<caption>(a) A scatter plot showing data with a positive correlation: 0 &lt; <emphasis effect="italics">r</emphasis> &lt; 1. (b) A scatter plot showing data with a negative correlation: –1 &lt; <emphasis effect="italics">r</emphasis> &lt; 0. (c) A scatter plot showing data with zero correlation: <emphasis effect="italics">r</emphasis> = 0.</caption></figure></section>
+
+<para id="eip-696">The formula for <emphasis effect="italics">r</emphasis> looks formidable. However, computer spreadsheets, statistical software, and many calculators can calculate <emphasis effect="italics">r</emphasis> quickly. The correlation coefficient, <emphasis effect="italics">r</emphasis>, is the bottom item in the output screens for the LinRegTTest on the TI-83, TI-83+, or TI-84+ calculator (see previous section for instructions).</para>
+
+<section id="eip-117">
+<title>The Coefficient of Determination</title>
+<para id="eip-458">The variable <emphasis effect="italics">r</emphasis><sup>2</sup> is called the <term id="term-00002">coefficient of determination</term> and it is the square of the correlation coefficient, but it is usually stated as a percentage, rather than in decimal form. It has an interpretation in the context of the data:</para><list id="eip-728"><item><m:math>
+<m:msup>
+<m:mi>r</m:mi>
+<m:mn>2</m:mn>
+</m:msup>
+<m:mtext>,</m:mtext>
+</m:math> when expressed as a percent, represents the percentage of variation in the dependent (predicted) variable <emphasis effect="italics">y</emphasis> that can be explained by variation in the independent (explanatory) variable <emphasis effect="italics">x</emphasis> using the regression (best-fit) line.</item>
+<item>1 – <m:math><m:msup>
+ <m:mi>r</m:mi>
+<m:mn>2</m:mn>
+</m:msup>
+<m:mtext>,</m:mtext>
+</m:math> when expressed as a percentage, represents the percentage of variation in <emphasis effect="italics">y</emphasis> that is <emphasis effect="italics">not</emphasis> explained by variation in <emphasis effect="italics">x</emphasis> using the regression line. This can be seen as the scattering of the observed data points about the regression line.</item>
+</list><para id="fs-idp19642608">Consider the <link target-id="element-22">third exam/final exam example</link> introduced in the previous section.<newline/>
+<list id="eip-624" list-type="bulleted"><item>The line of best fit is: <emphasis effect="italics">ŷ</emphasis> = –173.51 + 4.83<emphasis effect="italics">x</emphasis>.</item>
+ <item>The correlation coefficient is <emphasis effect="italics">r</emphasis> = .6631.</item>
+<item>The coefficient of determination is <emphasis effect="italics">r</emphasis><sup>2</sup> = .6631<sup>2</sup> = .4397.</item>
+</list></para>
+<para id="fs-id1164562397891">Interpret <emphasis effect="italics">r</emphasis><sup>2</sup> in the context of this example.<newline/>
+<list id="fs-id1164564958788"><item>Approximately 44 percent of the variation (0.4397 is approximately 0.44) in the final exam grades can be explained by the variation in the grades on the third exam, using the best-fit regression line.</item>
+<item>Therefore, the rest of the variation (1 – 0.44 = 0.56 or 56 percent) in the final exam grades cannot be explained by the variation of the grades on the third exam with the best-fit regression line. These are the variation of the points that are not as close to the regression line as others.</item>
+</list></para></section>
+
+<section id="eip-993" class="summary">
+<title>Chapter Review</title>
+<para id="fs-idm125375712">A regression line, or a line of best fit, can be drawn on a scatter plot and used to predict outcomes for the <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis> variables in a given data set or sample data. There are several ways to find a regression line, but usually the least-squares regression line is used because it creates a uniform line. Residuals, also called <emphasis effect="italics">errors</emphasis>, measure the distance from the actual value of <emphasis effect="italics">y</emphasis> and the estimated value of <emphasis effect="italics">y</emphasis>. The sum of squared errors, or SSE, when set to its minimum, calculates the points on the line of best fit. Regression lines can be used to predict values within the given set of data but should not be used to make predictions for values outside the set of data.</para><para id="fs-idm137061632">The correlation coefficient, <emphasis effect="italics">r</emphasis>, measures the strength of the linear association between <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis>. The variable <emphasis effect="italics">r</emphasis> has to be between –1 and +1. When <emphasis effect="italics">r</emphasis> is positive, <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis> tend to increase and decrease together. When <emphasis effect="italics">r</emphasis> is negative, <emphasis effect="italics">x</emphasis> increases and <emphasis effect="italics">y</emphasis> decreases, or the opposite occurs: <emphasis effect="italics">x</emphasis> decreases and <emphasis effect="italics">y</emphasis> increases. The coefficient of determination, <emphasis effect="italics">r</emphasis><sup>2</sup>, is equal to the square of the correlation coefficient. When expressed as a percentage, <emphasis effect="italics">r</emphasis><sup>2</sup> represents the percentage of variation in the dependent variable, <emphasis effect="italics">y</emphasis>, that can be explained by variation in the independent variable, <emphasis effect="italics">x</emphasis>, using the regression line.</para></section>
+
+<section id="eip-234" class="practice">
+<exercise id="fs-id1170308315959">
+<problem id="fs-id1170308311949">
+<para id="fs-id1170308211370">Table 12.16 below represents the relationship between the number of hours spent studying and final exam grades.</para>
+<table id="fs-id1170308751423" summary="This table has 2 columns. The left column is labeled X number of hours spent studying. The right column is labeled Y final exam grades. The first row as an X value of 3 and Y value of 50. The second row has an X value of 5 and a Y value of 72. The third row has a X value of 1 and a Y value of 45. The fourth row has a X value of 2 and a Y value of 51. The fifth row has a letter X value of 6 and Y value of 80. The sixth row has a X value of 8 and a Y value of 96. The seventh row has an X value of 4 and a Y value of 65. The eight row has a X value of 7 and a Y value of 90.">
+<tgroup cols="2">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<thead>
+<row>
+<entry><emphasis effect="italics">x</emphasis> (number of hours spent studying)</entry>
+<entry><emphasis effect="italics">y</emphasis> (final exam grades)</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>3</entry>
+<entry>50</entry>
+</row>
+<row>
+<entry>5</entry>
+<entry>72</entry>
+</row>
+<row>
+<entry>1</entry>
+<entry>45</entry>
+</row>
+<row>
+<entry>2</entry>
+<entry>51</entry>
+</row>
+<row>
+<entry>6</entry>
+<entry>80</entry>
+</row>
+<row>
+<entry>8</entry>
+<entry>96</entry>
+</row>
+<row>
+<entry>4</entry>
+<entry>65</entry>
+</row>
+<row>
+<entry>7</entry>
+<entry>90</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<para id="fs-id1170308268448">Fill in the following chart as a first step in finding the line of best fit, using the median–median approach.</para><table id="fs-id1170308882917" summary="This blank table is intended to hold data for 3 groups. The column labels are X number of hours spent studying, Y final exam grades, median X value and median Y value.">
+<tgroup cols="5">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<colspec colnum="3" colname="c3"/>
+<colspec colnum="4" colname="c4"/>
+<colspec colnum="5" colname="c5"/>
+<thead>
+<row>
+<entry>Group</entry>
+<entry><emphasis effect="italics">x</emphasis> (no. of hours spent studying)</entry>
+<entry><emphasis effect="italics">y</emphasis> (final exam grades)</entry>
+<entry>Median <emphasis effect="italics">x</emphasis> Value</entry>
+<entry>Median <emphasis effect="italics">y</emphasis> Value</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>1</entry>
+<entry/>
+<entry/>
+<entry/>
+<entry/>
+</row>
+<row>
+<entry>2</entry>
+<entry/>
+<entry/>
+<entry/>
+<entry/>
+</row>
+<row>
+<entry>3</entry>
+<entry/>
+<entry/>
+<entry/>
+<entry/>
+</row>
+</tbody>
+</tgroup>
+</table>
+</problem>
+<solution id="fs-id1170308753022">
+<table id="fs-id1170308753024" summary="This table holds data for 3 groups. The column labels are X number of hours spent studying, Y final exam grades, median X value and median Y value. Group one has X values of 1, 2, and 3 and Y values of 45, 50, and 51. The median X value is 2 and the median Y value is 50. Group 2 has X values of 4 and 5 and Y values of 65 and 72. The median X value is 4.5 and the median Y value is 68.5. Group 3 has X values of 6, 7, and 8 and Y values of 80, 90, and 96. The median X value is 7 and the median Y value is 90.">
+<tgroup cols="5">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<colspec colnum="3" colname="c3"/>
+<colspec colnum="4" colname="c4"/>
+<colspec colnum="5" colname="c5"/>
+<thead>
+<row>
+<entry>Group</entry>
+<entry><emphasis effect="italics">x</emphasis> (no. of hours spent studying)</entry>
+<entry><emphasis effect="italics">y</emphasis> (final exam grades)</entry>
+<entry>Median <emphasis effect="italics">x</emphasis> value</entry>
+<entry>Median <emphasis effect="italics">y</emphasis> value</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>1</entry>
+<entry>1<newline/>2<newline/>3</entry>
+<entry>45<newline/>50<newline/>51</entry>
+<entry>2</entry>
+<entry>50</entry>
+</row>
+<row>
+<entry>2</entry>
+<entry>4<newline/>5</entry>
+<entry>65<newline/>72</entry>
+<entry>4.5</entry>
+<entry>68.5</entry>
+</row>
+<row>
+<entry>3</entry>
+<entry>6<newline/>7<newline/>8</entry>
+<entry>80<newline/>90<newline/>96</entry>
+<entry>7</entry>
+<entry>90</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</solution>
+</exercise>
+<para id="eip-399"><emphasis effect="italics">Use the following information to answer the next five exercises</emphasis>. A random sample of 10 professional athletes produced the following data, where <emphasis effect="italics">x</emphasis> is the number of endorsements the player has and <emphasis effect="italics">y</emphasis> is the amount of money made, in millions of dollars.</para>
+<para id="eip-841"><table id="fs-idm76330016" summary="The table shows the x and Y axis in four columns. The table lables are X Y X Y and the rows follow from left to right: 0, 2, 5, 12, row two 3, 8, 4, 9 row three 2,7, 3, 9 row four 1, 3, 0, 3, and row five 5, 13, 4, 10.">
+<title/>
+<tgroup cols="4">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<colspec colnum="3" colname="c3"/>
+<colspec colnum="4" colname="c4"/>
+<thead>
+<row>
+<entry><emphasis effect="italics">x</emphasis></entry>
+<entry><emphasis effect="italics">y</emphasis></entry>
+<entry><emphasis effect="italics">x</emphasis></entry>
+<entry><emphasis effect="italics">y</emphasis></entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>0</entry>
+<entry>2</entry>
+<entry>5</entry>
+<entry>12</entry>
+</row>
+<row>
+<entry>3</entry>
+<entry>8</entry>
+<entry>4</entry>
+<entry>9</entry>
+</row>
+<row>
+<entry>2</entry>
+<entry>7</entry>
+<entry>3</entry>
+<entry>9</entry>
+</row>
+<row>
+<entry>1</entry>
+<entry>3</entry>
+<entry>0</entry>
+<entry>3</entry>
+</row>
+<row>
+<entry>5</entry>
+<entry>13</entry>
+<entry>4</entry>
+<entry>10</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</para><exercise id="eip-405"><problem id="eip-751">
+  <para id="eip-193">Draw a scatter plot of the data.</para>
+</problem></exercise><exercise id="eip-141">
+<problem id="eip-445">
+  <para id="eip-40">Use regression to find the equation for the line of best fit.</para></problem>
+
+<solution id="eip-780">
+  <para id="eip-377"><emphasis effect="italics">ŷ</emphasis> = 2.23 + 1.99<emphasis effect="italics">x</emphasis></para></solution>
+</exercise>
+
+<exercise id="eip-88"><problem id="eip-916">
+  <para id="eip-294">Draw the line of best fit on the scatter plot.</para></problem></exercise><exercise id="eip-247">
+<problem id="eip-279">
+  <para id="eip-140">What is the slope of the line of best fit? What does it represent?</para></problem>
+
+<solution id="eip-947">
+  <para id="eip-540">The slope is 1.99 (<emphasis effect="italics">b</emphasis> = 1.99). It means that for every endorsement deal a professional player gets, he gets an average of another $1.99 million in pay each year.</para></solution>
+</exercise>
+
+<exercise id="eip-723"><problem id="eip-19">
+  <para id="eip-418">What is the <emphasis effect="italics">y</emphasis>-intercept of the line of best fit? What does it represent?</para>
+</problem></exercise><exercise id="eip-976">
+<problem id="eip-554">
+  <para id="eip-24">What does an <emphasis effect="italics">r</emphasis> value of zero mean?</para>
+</problem>
+
+<solution id="eip-646">
+  <para id="eip-152">It means that there is no correlation between the data sets.</para>
+</solution>
+</exercise>
+<exercise id="eip-339"><problem id="eip-736">
+  <para id="eip-818">When <emphasis effect="italics">n</emphasis> = 2 and <emphasis effect="italics">r</emphasis> = 1, are the data significant? Explain.</para>
+</problem></exercise><exercise id="eip-270"><problem id="eip-87">
+  <para id="fs-idp27546736">When <emphasis effect="italics">n</emphasis> = 100 and <emphasis effect="italics">r</emphasis> = –0.89, is there a significant correlation? Explain.</para></problem>
+
+<solution id="eip-946">
+  <para id="eip-240">Yes. There are enough data points and the value of <emphasis effect="italics">r</emphasis> is strong enough to show there is a strong negative correlation between the data sets.</para></solution>
+</exercise>
+</section><section id="eip-884" class="free-response"><title>Homework</title><exercise id="eip-idp54658976"><problem id="eip-idp54659232">
+  <para id="eip-idp106876496">What is the process through which we can calculate a line that goes through a scatter plot with a linear pattern?</para>
+</problem></exercise><exercise id="eip-71"><problem id="eip-944">
+<para id="eip-284">Explain what it means when a correlation has an <emphasis effect="italics">r</emphasis><sup>2</sup> value of .72.</para></problem>
+<solution id="eip-459">
+<para id="eip-495">It means that 72 percent of the variation in the dependent variable (<emphasis effect="italics">y</emphasis>) can be explained by the variation in the independent variable (<emphasis effect="italics">x</emphasis>).</para>
+</solution></exercise><exercise id="eip-956"><problem id="eip-573">
+<para id="eip-352">Can a coefficient of determination be negative? Why or why not?</para>
+</problem></exercise>
+<exercise id="fs-id1170308330356">
+<problem id="fs-id1170308330358">
+<para id="fs-id1170308330361">The table below represents the relationship between SAT scores on the math portion of the test and high school grade point averages (GPAs).</para>
+<para id="fs-id1170308812860">Use the median-median line approach to find the equation for the line of best fit.</para><table id="fs-id1170308545813" summary="This table shows 2 columns. The left column is labeled X SAT math scores. The right column is labeled Y GPA. The first row has an X value of 624 and a Y value of 90. The next row as an X value of 544 and a Y value of 86. The next row has an X value of 363 and a Y value of 70. The next row has an X value of 373 and a Y value of 71. The next row has an X value of 350 and a Y value of 65. The next row has an X value of 741 and a Y value of 98. The next row has a X value of 262 and a Y value of 60. The next row has an X value of 587 and a Y value of 87. The next row has been X value of 327 and a Y value of 62. The next row has an X value of 364 and a Y value of 67. The last row has an X value of 261 and a Y value of 50.">
+<tgroup cols="2">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<thead>
+<row>
+<entry><emphasis effect="italics">x</emphasis> (SAT math scores)</entry>
+<entry><emphasis effect="italics">y</emphasis> (GPAs)</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>624</entry>
+<entry>90</entry>
+</row>
+<row>
+<entry>544</entry>
+<entry>86</entry>
+</row>
+<row>
+<entry>363</entry>
+<entry>70</entry>
+</row>
+<row>
+<entry>373</entry>
+<entry>71</entry>
+</row>
+<row>
+<entry>350</entry>
+<entry>65</entry>
+</row>
+<row>
+<entry>741</entry>
+<entry>98</entry>
+</row>
+<row>
+<entry>262</entry>
+<entry>60</entry>
+</row>
+<row>
+<entry>587</entry>
+<entry>87</entry>
+</row>
+<row>
+<entry>327</entry>
+<entry>62</entry>
+</row>
+<row>
+<entry>364</entry>
+<entry>67</entry>
+</row>
+<row>
+<entry>261</entry>
+<entry>50</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</problem>
+<solution id="fs-id1170308849163">
+<table id="fs-id1170308849165" summary="This table shows 2 columns. The left column is labeled X SAT math scores. The right column is labeled Y GPA. The first row has an X value of 261 and a Y value of 50. The next row has an X value of 262 and a Y value of 60. The next row has an X value of 327 and a Y value of 62. The next row has an X value of 350 and a Y value of 65. The next row has an X value of 363 and a Y value of 70. The next row has an X value of 364 and a Y value of 67. The next row has an X value of 373 and a Y value of 71. The next row has an X value of 544 and a Y value of 86. The next row has an X value of 587 and a Y value of 87. The next row has an X value of 624 and a Y value of 90. The last row has an X value of 741 and a Y value of 98.">
+<tgroup cols="2">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<thead>
+<row>
+<entry><emphasis effect="italics">x</emphasis> (SAT math scores)</entry>
+<entry><emphasis effect="italics">y</emphasis> (GPAs)</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>261</entry>
+<entry>50</entry>
+</row>
+<row>
+<entry>262</entry>
+<entry>60</entry>
+</row>
+<row>
+<entry>327</entry>
+<entry>62</entry>
+</row>
+<row>
+<entry>350</entry>
+<entry>65</entry>
+</row>
+<row>
+<entry>363</entry>
+<entry>70</entry>
+</row>
+<row>
+<entry>364</entry>
+<entry>67</entry>
+</row>
+<row>
+<entry>373</entry>
+<entry>71</entry>
+</row>
+<row>
+<entry>544</entry>
+<entry>86</entry>
+</row>
+<row>
+<entry>587</entry>
+<entry>87</entry>
+</row>
+<row>
+<entry>624</entry>
+<entry>90</entry>
+</row>
+<row>
+<entry>741</entry>
+<entry>98</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<para id="fs-id1170308297050">We must remember to check the order of the <emphasis effect="italics">y</emphasis> values within each group as well. We notice that the <emphasis effect="italics">y</emphasis> values in the second group are not in order from the least value to the greatest value; these values thus must be reordered, meaning the median <emphasis effect="italics">y</emphasis> value for that group is 70.</para><table id="fs-id1170308482000" summary="This table holds data for 3 groups. The column labels are X SAT math scores, Y GPA, median X value and median Y value. Group one has X values of 261, 262, 327, 350 and Y values of 50, 60, 62, and 65. The median X value is 294.5 and the median Y value is 61. Group 2 has X values of 363, 364 and 373 and Y values of 67, 70 and 71. The median X value is 364 and the median Y value is 70. Group 3 has X values of 544, 587, 624 and 741 and Y values of 86, 87, 90 and 98. The median X value is 605.5 and the median Y value is 88.5">
+<tgroup cols="5">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<colspec colnum="3" colname="c3"/>
+<colspec colnum="4" colname="c4"/>
+<colspec colnum="4" colname="c5"/>
+<thead>
+<row>
+<entry>Group</entry>
+<entry><emphasis effect="italics">x</emphasis> (SAT math scores)</entry>
+<entry><emphasis effect="italics">y</emphasis> (GPAs)</entry>
+<entry>Median <emphasis effect="italics">x</emphasis> value</entry>
+<entry>Median <emphasis effect="italics">y</emphasis> value</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>1</entry>
+<entry>261<newline/>262<newline/>327<newline/>350</entry>
+<entry>50<newline/>60<newline/>62<newline/>65</entry>
+<entry>294.5</entry>
+<entry>61</entry>
+</row>
+<row>
+<entry>2</entry>
+<entry>363<newline/>364<newline/>373</entry>
+<entry>67<newline/>70<newline/>71</entry>
+<entry>364</entry>
+<entry>70</entry>
+</row>
+<row>
+<entry>3</entry>
+<entry>544<newline/>587<newline/>624<newline/>741</entry>
+<entry>86<newline/>87<newline/>90<newline/>98</entry>
+<entry>605.5</entry>
+<entry>88.5</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<para id="fs-id1170308332499">The ordered pairs are (294.5, 61), (364, 70), and (605.5, 88.5).</para>
+<para id="fs-id1170308332502">The slope can be calculated using the formula <m:math>
+ <m:mrow>
+  <m:mi>m</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:msub>
+     <m:mi>y</m:mi>
+     <m:mn>3</m:mn>
+    </m:msub>
+    <m:mo>−</m:mo><m:msub>
+     <m:mi>y</m:mi>
+     <m:mn>1</m:mn>
+    </m:msub>
+
+   </m:mrow>
+   <m:mrow>
+    <m:msub>
+     <m:mi>x</m:mi>
+     <m:mn>3</m:mn>
+    </m:msub>
+    <m:mo>−</m:mo><m:msub>
+     <m:mi>x</m:mi>
+     <m:mn>1</m:mn>
+    </m:msub>
+
+   </m:mrow>
+  </m:mfrac>
+  <m:mtext>.</m:mtext>
+ </m:mrow>
+</m:math> Substituting the median <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis> values, from the first and third groups gives <m:math>
+ <m:mrow>
+  <m:mi>m</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:mn>88.5</m:mn><m:mo>−</m:mo><m:mn>61</m:mn>
+   </m:mrow>
+   <m:mrow>
+    <m:mn>605.5</m:mn><m:mo>−</m:mo><m:mn>294.5</m:mn>
+   </m:mrow>
+  </m:mfrac>
+<m:mtext>,</m:mtext>
+ </m:mrow>
+</m:math> which simplifies to <m:math>
+ <m:mrow>
+  <m:mi>m</m:mi><m:mo>≈</m:mo><m:mn>0.09</m:mn>
+<m:mtext>.</m:mtext>
+ </m:mrow>
+</m:math></para>
+<para id="fs-id1170308376805">The y-intercept may be found using the formula <m:math>
+ <m:mrow>
+  <m:mi>b</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:mstyle displaystyle="true">
+     <m:mo>∑</m:mo> <m:mrow>
+      <m:mi>y</m:mi><m:mo>−</m:mo><m:mi>m</m:mi><m:mstyle displaystyle="true">
+       <m:mo>∑</m:mo> <m:mi>x</m:mi>
+      </m:mstyle>
+     </m:mrow>
+    </m:mstyle>
+   </m:mrow>
+   <m:mn>3</m:mn>
+  </m:mfrac>
+  <m:mtext>.</m:mtext>
+ </m:mrow>
+</m:math> The sum of the median <emphasis effect="italics">x</emphasis> values is 1264, and the sum of the median <emphasis effect="italics">y</emphasis> values is 219.5. Substituting these sums and the slope into the formula gives <m:math>
+ <m:mrow>
+  <m:mi>b</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:mn>219.5</m:mn><m:mo>−</m:mo><m:mn>0.09</m:mn><m:mo stretchy="false">(</m:mo><m:mn>1264</m:mn><m:mo stretchy="false">)</m:mo>
+   </m:mrow>
+   <m:mn>3</m:mn>
+  </m:mfrac>
+  <m:mtext>,</m:mtext>
+ </m:mrow>
+</m:math> which simplifies to <m:math>
+ <m:mrow>
+  <m:mi>b</m:mi><m:mo>≈</m:mo><m:mn>35.25</m:mn>
+<m:mtext>.</m:mtext>
+ </m:mrow>
+</m:math></para>
+<para id="fs-id1170308317633">The line of best fit is represented as <m:math>
+ <m:mrow>
+  <m:mi>y</m:mi><m:mo>=</m:mo><m:mi>m</m:mi><m:mi>x</m:mi><m:mo>+</m:mo><m:mi>b</m:mi>
+ </m:mrow>
+</m:math>. Thus, the equation can be written as <m:math>
+ <m:mrow>
+  <m:mi>y</m:mi><m:mo>=</m:mo><m:mn>0.09</m:mn><m:mi>x</m:mi><m:mo>+</m:mo><m:mn>35.25</m:mn>
+ <m:mtext>.</m:mtext></m:mrow>
+</m:math></para>
+</solution>
+</exercise>
+</section>
+   </content>
+<glossary>
+<definition id="coeffcorr">
+    <term>coefficient of correlation</term>
+    <meaning id="id1167925021109">a measure developed by Karl Pearson during the early 1900s that gives the strength of association between the independent variable and the dependent variable;
+<equation class="unnumbered" id="fs-id1170309748850"><label/><m:math>
+ <m:mrow>
+  <m:mi>r</m:mi><m:mo>=</m:mo><m:mfrac>
+   <m:mrow>
+    <m:mi>n</m:mi><m:msup>
+     <m:mrow>
+      <m:msup>
+       <m:mstyle mathsize="140%" displaystyle="true"><m:mo>∑</m:mo></m:mstyle>
+       <m:mtext>​</m:mtext>
+      </m:msup>
+
+     </m:mrow>
+     <m:mtext>​</m:mtext>
+    </m:msup>
+    <m:mi>x</m:mi><m:mi>y</m:mi><m:mo>−</m:mo><m:mo stretchy="false">[</m:mo><m:msup>
+     <m:mrow>
+      <m:msup>
+       <m:mstyle mathsize="140%" displaystyle="true"><m:mo>∑</m:mo></m:mstyle>
+       <m:mtext>​</m:mtext>
+      </m:msup>
+
+     </m:mrow>
+     <m:mtext>​</m:mtext>
+    </m:msup>
+    <m:mi>x</m:mi><m:mo stretchy="false">]</m:mo><m:mo stretchy="false">[</m:mo><m:msup>
+     <m:mrow>
+      <m:msup>
+       <m:mstyle mathsize="140%" displaystyle="true"><m:mo>∑</m:mo></m:mstyle>
+       <m:mtext>​</m:mtext>
+      </m:msup>
+
+     </m:mrow>
+     <m:mtext>​</m:mtext>
+    </m:msup>
+    <m:mi>y</m:mi><m:mo stretchy="false">]</m:mo>
+   </m:mrow>
+   <m:mrow>
+    <m:msqrt>
+     <m:mrow>
+      <m:mo stretchy="false">(</m:mo><m:mi>n</m:mi><m:msup>
+       <m:mrow>
+        <m:msup>
+         <m:mstyle mathsize="140%" displaystyle="true"><m:mo>∑</m:mo></m:mstyle>
+         <m:mtext>​</m:mtext>
+        </m:msup>
+
+       </m:mrow>
+       <m:mtext>​</m:mtext>
+      </m:msup>
+      <m:msup>
+       <m:mi>x</m:mi>
+       <m:mn>2</m:mn>
+      </m:msup>
+      <m:mo>−</m:mo><m:msup>
+       <m:mrow>
+        <m:mo stretchy="false">[</m:mo><m:msup>
+         <m:mrow>
+          <m:msup>
+           <m:mstyle mathsize="140%" displaystyle="true"><m:mo>∑</m:mo></m:mstyle>
+           <m:mtext>​</m:mtext>
+          </m:msup>
+
+         </m:mrow>
+         <m:mtext>​</m:mtext>
+        </m:msup>
+        <m:mi>x</m:mi><m:mo stretchy="false">]</m:mo>
+       </m:mrow>
+       <m:mn>2</m:mn>
+      </m:msup>
+      <m:mo stretchy="false">)</m:mo><m:mo stretchy="false">(</m:mo><m:mi>n</m:mi><m:msup>
+       <m:mrow>
+        <m:msup>
+         <m:mstyle mathsize="140%" displaystyle="true"><m:mo>∑</m:mo></m:mstyle>
+         <m:mtext>​</m:mtext>
+        </m:msup>
+
+       </m:mrow>
+       <m:mtext>​</m:mtext>
+      </m:msup>
+      <m:msup>
+       <m:mi>y</m:mi>
+       <m:mn>2</m:mn>
+      </m:msup>
+      <m:mo>−</m:mo><m:msup>
+       <m:mrow>
+        <m:mo stretchy="false">[</m:mo><m:msup>
+         <m:mrow>
+          <m:msup>
+           <m:mstyle mathsize="140%" displaystyle="true"><m:mo>∑</m:mo></m:mstyle>
+           <m:mtext>​</m:mtext>
+          </m:msup>
+
+         </m:mrow>
+         <m:mtext>​</m:mtext>
+        </m:msup>
+        <m:mi>y</m:mi><m:mo stretchy="false">]</m:mo>
+       </m:mrow>
+       <m:mn>2</m:mn>
+      </m:msup>
+      <m:mo stretchy="false">)</m:mo>
+     </m:mrow>
+    </m:msqrt>
+
+   </m:mrow>
+  </m:mfrac>
+
+ </m:mrow>
+</m:math>
+</equation>
+where <emphasis effect="italics">n</emphasis> is the number of data points
+<newline/>The coefficient cannot be more than 1 and less than –1. The closer the coefficient is to ±1, the stronger the evidence of a significant linear relationship between <emphasis effect="italics">x</emphasis> and <emphasis effect="italics">y</emphasis>.
+    </meaning>
+  </definition>
+
+
+</glossary>
+</document>

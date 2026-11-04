@@ -1,0 +1,406 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+  <title>Box Plots</title>
+  <metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m79603</md:content-id>
+  <md:title>Box Plots</md:title>
+  <md:abstract/>
+  <md:uuid>060e0986-453e-4ccc-b506-06fe9772554b</md:uuid>
+</metadata>
+
+<content>
+<section id="fs-id1164563362122">
+<para id="eip-123456789"><term id="term-00001">Box plots</term>, also called <term id="term-00002">box-and-whisker plots</term> or <term id="term-00003">box-whisker plots</term>, give a good graphical image of the concentration of the data. They also show how far the extreme values are from most of the data. As mentioned previously, a box plot is constructed from five values: the minimum value, the first quartile, the median, the third quartile, and the maximum value. We use these values to compare how close other data values are to them.</para><para id="element-175">To construct a box plot, use a horizontal or vertical number line and a rectangular box. The smallest and largest data values label the endpoints of the axis. The first quartile marks one end of the box, and the third quartile marks the other end of the box. Approximately <emphasis>the middle 50 percent of the data fall inside the box.</emphasis> The <emphasis effect="italics">whiskers</emphasis> extend from the ends of the box to the smallest and largest data values. A box plot easily shows the range of a data set, which is the difference between the largest and smallest data values (or the difference between the maximum and minimum). Unless the median, first quartile, and third quartile are the same value, the median will lie inside the box or between the first and third quartiles. The box plot gives a good, quick picture of the data.</para>
+
+<note id="eip-724">
+<label/><title>NOTE</title>
+<para id="eip-idp95320688">You may encounter box-and-whisker plots that have dots marking outlier values. In those cases, the whiskers are not extending to the minimum and maximum values.</para>
+</note>
+
+<para id="element-476">Consider, again, this data set:</para><para id="element-238907">1, 1, 2, 2, 4, 6, 6.8, 7.2, 8, 8.3, 9, 10, 10, 11.5
+</para><para id="element-23123">The first quartile is two, the median is seven, and the third quartile is nine. The smallest value is one, and the largest value is 11.5. The following image shows the constructed box plot.</para>
+
+<note id="fs-idp40306080"><label/><title>NOTE</title>
+<para id="eip-idp22327712">See the calculator instructions on the <link url="https://education.ti.com/en/professional-development/webinars-and-tutorials/technology-tutorials">TI website</link> or in the appendix.</para></note>
+<figure id="fs-idp11793488"><media id="id8621327" alt="Horizontal boxplot's first whisker extends from the smallest value, 1, to the first quartile, 2, the box begins at the first quartile and extends to the third quartile, 9, a vertical dashed line is drawn at the median, 7, and the second whisker extends from the third quartile to the largest value of 11.5." display="block"><image src="../../media/fig-ch_02_05_01.jpg" mime-type="image/jpg" width="420"/></media>
+</figure><para id="element-303">The two whiskers extend from the first quartile to the smallest value and from the third quartile to the largest value. The median is shown with a dashed line.</para>
+
+<note id="fs-idp59493440"><label/><title>NOTE</title>
+<para id="fs-idp69379904">It is important to start a box plot with a <emphasis effect="bold">scaled number line</emphasis>. Otherwise, the box plot may not be useful.</para>
+</note><example id="element-32"><para id="element-676">The following data are the heights of 40 students in a statistics class:</para><para id="element-731">59, 60, 61, 62, 62, 63, 63, 64, 64, 64, 65, 65, 65, 65, 65, 65, 65, 65, 65, 66, 66, 67, 67, 68, 68, 69, 70, 70, 70, 70, 70, 71, 71, 72, 72, 73, 74, 74, 75, 77.</para><para id="element-483">Construct a box plot with the following properties. Calculator instructions for finding the five number summary follow this example:</para>
+<list id="element-172" list-type="bulleted"><item>Minimum value = 59</item>
+<item>Maximum value = 77</item>
+<item><emphasis effect="italics">Q</emphasis><sub>1</sub>: First quartile = 64.5</item>
+<item><emphasis effect="italics">Q</emphasis><sub>2</sub>: Second quartile or median = 66</item>
+<item><emphasis effect="italics">Q</emphasis><sub>3</sub>: Third quartile = 70</item>
+</list><figure id="fs-idm18897872"><media id="id1164416794841" alt="Horizontal boxplot with first whisker extending from smallest value, 59, to Q1, 64.5, box beginning from Q1 to Q3, 70, median dashed line at Q2, 66, and second whisker extending from Q3 to largest value, 77." display="block"><image src="../../media/fig-ch_02_05_02.jpg" mime-type="image/jpg" width="420"/></media>
+</figure><list id="element-754" mark-suffix="." list-type="enumerated" number-style="lower-alpha"><item>Each quarter has approximately 25 percent of the data.</item>
+<item>The spreads of the four quarters are 64.5 – 59 = 5.5 (first quarter), 66 – 64.5 = 1.5 (second quarter), 70 – 66 = 4 (third quarter), and 77 – 70 = 7 (fourth quarter). So, the second quarter has the smallest spread, and the fourth quarter has the largest spread.</item>
+<item>Range = maximum value – minimum value = 77 – 59 = 18.</item>
+<item>Interquartile Range: <emphasis effect="italics">IQR</emphasis> = <emphasis effect="italics">Q</emphasis>3 – <emphasis effect="italics">Q</emphasis>1 = 70 – 64.5 = 5.5.</item>
+<item>The interval 59–65 has more than 25 percent of the data, so it has more data in it than the interval 66–70, which has 25 percent of the data.</item>
+<item>The middle 50 percent (middle half) of the data has a range of 5.5 inches.</item>
+</list></example>
+
+<note id="fs-idp87772032" class="statistics calculator"><label/>
+<para id="fs-idm41967520">To find the minimum, maximum, and quartiles:</para>
+<para id="fs-idp68357280">Enter data into the list editor (Pres STAT 1:EDIT). If you need to clear the list, arrow up to the name L1, press CLEAR, and then arrow down.</para>
+<para id="fs-idp62743968">Put the data values into the list L1.</para>
+<para id="fs-idp69578208">Press STAT and arrow to CALC. Press 1:1-VarStats. Enter L1.</para>
+<para id="fs-idp74492720">Press ENTER.</para>
+<para id="fs-idp69067168">Use the down and up arrow keys to scroll.</para>
+<para id="fs-idp53473856">Smallest value = 59.</para>
+<para id="fs-idp58572832">Largest value = 77.</para>
+<para id="fs-idp87802880"><emphasis effect="italics">Q</emphasis><sub>1</sub>: First quartile = 64.5.</para><para id="fs-idp30335392"><emphasis effect="italics">Q</emphasis><sub>2</sub>: Second quartile or median = 66.</para><para id="fs-idp53554416"><emphasis effect="italics">Q</emphasis><sub>3</sub>: Third quartile = 70.<newline count="2"/></para><para id="fs-idp67418928">To construct the box plot:</para>
+<para id="fs-idp65417472">Press 4:Plotsoff. Press ENTER.</para>
+<para id="fs-idm19087248">Arrow down and then use the right arrow key to go to the fifth picture, which is the box plot. Press ENTER.</para>
+<para id="fs-idp74884208">Arrow down to Xlist: Press 2<sup>nd</sup> 1 for L1.</para>
+<para id="fs-idp72873744">Arrow down to Freq: Press ALPHA. Press 1.</para>
+<para id="fs-idp75665280">Press Zoom. Press 9: ZoomStat.</para>
+<para id="fs-idp65135968">Press TRACE and use the arrow keys to examine the box plot.</para>
+</note><note id="fs-idp31328448" class="statistics try"><label/>
+<title>Try It</title>
+<exercise id="fs-idp52595328"><problem id="fs-idm27882400">
+<para id="fs-idp69268960">The following data are the number of pages in 40 books on a shelf. Construct a box plot using a graphing calculator and state the interquartile range.</para>
+<para id="fs-idm41586448">136, 140, 178, 190, 205, 215, 217, 218, 232, 234, 240, 255, 270, 275, 290, 301, 303, 315, 317, 318, 326, 333, 343, 349, 360, 369, 377, 388, 391, 392, 398, 400, 402, 405, 408, 422, 429, 450, 475, 512</para></problem>
+<solution id="fs-idp22044528">
+<label/>
+<figure id="fs-idm17008240"><media id="fs-idp24844528" alt="This box plot shows that the interquartile range of the number of pages in 40 books on a shelf is 320 pages. With most of the books falling between 240 and 390." display="block">
+<image src="../../media/CNX_Stats_C02_M05_tryit001.png" mime-type="image/png" width="550"/>
+</media>
+</figure><para id="fs-idp29581536"><emphasis effect="italics">IQR</emphasis> = 158</para>
+</solution>
+</exercise></note>
+
+<para id="element-155">For some sets of data, some of the largest value, smallest value, first quartile, median, and third quartile may be the same. For instance, you might have a data set in which the median and the third quartile are the same. In this case, the diagram would not have a dotted line inside the box displaying the median. The right side of the box would display both the third quartile and the median. For example, if the smallest value and the first quartile were both one, the median and the third quartile were both five, and the largest value was seven, the box plot would look like the following:</para>
+<figure id="fs-idm16338080">
+<media id="id1164414369705" alt="Horizontal boxplot box begins at the smallest value and Q1, 1, until the Q3 and median, 5, no median line is designated, and has its lone whisker extending from the Q3 to the largest value, 7." display="block"><image src="../../media/fig-ch_02_05_03.jpg" mime-type="image/jpg" width="380"/></media>
+</figure>
+<para id="fs-idm26870032">In this case, at least 25 percent of the values are equal to one. Twenty-five percent of the values are between one and five, inclusive. At least 25 percent of the values are equal to five. The top 25 percent of the values fall between five and seven, inclusive.</para>
+
+
+<example id="element-583"><para id="element-601">Test scores for Mr. Ramirez's class held during the day are as follows:</para><para id="element-891">99, 56, 78, 55.5, 32, 90, 80, 81, 56, 59, 45, 77, 84.5, 84, 70, 72, 68, 32, 79, 90.</para><para id="element-212">Test scores for Ms. Park's class held during the evening are as follows:</para><para id="element-763">98, 78, 68, 83, 81, 89, 88, 76, 65, 45, 98, 90, 80, 84.5, 85, 79, 78, 98, 90, 79, 81, 25.5.
+</para><exercise id="element-23526"><problem id="id1164420007817">
+<list id="element-778" list-type="enumerated" number-style="lower-alpha"><item>Find the smallest and largest values, the median, and the first and third quartile for Mr. Ramirez's class.</item>
+<item>Find the smallest and largest values, the median, and the first and third quartile for Ms. Park's class.</item>
+<item>For each data set, what percentage of the data is between the smallest value and the first quartile? the first quartile and the median? the median and the third quartile? the third quartile and the largest value? What percentage of the data is between the first quartile and the largest value?</item>
+<item>Create a box plot for each set of data. Use one number line for both box plots.</item>
+<item>Which box plot has the widest spread for the middle 50 percent of the data,the data between the first and third quartiles? What does this mean for that set of data in comparison to the other set of data?</item>
+</list></problem>
+<solution id="element-601s" print-placement="end">
+<list id="element-106" list-type="enumerated" number-style="lower-alpha"><item><list id="eip-idp9991488" list-type="labeled-item">
+<!--<title>First Data Set</title>-->
+<item>Min = 32</item>
+<item><emphasis effect="italics">Q</emphasis><sub>1</sub> = 56</item>
+<item><emphasis effect="italics">M</emphasis> = 74.5</item>
+<item><emphasis effect="italics">Q</emphasis><sub>3</sub> = 82.5</item>
+<item>Max = 99</item>
+
+</list>
+</item>
+<item>
+<list id="element-1062" list-type="labeled-item">
+<!--<title>Second Data Set</title>-->
+<item>Min = 25.5</item>
+<item><emphasis effect="italics">Q</emphasis><sub>1</sub> = 78</item>
+<item><emphasis effect="italics">M</emphasis> = 81</item>
+<item><emphasis effect="italics">Q</emphasis><sub>3</sub> = 89</item>
+<item>Max = 98</item>
+</list></item>
+<item>Mr. Ramirez's class: There are six data values ranging from 32 to 56: 30 percent. There are six data values ranging from 56 to 74.5: 30 percent. There are five data values ranging from 74.5 to 82.5: 25 percent. There are five data values ranging from 82.5 to 99: 25 percent. There are 16 data values between the first quartile, 56, and the largest value, 99: 80 percent. Ms. Park’s class: There are seven data values ranging from 25.5 to 78: 32 percent. There are seven data values ranging from 78 through 32 percent. There are seven data values ranging 81 to 89: 32 percent. There are six data values ranging from 89 to 98: 27 percent. There are 17 values between the first quartile, 78, and the largest value, 98: 77 percent.</item>
+<item>
+<figure id="fs-idp65829088">
+<media id="id1164411411845" alt="Two box plots over a number line from 0 to 100. The top plot shows a whisker from 32 to 56, a solid line at 56, a dashed line at 74.5, a solid line at 82.5, and a whisker from 82.5 to 99. The lower plot shows a whisker from 25.5 to 78, solid line at 78, dashed line at 81, solid line at 89, and a whisker from 89 to 98." display="block"><image src="../../media/fig-ch02_sol_01.jpg" mime-type="image/jpg" width="380"/></media>
+</figure>
+</item>
+<item>The first data set has the wider spread for the middle 50 percent of the data. The <emphasis effect="italics">IQR</emphasis> for the first data set is greater than the <emphasis effect="italics">IQR</emphasis> for the second set. This means that there is more variability in the middle 50 percent of the first data set.</item>
+</list></solution></exercise></example>
+
+<note id="fs-idp63834272" class="statistics try finger"><label/><title>Try It</title>
+<exercise id="fs-idm19314304">
+<problem id="fs-idm1151200">
+<para id="fs-idp29298016">The following data set shows the heights in inches for the boys in a class of 40 students:</para><para id="fs-idm35019456">66, 66, 67, 67, 68, 68, 68, 68, 68, 69, 69, 69, 70, 71, 72, 72, 72, 73, 73, 74.
+<newline/>The following data set shows the heights in inches for the girls in a class of 40 students:
+<newline/>61 61, 62, 62, 63, 63, 63, 65, 65, 65, 66, 66, 66, 67, 68, 68, 68, 69, 69, 69.
+<newline/>Construct a box plot using a graphing calculator for each data set, and state which box plot has the wider spread for the middle 50 percent of the data.</para></problem>
+
+<solution id="fs-idm27227056">
+<label/>
+<figure id="fs-idm27585392"><media id="fs-idp8262608" alt="All boys in the class have heights between 66 and 74, with most falling between 68 and 72, the most heights for boys are 69. For girls, the highs of the class fall between 61 and 69, with most falling between 63 and 68. The most highs for the girls are 65.5.">
+<image src="../../media/CNX_Stats_C02_M05_tryit002.png" mime-type="image/png" width="450"/>
+</media>
+</figure><para id="fs-idm40065088"><emphasis effect="italics">IQR</emphasis> for the boys = 4</para>
+<para id="fs-idp27578208"><emphasis effect="italics">IQR</emphasis> for the girls = 5</para>
+<para id="fs-idm14240336">The box plot for the heights of the girls has the wider spread for the middle 50% of the data.</para>
+</solution>
+</exercise></note>
+
+
+<example id="fs-idm38612912">
+<para id="fs-idm15332992">Graph a box-and-whisker plot for the following data values shown:</para><para id="fs-idp63131872">10, 10, 10, 15, 35, 75, 90, 95, 100, 175, 420, 490, 515, 515, 790</para><para id="fs-idp59445184">The five numbers used to create a box-and-whisker plot are as follows:</para>
+<list id="fs-idp3956176" list-type="labeled-item">
+<item>Min: 10</item>
+<item><emphasis effect="italics">Q</emphasis><sub>1</sub>: 15</item>
+<item>Med: 95</item>
+<item><emphasis effect="italics">Q</emphasis><sub>3</sub>: 490</item>
+<item>Max: 790</item>
+</list>
+<para id="fs-idp68810672">The following graph shows the box-and-whisker plot.</para><figure id="fs-idm67197680"><media id="fs-idp52050960" alt="This graph and whisker plot shows the numbers 10, 15, 95, 490, and 790 represented on a line plot. The markings are from 10 to 790 with the range being from 15 to 490 and the median being 95."><image mime-type="image/jpg" src="../../media/CNX_Stats_C02_M05_015.jpg" width="420"/>
+</media>
+</figure></example>
+
+
+
+<note id="fs-idp43137808" class="statistics try"><label/><title>Try It</title>
+<exercise id="eip-idp22858976">
+<problem id="eip-idp22859232">
+    <para id="fs-idm36238000">Follow the steps you used to graph a box-and-whisker plot for the data values shown:</para><para id="fs-idm33689504">0, 5, 5, 15, 30, 30, 45, 50, 50, 60, 75, 110, 140, 240, 330</para></problem>
+
+<solution id="eip-idp104865440">
+<para id="eip-idm48384384">The data are in order from least to greatest. There are 15 values, so the eighth number in order is the median: 50. There are seven data values written to the left of the median and 7 values to the right. The five values that are used to create the boxplot are:</para>
+    <list id="listtry" list-type="labeled-item">
+        <item>Min: 0</item>
+        <item><emphasis effect="italics">Q</emphasis><sub>1</sub>: 15</item>
+        <item>Med: 50</item>
+        <item><emphasis effect="italics">Q</emphasis><sub>3</sub>: 110</item>
+        <item>Max: 330</item>
+    </list>
+    <figure id="figtry"><media id="mmdtry" alt="This box and whisker plot shows the numbers 0 50 100 150 200 250 300 and 350 represented on a line plot. The markings are from 0 to 325 with the range being from 25 to 125 and the median being 50."><image mime-type="image/jpg" src="../../media/CNX_Stats_C02_M04_100.jpg" width="420"/>
+    </media>
+    </figure></solution>
+
+</exercise>
+</note>
+</section>
+<section id="fs-idp34607616" class="references">
+<title>References</title>
+<!-- <para id="fs-id1164562238419">West Magazine. Retrieved from https://westmagazine.net/.</para> -->
+<para id="fs-id1164965447951"><emphasis effect="italics">West Magazine</emphasis>. (n.d.). Retrieved from https://westmagazine.net/</para>
+</section>
+<section id="fs-idp44166016" class="summary">
+<title>Chapter Review</title>
+<para id="fs-idp62162768">Box plots are a type of graph that can help visually organize data. Before a box plot can be graphed, the following data points must be calculated: the minimum value, the first quartile, the median, the third quartile, and the maximum value. Once the box plot is graphed, you can display and compare distributions of data.</para></section>
+
+<section id="fs-idm61864272" class="practice">
+<para id="fs-idp75507648">Sixty-five randomly selected car salespersons were asked the number of cars they generally sell in one week. Fourteen people answered that they generally sell three cars, 19 generally sell four cars, 12 generally sell five cars, nine generally sell six cars, and 11 generally sell seven cars.</para>
+
+<exercise id="fs-idm23427584">
+<problem id="fs-idm58196288">
+<para id="element-580">Construct a box plot below. Use a ruler to measure and scale accurately.</para>
+</problem>
+</exercise>
+
+<exercise id="fs-idm39140224">
+<problem id="fs-idp35412208">
+<para id="element-797">Looking at your box plot, does it appear that the data are concentrated together, spread out evenly, or concentrated in some areas but not in others? How can you tell?</para>
+</problem>
+<solution id="fs-idp72108720">
+<para id="fs-idp104832256">More than 25 percent of salespersons sell four cars in a typical week. You can see this concentration in the box plot because the first quartile is equal to the median. The top 25 percent and the bottom 25 percent are spread out evenly; the whiskers have the same length.</para>
+</solution>
+</exercise>
+</section>
+
+<section id="fs-idp27456352" class="free-response">
+<title>Homework</title><exercise id="fs-idp68490208">
+<problem id="fs-idp68490464">
+<para id="fs-idp42452688">In a survey of 20-year-olds in China, Germany, and the United States, people were asked the number of foreign countries they had visited in their lifetime. The following box plots display the results:</para><figure id="fs-idm75185920">
+<media id="fs-idm9643216" alt="This shows three boxplots graphed over a number line from 0 to 11. The boxplots match the supplied data, and compare the countries' results. The China boxplot has a single whisker from 0 to 5. The Germany box plot's median is equal to the third quartile, so there is a dashed line at right edge of box. The America boxplot does not have a left whisker." display="block"><image src="../../media/fig-ch02_13_01_rev.jpg" mime-type="image/jpg" width="420"/></media>
+</figure>
+
+<list id="fs-idm29105040" list-type="enumerated" number-style="lower-alpha"><item>In complete sentences, describe what the shape of each box plot implies about the distribution of the data collected.</item>
+<item>Have more Americans or more Germans surveyed been to more than eight foreign countries?</item>
+<item>Compare the three box plots. What do they imply about the foreign travel of 20-year-old residents of the three countries when compared to each other?</item></list></problem>
+</exercise>
+
+<exercise id="element-606"><problem id="id4047646">
+<para id="fs-idm12685520">Given the following box plot, answer the questions.</para><figure id="fs-idp53170192">
+<media id="id4992419" alt="This is a boxplot graphed over a number line from 0 to 150. There is no first, or left, whisker. The box starts at the first quartile, 0, and ends at the third quartile, 80. A vertical, dashed line marks the median, 20. The second whisker extends the third quartile to the largest value, 150." display="block"><image src="../../media/fig-ch02_13_03.jpg" mime-type="image/jpg" width="400"/></media>
+</figure>
+<list id="element-554" mark-suffix="." list-type="enumerated" number-style="lower-alpha"><item>Think of an example (in words) where the data might fit into the above box plot. In two to five sentences, write down the example.</item>
+<item>What does it mean to have the first and second quartiles so close together, while the second to third quartiles are far apart?</item></list></problem>
+<solution id="fs-idp61525024">
+<list id="fs-idp69928608" list-type="enumerated" number-style="lower-alpha">
+<item>Answers will vary. Possible answer: State University conducted a survey to see how involved its students are in community service. The box plot shows the number of community service hours logged by participants over the past year.</item>
+<item>Because the first and second quartiles are close, the data in this quarter is very similar. There is not much variation in the values. The data in the third quarter is much more variable, or spread out. This is clear because the second quartile is so far away from the third quartile.</item>
+</list></solution>
+</exercise>
+
+<exercise id="element-990"><problem id="id9907048">
+<para id="element-499">Given the following box plots, answer the questions.</para><figure id="fs-idm76469696">
+<media id="id4260732" alt="This shows two boxplots graphed over number lines from 0 to 7. The first whisker in the data 1 boxplot extends from 0 to 2. The box begins at the firs quartile, 2, and ends at the third quartile, 5. A vertical, dashed line marks the median at 4. The second whisker extends from the third quartile to the largest value, 7. The first whisker in the data 2 box plot extends from 0 to 1.3. The box begins at the first quartile, 1.3, and ends at the third quartile, 2.5. A vertical, dashed line marks the medial at 2. The second whisker extends from the third quartile to the largest value, 7." display="block"><image src="../../media/fig-ch02_13_06.jpg" mime-type="image/jpg" width="400"/></media>
+</figure>
+<list id="element-718" mark-suffix="." list-type="enumerated" number-style="lower-alpha"><item>In complete sentences, explain why each statement is false.
+<list id="nestlist13" mark-suffix="." list-type="enumerated" number-style="lower-roman"><item><emphasis>Data 1</emphasis> has more data values above two than <emphasis>Data 2</emphasis> has above two.</item>
+<item>The data sets cannot have the same mode.</item>
+<item>For <emphasis>Data 1</emphasis>, there are more data values below four than there are above four.</item>
+</list></item>
+<item>For which group, Data 1 or Data 2, is the value of 7 more likely to be an outlier? Explain why in complete sentences.</item></list></problem>
+</exercise>
+
+<exercise id="fs-idp23710160"><problem id="fs-idp61030656">
+<para id="fs-idp61030912">A survey was conducted of 130 purchasers of new black sports cars, 130 purchasers of new red sports cars, and 130 purchasers of new white sports cars. In it, people were asked the age they were when they purchased their car. The following box plots display the results:</para><figure id="fs-idm78146976">
+<media id="fs-idp33210608" alt="This shows three boxplots graphed over a number line from 25 to 80. The first whisker on the BMW 3 plot extends from 25 to 30. The box begins at the firs quartile, 30 and ends at the thir quartile, 41. A verical, dashed line marks the median at 34. The second whisker extends from the third quartile to 66. The first whisker on the BMW 5 plot extends from 31 to 40. The box begins at the firs quartile, 40, and ends at the third quartile, 55. A vertical, dashed line marks the median at 41. The second whisker extends from 55 to 64. The first whisker on the BMW 7 plot extends from 35 to 41. The box begins at the first quartile, 41, and ends at the third quartile, 59. A vertical, dashed line marks the median at 46. The second whisker extends from 59  to 68." display="block"><image src="../../media/fig-ch02_13_07.jpg" mime-type="image/jpg" width="400"/></media>
+</figure>
+<list id="element-24" list-type="enumerated" number-style="lower-alpha"><item>In complete sentences, describe what the shape of each box plot implies about the distribution of the data collected for that car series.</item>
+<item>Which group is most likely to have an outlier? Explain how you determined that.</item>
+<item>Compare the three box plots. What do they imply about the age of purchasing a sports car from the series when compared to each other?</item>
+<item>Look at the red sports cars. Which quarter has the smallest spread of data? What is the spread?</item>
+<item>Look at the red sports cars. Which quarter has the largest spread of data? What is the spread?</item>
+<item>Look at the red sports cars. Estimate the interquartile range (<emphasis effect="italics">IQR</emphasis>).</item>
+<item>Look at the red sports cars. Are there more data in the interval 31–38 or in the interval 45–55? How do you know this?</item>
+<item>Look at the red sports cars. Which interval has the fewest data in it? How do you know this?
+<list id="fs-idp34051952" mark-suffix="." list-type="enumerated" number-style="lower-roman"><item>31–35</item>
+<item>38–41</item>
+<item>41–64</item>
+</list></item>
+</list></problem>
+<solution id="fs-idp2465296">
+<list id="fs-idp2465552" list-type="enumerated" number-style="lower-alpha"><item>Each box plot is spread out more in the greater values. Each plot is skewed to the right, so the ages of the top 50 percent of buyers are more variable than the ages of the lower 50 percent.</item>
+<item>The black sports car is most likely to have an outlier. It has the longest whisker.</item>
+<item>Comparing the median ages, younger people tend to buy the black sports car, while older people tend to buy the white sports car. However, this is not a rule, because there is so much variability in each data set.</item>
+<item>The second quarter has the smallest spread. There seems to be only a three-year difference between the first quartile and the median.</item>
+<item>The third quarter has the largest spread. There seems to be approximately a 14-year difference between the median and the third quartile.</item>
+<item><emphasis effect="italics">IQR</emphasis> ~ 17 years</item>
+<item>There is not enough information to tell. Each interval lies within a quarter, so we cannot tell exactly where the data in that quarter is are concentrated.</item>
+<item>The interval from 31 to 35 years has the fewest data values. Twenty-five percent of the values fall in the interval 38 to 41, and 25 percent fall between 41 and 64. Since 25 percent of values fall between 31 and 38, we know that fewer than 25 percent fall between 31 and 35.</item>
+</list></solution>
+</exercise>
+
+<exercise id="element-833">
+<problem id="id3776067">
+<para id="element-202">Twenty-five randomly selected students were asked the number of movies they watched the previous week. The results are as follows:
+<table id="fs-idm41926784" summary="The table presents the number of movies 25 students watched in the previous week. The first column lists the number of movies from 0-4, the second column lists the frequency with the values of 5, 9, 6, 4, 1, the third column is for relative frequency and is blank, and the fourth column is for cumulative relative frequency and is blank.">
+<tgroup cols="2"><thead>
+ <row>
+    <entry>Number of Movies</entry>
+    <entry>Frequency</entry>
+  </row>
+</thead>
+<tbody>
+  <row>
+    <entry>0</entry>
+    <entry>5</entry>
+  </row>
+  <row>
+    <entry>1</entry>
+    <entry>9</entry>
+  </row>
+  <row>
+    <entry>2</entry>
+    <entry>6</entry>
+  </row>
+  <row>
+    <entry>3</entry>
+    <entry>4</entry>
+  </row>
+  <row>
+    <entry>4</entry>
+    <entry>1</entry>
+  </row>
+</tbody>
+
+</tgroup>
+</table></para><para id="fs-idp36227856">Construct a box plot of the data. </para>
+</problem>
+</exercise>
+
+
+</section>
+<section id="fs-idm80158176" class="bring-together-homework">
+      <title>Bringing It Together</title>
+    <exercise id="fs-idp67679120">
+      <problem id="fs-idp67679376">
+        <para id="fs-idp43357184">Santa Clara County, California, has approximately 27,873 Japanese Americans. <link target-id="fs-idm41920944" document=""/> shows their ages by group and each age-group's percentage of the Japanese American community.
+</para><table id="fs-idm41920944" summary="This table presents Japanese-Americans and their ages from Santa Clara County. The first column lists the age group and the second column lists the percent of the community. There are 7 rows.">
+          <tgroup cols="2"><thead>
+            <row>
+              <entry>Age-Group</entry>
+              <entry>Percentage of Community</entry>
+            </row>
+          </thead>
+            <tbody>
+              <row>
+                <entry>0–17</entry>
+                <entry>18.9</entry>
+              </row>
+              <row>
+                <entry>18–24</entry>
+                <entry>8.0</entry>
+              </row>
+              <row>
+                <entry>25–34</entry>
+                <entry>22.8</entry>
+              </row>
+              <row>
+                <entry>35–44</entry>
+                <entry>15.0</entry>
+              </row>
+              <row>
+                <entry>45–54</entry>
+                <entry>13.1</entry>
+              </row>
+              <row>
+                <entry>55–64</entry>
+                <entry>11.9</entry>
+              </row>
+              <row>
+                <entry>65+</entry>
+                <entry>10.3</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+        <list id="fs-idm34981104" list-type="enumerated" number-style="lower-alpha">
+          <item>Construct a histogram of the Japanese American community in Santa Clara County. The bars will <emphasis>not</emphasis> be the same width for this example. Why not? What impact does this have on the reliability of the graph?</item>
+          <item>What percentage of the community is under age 35?</item>
+          <item>Which box plot most resembles the information above?</item>
+        </list><figure id="fs-idm2636592">
+          <media id="fs-idm26491920" alt="Three box plots with values between 0 and 100. Plot i has Q1 at 24, M at 34, and Q3 at 53; Plot ii has Q1 at 18, M at 34, and Q3 at 45; Plot iii has Q1 at 24, M at 25, and Q3 at 54." display="block"><image src="../../media/fig-ch02_13_04.jpg" mime-type="image/jpg" width="450"/></media>
+        </figure>
+      </problem>
+      <solution id="fs-idp100901312">
+        <list id="fs-idp68335440" mark-suffix="." list-type="enumerated" number-style="lower-alpha"><item>For graph, check student's solution. </item>
+          <item>49.7 percent of the community is under the age of 35</item>
+          <item>Based on the information in the table, graph (a) most closely represents the data.</item>
+        </list></solution>
+    </exercise>
+    </section>
+ </content>
+
+<glossary>
+<definition id="fs-idp72865536">
+<term>box plot</term>
+<meaning id="fs-idp43755328">a graph that gives a quick picture of the middle 50 percent of the data</meaning>
+</definition>
+
+<definition id="fs-idp102508064">
+<term>first quartile</term>
+<meaning id="fs-idp111069232">the value that is the median of the lower half of the ordered data set</meaning>
+</definition>
+
+<definition id="fs-idp97747904">
+<term>frequency polygon</term>
+<meaning id="fs-idm46549456">a data display that looks like a line graph but uses intervals to display ranges of large amounts of data</meaning>
+</definition>
+
+<definition id="fs-idp84101520">
+<term>interval</term>
+<meaning id="fs-idm8914352">also called a class interval; an interval represents a range of data and is used when displaying large data sets</meaning>
+</definition>
+
+
+<definition id="fs-idm26718304">
+<term>paired data set</term>
+<meaning id="fs-idp116205376">two data sets that have a one-to-one relationship so that
+<list id="fs-idp85390096" list-type="bulleted">
+<item>both data sets are the same size, and</item>
+<item>each data point in one data set is matched with exactly one point from the other set</item>
+</list></meaning>
+</definition>
+
+<definition id="fs-idp31125760">
+<term>skewed</term>
+<meaning id="fs-idp57238128">used to describe data that is not symmetrical; when the right side of a graph looks <emphasis effect="italics">chopped off</emphasis> compared to the left side, we say it is <emphasis effect="italics">skewed to the left</emphasis>.
+<newline/>When the left side of the graph looks <emphasis effect="italics">chopped off</emphasis> compared to the right side, we say the data are <emphasis effect="italics">skewed to the right</emphasis>. Alternatively, when the lower values of the data are more spread out, we say the data are skewed to the left. When the greater values are more spread out, the data are skewed to the right.</meaning>
+</definition>
+</glossary>
+</document>

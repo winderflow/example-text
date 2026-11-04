@@ -1,10 +1,12 @@
 # 科研绘图开放素材库
 
-为论文示意图、实验流程图、科研海报和课件整理的开放素材库。现有 **19,402 张原始图片，来自31个上游仓库**：16,426个SVG、2,838张JPEG和138张原始PNG。另保留418张长边2400像素的PNG兼容版本，以及72图、20页的PowerPoint素材板；格式转换不重复计为新图片。
+为论文示意图、实验流程图、科研海报和课件整理的开放素材库。现有 **22,988 张原始图片，来自45个上游仓库**：18,911个SVG、3,171张JPEG和906张原始PNG。另保留418张长边2400像素的PNG兼容版本，以及72图、20页的PowerPoint素材板；格式转换不重复计为新图片。
 
-首批检索：2026-11-02；PPT质量整理：2026-11-03；本轮新图扩展：2026-11-04。素材原始字节保持不变，逐图保存作者、许可证、固定版本来源及 SHA-256。**本库没有统一的素材许可证**；详见 [许可与署名指南](docs/LICENSES.md)。
+首批检索：2026-11-02；PPT质量整理：2026-11-03；最近新图扩展：2026-11-05。素材原始字节保持不变，逐图保存作者、许可证、固定版本来源及 SHA-256。**本库没有统一的素材许可证**；详见 [许可与署名指南](docs/LICENSES.md)。
 
 ## 浏览与下载
+
+- **[最新新增3,586张：按用途、学科和来源下载](docs/MORE-OPEN-ART-2026-11-05.md)**：含2,485张SVG；完整通路、基因线路、解剖轮廓、天文、统计、数学、物理和显微光学。
 
 - **[本批新增2,854张：按学科与来源下载](docs/BULK-OPEN-ART-2026-11-04.md)**：生命科学1,055张、物理化学1,698张、完整通路SVG91张、实验仪器透明PNG10张。
 
@@ -14,7 +16,7 @@
 
 - **[直接下载 PowerPoint 素材板](downloads/ppt-illustrations.pptx)**：72 张图片可逐张复制，每页备注保留完整署名。GitHub 文件页可点击 Download raw 下载。
 - **[按名称和学科查找高清 PNG](docs/PPT-INDEX.md)**：418 张原图的2400像素兼容版本；[PPT 使用指南](docs/PPT-GUIDE.md)。
-- 在图库的“文件格式”中选择“原始位图 PNG/JPG（全部）”“高清原图 PNG/JPG”或“PPT 高清 PNG”，可按学科查找并查看实际像素尺寸。全部2,976张原始位图中291张原生长边至少1600像素，其余明确标记标准尺寸；SVG可缩放使用。
+- 在图库的“文件格式”中选择“原始位图 PNG/JPG（全部）”“高清原图 PNG/JPG”或“PPT 高清 PNG”，可按学科查找并查看实际像素尺寸。全部4,077张原始位图中387张原生长边至少1600像素，其余明确标记标准尺寸；SVG可缩放使用。
 
 - 打开 [在线图库（Pages 启用后可用）](https://winderflow.github.io/example-text/)，按学科、素材库、许可证和中英文关键词筛选；点击卡片可下载原始 SVG、查看来源和复制署名。
 - 直接在下方分类目录下载单图；批量获取可使用 GitHub 的 **Code → Download ZIP** 或 `git clone https://github.com/winderflow/example-text.git`。
@@ -23,12 +25,12 @@
 
 | 学科分类 | 原图文件数 |
 | --- | ---: |
-| [生物医学](assets/biomedical/) | 8,328 |
-| [化学与分子](assets/chemistry/) | 1,227 |
-| [生态与物种](assets/ecology/) | 1,200 |
-| [地理、气象与空间](assets/earth-space/) | 3,379 |
-| [工程与物理](assets/engineering/) | 2,321 |
-| [计算与数据流程](assets/computing/) | 2,509 |
+| [生物医学](assets/biomedical/) | 10,234 |
+| [化学与分子](assets/chemistry/) | 1,687 |
+| [生态与物种](assets/ecology/) | 1,225 |
+| [地理、气象与空间](assets/earth-space/) | 3,605 |
+| [工程与物理](assets/engineering/) | 2,440 |
+| [计算与数据流程](assets/computing/) | 3,359 |
 | [科研交流与通用](assets/general/) | 438 |
 
 ## 已下载来源
@@ -66,6 +68,20 @@
 | [OpenStax 基础物理开放插画](https://github.com/openstax/osbooks-college-physics-bundle) | 科研专题 | 761 | CC-BY-4.0 | 固定CC BY4快照中的力学、光学、声学、电磁学与热学示意图；保留实际尺寸和章节证据。 |
 | [OpenStax 大学物理开放插画](https://github.com/openstax/osbooks-university-physics-bundle) | 科研专题 | 499 | CC-BY-4.0 | 固定CC BY4快照中的力学、电路、电磁学、波动及现代物理原图；保留实际尺寸和章节证据。 |
 | [CPM LabIcons 实验室仪器插画](https://github.com/Center-for-Proteomics-and-Metabolomics/LabIcons) | 科研专题 | 10 | CC-BY-4.0 | 质谱仪、色谱设备、离心机与耗材透明PNG原图；逐图保留作者和ORCID署名。 |
+| [WikiPathways 完整通路图](https://github.com/wikipathways/wikipathways-assets) | 科研专题 | 2,219 | CC0-1.0 | 官方approved-GPML下游完整SVG通路图；逐图保留物种、作者、版本和固定JSON元数据地址。 |
+| [SBOL Visual 合成生物学图形](https://github.com/SynBioDex/SBOL-visual) | 科研专题 | 77 | CC0-1.0 / CC-BY-4.0 | 基因序列功能、分子与相互作用标准符号及基因线路示例；不收已弃用图形和尺寸规范图板。 |
+| [OpenStax 护理与药理历史开放插画](https://github.com/openstax/osbooks-nursing-external-bundle) | 科研专题 | 64 | CC-BY-4.0 | 历史CC BY4固定版本中的药理、营养与公共卫生原图；逐图排查第三方图片及已收教材改编。 |
+| [EMBL-EBI Anatomogram 解剖轮廓](https://github.com/ebi-gene-expression-group/anatomogram) | 科研专题 | 31 | CC-BY-4.0 | 人体、脑、模式动物与植物原始SVG；灰色轮廓及隐藏器官高亮层保持原样。 |
+| [OpenStax 天文学历史开放插画](https://github.com/openstax/osbooks-astronomy) | 科研专题 | 119 | CC-BY-4.0 | 历史CC BY4固定版本中的天球、行星、恒星及宇宙学示意图；按真实标准像素尺寸收录。 |
+| [Process Map 科研工作流符号](https://github.com/PEC-Development-Team/Process-Map-Vector-Graphics) | 通用绘图符号 | 51 | MIT | 用于科研流程绘图的彩色BPMN、DFD和UML独立SVG符号。 |
+| [OpenStreetMap Carto 科研地图符号](https://github.com/gravitystorm/openstreetmap-carto) | 科研专题 | 107 | CC0-1.0 | 植被、地形、地表纹理、环境、能源和公共卫生专题地图SVG选集。 |
+| [远程重聚焦原创光学插图](https://github.com/AndrewGYork/remote_refocus) | 科研专题 | 5 | CC-BY-4.0 | 论文作者开放发布的双倍/单倍远程重聚焦光路与装置原图，保留作者及论文图注。 |
+| [高NA单物镜光片显微镜原创图](https://github.com/AndrewGYork/high_na_single_objective_lightsheet) | 科研专题 | 22 | CC-BY-4.0 | 论文作者的光路、Ewald球、不同有效焦距管镜与机械装置示意原图。 |
+| [Rescan Line STED 显微光学图](https://github.com/AndrewGYork/rescan_line_sted) | 科研专题 | 2 | CC-BY-4.0 | 原创点/线扫描与光路切换示意图；不收实验照片、动画帧和结果曲线。 |
+| [OpenStax 统计学与商业统计历史开放图](https://github.com/openstax/osbooks-introductory-statistics-bundle) | 科研专题 | 339 | CC-BY-4.0 | 抽样、分布、回归、假设检验与数据可视化原图，保留历史CC BY4章节证据。 |
+| [OpenStax 现代数学历史开放图](https://github.com/openstax/osbooks-contemporary-mathematics) | 科研专题 | 412 | CC-BY-4.0 | 网络图、图论、几何、统计与应用数学原图；不收纯文字表或空坐标模板。 |
+| [OpenStax 高中物理开放插画](https://github.com/openstax/osbooks-physics) | 科研专题 | 90 | CC-BY-4.0 | 独立Physics教材中的力学、光学、电磁学和实验装置原图；与既有物理图集分开核验。 |
+| [OpenStax 统计学开放图](https://github.com/openstax/osbooks-statistics) | 科研专题 | 48 | CC-BY-4.0 | 概率分布、回归、抽样与推断统计原图；排除截图和空坐标模板。 |
 
 Bioicons 子集中含 **1,374 个署名 Servier**、**630 个署名 DBCLS** 的文件；这是通过 Bioicons 取得的具体历史素材，不是对 Servier / Togo 当前官网的全站镜像或完整性声明。上游原始说明、完整许可及元数据见 [licenses/](licenses/)。
 
@@ -108,6 +124,14 @@ Bioicons 子集中含 **1,374 个署名 Servier**、**630 个署名 DBCLS** 的�
 
 [本批分类下载索引](docs/BULK-OPEN-ART-2026-11-04.md)按来源列出每张新增图片的下载、实际尺寸和署名。逐图许可、章节上下文、视觉筛选及排除依据见[生命科学审核](docs/BULK-LIFE-SCIENCES-NOTES.md)、[物理化学审核](docs/BULK-PHYSICS-CHEMISTRY-NOTES.md)和[通路与实验仪器审核](docs/BULK-SVG-NOTES.md)。
 
+## 2026-11-05 新增14个来源、3,586张原图
+
+本批新增3,586张、466,057,392字节（444.5 MiB）的原件，来源数由31增至45，总量由19,402增至22,988。其中2,485张是SVG，96张为原生高清位图，1,005张为标准尺寸位图；原有图片、418张PNG兼容版和PPT素材板均保留。
+
+新增包含WikiPathways的2,219幅完整通路SVG（44物种）、SBOL Visual的77张基因线路图形、EMBL-EBI的31张解剖/物种轮廓SVG、119张天文图、889张物理统计与数学图、64张护理药理图、29张原创显微光学图，以及158张流程与专题地图SVG。逐图保留许可、作者、固定来源与实际尺寸；WikiPathways另保留WP编号、物种、revision及上游JSON的固定地址和SHA256。
+
+[最新分类下载目录](docs/MORE-OPEN-ART-2026-11-05.md)按科研用途组织，再分为60页来源/下载分册，每册最多100张；每张都有原文件下载及授权依据。SVG没有转成低清预览后冒充原件，标准位图未放大后计为高清。
+
 ## 更多资源与检索边界
 
 [检索记录](docs/RESEARCH.md) 列出 SciDraw、PhyloPic、IAN、NIH BioArt、Wikimedia Commons 等继续检索入口；[扩展库清单](docs/LICENSES.md#其他官方资源及收录状态) 仍列出 Material Icons 和 Simple Icons 等未导入来源。Lucide、Font Awesome、Bootstrap 和 IconPark 已在本轮从链接清单转为实际入库，具体范围见上表；**仅列链接的来源不计入下载数量**。
@@ -130,7 +154,7 @@ python3 -m http.server 8000
 
 ## 固定版本重建
 
-上游仓库与精确 commit 锁在 [sources.lock.json](data/sources.lock.json)。下载器只获取文件，不运行上游代码，不关闭 TLS 验证；需要 Git、Python 3.10+ 及 GitHub HTTPS 网络访问。完整下载比使用仓库内成品耗时和占盘更多。
+上游仓库与精确 commit 锁在 [sources.lock.json](data/sources.lock.json)。新来源通过锁文件的 `catalog` 保存名称、图像许可和范围，并用 `data/source-selections/<source-id>.json` 固定逐图选择与证据；缺少必要元数据或清单会明确拒绝导入。下载器只获取文件，不运行上游代码，不关闭 TLS 验证；需要 Git、Python 3.10+ 及 GitHub HTTPS 网络访问。完整下载比使用仓库内成品耗时和占盘更多。
 
 ```bash
 python3 scripts/fetch_sources.py --dest .cache/sources
@@ -143,7 +167,7 @@ python3 scripts/build_site.py
 
 只重建本轮来源时可用 `python3 scripts/build_catalog.py --sources .cache/sources --only reactome openstax-anatomy justfig-icons`，其余已验证原图会保留。
 
-重建不自动跟随上游最新版本。修改锁文件前应重新核实许可和导入范围；构建器拒绝脏的上游工作区，并只移除上次清单管理且未被用户修改的旧素材。`dist/` 是可直接部署的静态站点。为控制发布体积，超过256KiB的图片由当前已提交版本的GitHub原文件提供；原图仍完整保留在仓库，只有发布包中的目录附加传递信息。图片增加或修改后需先提交再构建，避免生成指向旧提交的失效链接。
+重建不自动跟随上游最新版本。修改锁文件前应重新核实许可和导入范围；构建器拒绝脏的上游工作区，并只移除上次清单管理且未被用户修改的旧素材。`dist/` 是可直接部署的静态站点。为控制发布体积，超过128KiB的图片由当前已提交版本的GitHub原文件提供；原图仍完整保留在仓库，只有发布包中的目录附加传递信息。图片增加或修改后需先提交再构建，避免生成指向旧提交的失效链接。
 
 ## GitHub Pages 部署
 

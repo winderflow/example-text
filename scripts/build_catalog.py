@@ -129,7 +129,15 @@ def main():
         actual=subprocess.check_output(['git','-C',str(p),'rev-parse','HEAD'],text=True).strip()
         if actual!=s['commit']: raise SystemExit(f'Commit mismatch: {sid}')
         if subprocess.check_output(['git','-C',str(p),'status','--porcelain'],text=True).strip():raise SystemExit(f'Upstream checkout is dirty: {sid}')
-        name,homepage,summary,desc=INFO[sid]
+        if sid in INFO:
+            name,homepage,summary,desc=INFO[sid]
+        else:
+            info=s.get('catalog')
+            if not isinstance(info,dict) or not all(info.get(k) for k in ['name','license','description']):
+                raise SystemExit(f'Source {sid} requires catalog metadata: name, license and description')
+            if not (ROOT/'data/source-selections'/(sid+'.json')).is_file():
+                raise SystemExit(f'Source {sid} requires data/source-selections/{sid}.json')
+            name,homepage,summary,desc=info['name'],info.get('homepage',s['repository']),info['license'],info['description']
         licdir=ROOT/'licenses'/sid;licdir.mkdir(parents=True,exist_ok=True)
         for f in p.iterdir():
             if sid=='electrical-symbol-library' and f.name=='README.md':continue
@@ -144,8 +152,15 @@ def main():
             for x in selection['assets']:
                 f=(p/x['path']).resolve();assert f.is_relative_to(p.resolve()),'Selection escapes checkout'
                 assert hashlib.sha256(f.read_bytes()).hexdigest()==x['sha256'],'Selected original checksum mismatch'
+                if sid=='wikipathways':
+                    metadata=f.with_suffix('.json');metadata_raw=metadata.read_bytes()
+                    expected=s['repository']+'/blob/'+s['commit']+'/'+quote(metadata.relative_to(p).as_posix(),safe='/')
+                    assert x['metadata_url']==expected and hashlib.sha256(metadata_raw).hexdigest()==x['metadata_sha256'],'Pathway metadata provenance mismatch'
+                    pathway=json.loads(metadata_raw)['pathway'];pid=x['pathway_id']
+                    assert pathway['id'] in {pid,'http://identifiers.org/wikipathways/'+pid,'https://identifiers.org/wikipathways/'+pid},'Pathway identity mismatch'
+                    assert pathway['organism']==x['organism'] and pathway['dataSourceVersion']==x['pathway_revision'],'Pathway organism or revision mismatch'
                 key=x['license'] if x['license'] in LICENSES else lookup[x['license']]
-                details={k:x[k] for k in ['caption','figure_id','credit','reference_url'] if x.get(k)}
+                details={k:x[k] for k in ['caption','figure_id','credit','reference_url','metadata_url','metadata_sha256','pathway_revision','pathway_id','organism','cited_source_urls'] if x.get(k)}
                 if f.suffix.lower() in {'.png','.jpg','.jpeg'}:
                     details['minimum_long_edge']=int(x.get('minimum_long_edge',selection.get('minimum_long_edge',1600)))
                     details['minimum_short_edge']=int(x.get('minimum_short_edge',selection.get('minimum_short_edge',1)))
@@ -297,7 +312,7 @@ def main():
                 folder=p/'collections'/collection;notice=licdir/collection;notice.mkdir(exist_ok=True);shutil.copyfile(folder/'license',notice/'license')
                 assert 'https://creativecommons.org/licenses/by-sa/4.0/' in (folder/'license').read_text()
                 for f in sorted((folder/'svg').rglob('*.svg')):add(f,'earth-space',sub,'cc-by-sa-4.0',meta[collection]['author'],f'{f.stem} · {sub}',[meta[collection].get('tags',''),meta[collection].get('description',''),sub,'地质','GIS'])
-        elif sid.startswith('openstax-') or sid in {'justfig-icons','cpm-labicons'}:
+        elif sid.startswith('openstax-') or (ROOT/'data/source-selections'/(sid+'.json')).is_file():
             selected_figures(ROOT/'data/source-selections'/(sid+'.json'))
             if sid.startswith('openstax-'):
                 assert (p/'LICENSE').read_text().lstrip('\ufeff').strip().splitlines()[0].strip()=='Attribution 4.0 International', 'Historical CC BY license evidence required'
@@ -339,7 +354,7 @@ def main():
                 if static_approved:asset['preview_path']=r['png_path']
             assets.append(asset)
         supporting={'lucide','fontawesome','bootstrap','iconpark','tabler','game-icons','openmoji','scienceicons','carbon-pictograms'}
-        sources.append(dict(id=sid,name=name,homepage=homepage,repository=s['repository'],license=summary,license_url=s['repository']+'/tree/'+s['commit'],count=len(assets)-before,description=desc,commit=s['commit'],kind='supporting' if sid in supporting else 'specialist',retrieved_at=s.get('retrieved_at','2026-11-02')))
+        sources.append(dict(id=sid,name=name,homepage=homepage,repository=s['repository'],license=summary,license_url=s['repository']+'/tree/'+s['commit'],count=len(assets)-before,description=desc,commit=s['commit'],kind=s.get('catalog',{}).get('kind','supporting' if sid in supporting else 'specialist'),retrieved_at=s.get('retrieved_at','2026-11-02')))
         print(sid,len(assets)-before,flush=True)
     retained={a['path'] for a in assets}
     for old in previous:
@@ -356,7 +371,7 @@ def main():
     (ROOT/'data/catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,separators=(',',':'))+'\n')
     (ROOT/'data/excluded.json').write_text(json.dumps(excluded,ensure_ascii=False,indent=2)+'\n')
     with (ROOT/'data/manifest.csv').open('w',newline='',encoding='utf-8-sig') as fp:
-        fields=['id','name','category','subcategory','source','path','format','pixel_width','pixel_height','quality_tier','minimum_long_edge','minimum_short_edge','license','license_url','author','author_url','source_url','sha256','bytes','commit','attribution','ppt_png_path','ppt_png_width','ppt_png_height','ppt_png_sha256','requires_png_fallback','evidence_url'];w=csv.DictWriter(fp,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(assets)
+        fields=['id','name','category','subcategory','source','path','format','pixel_width','pixel_height','quality_tier','minimum_long_edge','minimum_short_edge','license','license_url','author','author_url','source_url','sha256','bytes','commit','attribution','ppt_png_path','ppt_png_width','ppt_png_height','ppt_png_sha256','requires_png_fallback','evidence_url','reference_url','metadata_url','metadata_sha256','pathway_id','pathway_revision','organism'];w=csv.DictWriter(fp,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(assets)
     print(f'Total: {len(assets)} original images, {sum(x["bytes"] for x in assets)/1e6:.1f} MB; excluded {len(excluded)}')
 
 if __name__=='__main__': main()

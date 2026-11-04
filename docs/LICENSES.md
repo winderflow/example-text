@@ -20,6 +20,8 @@
 
 2026-11-04批量新增的OpenStax插图来自锁定的历史CC BY4.0提交，逐图保存章节及第三方署名排查证据；没有将当前非商业版本的许可替换为历史许可。CPM LabIcons的10张透明实验仪器PNG适用CC BY4.0：9张作者为Manon Zuurmond，`solarix.png`作者为Stefan Ruchti，作者ORCID与具体作品来源已写入清单。[CPM逐图许可及作者表](../licenses/cpm-labicons/evidence/equipment/README.md)与[完整许可](../licenses/cpm-labicons/LICENSE.md)随原图保留。Reactome新增通路SVG继续适用其Apache2.0许可。
 
+2026-11-05新增的[WikiPathways完整通路SVG](WIKIPATHWAYS-SOURCE-NOTES.md)由官方CC0资产库发布，仍保留编辑者、物种、WP编号和revision；JSON中引用的第三方长篇叙述不另行镜像或套用图像CC0。[SBOL Visual](SBOL-VISUAL-SOURCE-NOTES.md)区分CC0标准符号与CC BY4示例。EMBL-EBI Anatomogram的图像明确CC BY4，与Apache2软件代码许可分开；新增显微光学原图的CC BY4保留论文全部作者及对应图注。新教材图仍按固定CC BY4版本和逐图证据核验。每张具体许可见[新增下载目录](MORE-OPEN-ART-2026-11-05.md)。
+
 ## 论文署名示例
 
 以下是格式示例，请替换为该素材实际提供的信息：
