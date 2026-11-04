@@ -1,10 +1,12 @@
 # 科研绘图开放素材库
 
-为论文示意图、实验流程图、科研海报和课件整理的开放素材库。现有 **16,548 张原始图片，来自30个上游仓库**：16,335个SVG、193张JPEG和20张原始PNG。另保留418张长边2400像素的PNG兼容版本，以及72图、20页的PowerPoint素材板；格式转换不重复计为新图片。
+为论文示意图、实验流程图、科研海报和课件整理的开放素材库。现有 **19,402 张原始图片，来自31个上游仓库**：16,426个SVG、2,838张JPEG和138张原始PNG。另保留418张长边2400像素的PNG兼容版本，以及72图、20页的PowerPoint素材板；格式转换不重复计为新图片。
 
 首批检索：2026-11-02；PPT质量整理：2026-11-03；本轮新图扩展：2026-11-04。素材原始字节保持不变，逐图保存作者、许可证、固定版本来源及 SHA-256。**本库没有统一的素材许可证**；详见 [许可与署名指南](docs/LICENSES.md)。
 
 ## 浏览与下载
+
+- **[本批新增2,854张：按学科与来源下载](docs/BULK-OPEN-ART-2026-11-04.md)**：生命科学1,055张、物理化学1,698张、完整通路SVG91张、实验仪器透明PNG10张。
 
 - **[本轮再加96张原生高清图：按名称直接下载](docs/MORE-OPEN-IMAGES-2026-11-04.md)**，包括解剖、生物、化学、微生物、光学和电子学。
 
@@ -12,7 +14,7 @@
 
 - **[直接下载 PowerPoint 素材板](downloads/ppt-illustrations.pptx)**：72 张图片可逐张复制，每页备注保留完整署名。GitHub 文件页可点击 Download raw 下载。
 - **[按名称和学科查找高清 PNG](docs/PPT-INDEX.md)**：418 张原图的2400像素兼容版本；[PPT 使用指南](docs/PPT-GUIDE.md)。
-- 在图库的“文件格式”中选择“PPT 高清 PNG”或“高清原图 PNG/JPG”，可按学科查找并查看实际像素尺寸。
+- 在图库的“文件格式”中选择“原始位图 PNG/JPG（全部）”“高清原图 PNG/JPG”或“PPT 高清 PNG”，可按学科查找并查看实际像素尺寸。全部2,976张原始位图中291张原生长边至少1600像素，其余明确标记标准尺寸；SVG可缩放使用。
 
 - 打开 [在线图库（Pages 启用后可用）](https://winderflow.github.io/example-text/)，按学科、素材库、许可证和中英文关键词筛选；点击卡片可下载原始 SVG、查看来源和复制署名。
 - 直接在下方分类目录下载单图；批量获取可使用 GitHub 的 **Code → Download ZIP** 或 `git clone https://github.com/winderflow/example-text.git`。
@@ -21,11 +23,11 @@
 
 | 学科分类 | 原图文件数 |
 | --- | ---: |
-| [生物医学](assets/biomedical/) | 7,403 |
-| [化学与分子](assets/chemistry/) | 689 |
-| [生态与物种](assets/ecology/) | 1,065 |
+| [生物医学](assets/biomedical/) | 8,328 |
+| [化学与分子](assets/chemistry/) | 1,227 |
+| [生态与物种](assets/ecology/) | 1,200 |
 | [地理、气象与空间](assets/earth-space/) | 3,379 |
-| [工程与物理](assets/engineering/) | 1,065 |
+| [工程与物理](assets/engineering/) | 2,321 |
 | [计算与数据流程](assets/computing/) | 2,509 |
 | [科研交流与通用](assets/general/) | 438 |
 
@@ -35,7 +37,7 @@
 | --- | --- | ---: | --- | --- |
 | [Bioicons（含 Servier / Togo）](https://github.com/duerrsimon/bioicons) | 科研专题 | 2,819 | 逐图授权 | 生物、医学、植物、实验器材；含经 Bioicons 分发的 Servier 与 DBCLS 素材，保留其历史逐图许可。 |
 | [ID & Immunology Icons](https://github.com/apsmunro/bioicons-id) | 科研专题 | 347 | CC0-1.0 | 病原体、免疫细胞、器官与感染传播，含彩色和单色版本。 |
-| [Reactome Illustrations](https://github.com/reactome/reactome_illustrations) | 科研专题 | 2,421 | Apache-2.0 | Reactome 官方蛋白、细胞、组织和通路组件，以及完整生物通路插画；图标保留原始 XML 元数据。 |
+| [Reactome Illustrations](https://github.com/reactome/reactome_illustrations) | 科研专题 | 2,512 | Apache-2.0 | Reactome 官方蛋白、细胞、组织和通路组件，以及完整生物通路插画；图标保留原始 XML 元数据。 |
 | [EMBL-EBI Science Icons](https://github.com/ebiwd/EBI-Icon-fonts) | 科研专题 | 80 | CC-BY-SA-4.0 | 仅选 chemistry、conceptual、species 科学符号，不含第三方品牌和通用字库。 |
 | [Health Icons](https://github.com/resolvetosavelives/healthicons) | 科研专题 | 2,128 | CC0-1.0 | 公共卫生、症状、医疗设备、人体与医疗服务图标，保留上游样式。 |
 | [OpenMoji 科研选集](https://github.com/hfg-gmuend/openmoji) | 通用绘图符号 | 419 | CC-BY-SA-4.0 | 动物、植物、地理天气、科学与技术主题彩色符号；逐图作者信息。 |
@@ -56,13 +58,14 @@
 | [Electricalsymbols 工业电气符号](https://github.com/chille/electricalsymbols) | 科研专题 | 32 | CC-BY-SA-3.0 | IEC 工业电气元件、开关、保护、传感器和电机；排除空白文档模板。 |
 | [FGDC Geologic Patterns](https://github.com/davenquinn/geologic-patterns) | 科研专题 | 471 | CC0-1.0 | USGS / FGDC 地质、岩性、冰川和地层剖面填充图案；可用于地学论文制图。 |
 | [GISsymbology 专题地图符号](https://github.com/GISsymbology/symbols) | 科研专题 | 453 | CC-BY-SA-4.0 | 选取地震微区划、地质图、FGDC 地质符号和水利防护四个许可明确的子库。 |
-| [OpenStax 人体解剖与生理历史开放插画](https://github.com/openstax/osbooks-anatomy-physiology) | 科研专题 | 184 | CC-BY-4.0 | 只收录固定历史 CC BY 4.0 版本中逐图核验的高清人体解剖与生理插画；不套用当前非商业版本许可。 |
+| [OpenStax 人体解剖与生理历史开放插画](https://github.com/openstax/osbooks-anatomy-physiology) | 科研专题 | 522 | CC-BY-4.0 | 固定历史 CC BY 4.0 版本中逐图核验的人体解剖与生理插画；保留真实像素尺寸和章节证据。 |
 | [JustFig 原创科研图形](https://github.com/BooneAndrewsLab/justfig-icons) | 科研专题 | 35 | CC0-1.0 | 仅收原创 house 集合中的实验室、细胞、蛋白、免疫和微生物图形，不收聚合库其他来源。 |
-| [OpenStax 生物学历史开放插画](https://github.com/openstax/osbooks-biology-bundle) | 科研专题 | 20 | CC-BY-4.0 | 固定历史CC BY4版本中的生物学、细胞、分子与生态高清原图；保留逐图章节证据。 |
-| [OpenStax 化学历史开放插画](https://github.com/openstax/osbooks-chemistry-bundle) | 科研专题 | 2 | CC-BY-4.0 | 固定历史CC BY4版本中许可明确的原始高清化学插图；不将小图放大后计为高清图。 |
-| [OpenStax 微生物学历史开放插画](https://github.com/openstax/osbooks-microbiology) | 科研专题 | 3 | CC-BY-4.0 | 固定历史CC BY4版本中的微生物、免疫与实验技术原图，保留原始尺寸和逐图来源。 |
-| [OpenStax 光学开放插画](https://github.com/openstax/osbooks-college-physics-bundle) | 科研专题 | 3 | CC-BY-4.0 | 固定CC BY4快照中的单缝衍射、透镜及光纤原始高清示意图；保留章节图注和许可。 |
-| [OpenStax 电子学开放插画](https://github.com/openstax/osbooks-university-physics-bundle) | 科研专题 | 1 | CC-BY-4.0 | 固定CC BY4快照中的原始高清放大电路图，不含第三方器材照片。 |
+| [OpenStax 生物学历史开放插画](https://github.com/openstax/osbooks-biology-bundle) | 科研专题 | 501 | CC-BY-4.0 | 固定历史CC BY4版本中的生物学、细胞、分子与生态原图；保留实际尺寸和逐图章节证据。 |
+| [OpenStax 化学历史开放插画](https://github.com/openstax/osbooks-chemistry-bundle) | 科研专题 | 444 | CC-BY-4.0 | 固定历史CC BY4版本中的分子、晶体、实验装置与科学曲线原图；按实际尺寸区分标准与高清。 |
+| [OpenStax 微生物学历史开放插画](https://github.com/openstax/osbooks-microbiology) | 科研专题 | 239 | CC-BY-4.0 | 固定历史CC BY4版本中的微生物、免疫与实验技术原图，保留原始尺寸和逐图来源。 |
+| [OpenStax 基础物理开放插画](https://github.com/openstax/osbooks-college-physics-bundle) | 科研专题 | 761 | CC-BY-4.0 | 固定CC BY4快照中的力学、光学、声学、电磁学与热学示意图；保留实际尺寸和章节证据。 |
+| [OpenStax 大学物理开放插画](https://github.com/openstax/osbooks-university-physics-bundle) | 科研专题 | 499 | CC-BY-4.0 | 固定CC BY4快照中的力学、电路、电磁学、波动及现代物理原图；保留实际尺寸和章节证据。 |
+| [CPM LabIcons 实验室仪器插画](https://github.com/Center-for-Proteomics-and-Metabolomics/LabIcons) | 科研专题 | 10 | CC-BY-4.0 | 质谱仪、色谱设备、离心机与耗材透明PNG原图；逐图保留作者和ORCID署名。 |
 
 Bioicons 子集中含 **1,374 个署名 Servier**、**630 个署名 DBCLS** 的文件；这是通过 Bioicons 取得的具体历史素材，不是对 Servier / Togo 当前官网的全站镜像或完整性声明。上游原始说明、完整许可及元数据见 [licenses/](licenses/)。
 
@@ -96,6 +99,14 @@ Bioicons 子集中含 **1,374 个署名 Servier**、**630 个署名 DBCLS** 的�
 本轮再增96张原始高清图：解剖与生理67张、生物学20张、化学2张、微生物3张、光学及电子学4张。每张原生长边至少1600像素，完整解码、保留图注并去除重复原文件。各图适用固定版本的CC BY4.0；当前非商业版本不作为这些图形的来源。
 
 [本轮原图下载目录](docs/MORE-OPEN-IMAGES-2026-11-04.md) 提供预览与逐图尺寸。图库的“高清原图PNG/JPG”筛选涵盖这些可直接插入PPT的原件。
+
+## 2026-11-04 批量新增2,854张科研原图
+
+这批实际新增2,854张、709,356,637字节（676.5 MiB）的原始图片，现有19,402张、31个来源。解剖与生理新增338张、生物学481张、微生物236张、化学442张、基础物理758张、大学物理498张、Reactome完整通路91张，另增加CPM LabIcons的10张透明实验仪器插画。
+
+新增中91张为SVG、78张为原生高清位图、2,685张为原生标准位图。标准位图长边600–1599像素且短边至少200像素，适合PPT中较小幅的科研示意图；请按实际尺寸排版，没有放大、转成伪SVG或重复计算格式派生物。原有16,548张原件、418张2400像素PNG兼容版和72图PPT素材板均保留。
+
+[本批分类下载索引](docs/BULK-OPEN-ART-2026-11-04.md)按来源列出每张新增图片的下载、实际尺寸和署名。逐图许可、章节上下文、视觉筛选及排除依据见[生命科学审核](docs/BULK-LIFE-SCIENCES-NOTES.md)、[物理化学审核](docs/BULK-PHYSICS-CHEMISTRY-NOTES.md)和[通路与实验仪器审核](docs/BULK-SVG-NOTES.md)。
 
 ## 更多资源与检索边界
 

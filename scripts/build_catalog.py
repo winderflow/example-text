@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Import pinned upstream SVGs without modifying their bytes; standard library only."""
+"""Import pinned scientific originals without modifying their bytes; standard library only."""
 import argparse
 import configparser
 import csv
@@ -42,12 +42,13 @@ INFO = {
  'electricalsymbols':('Electricalsymbols 工业电气符号','https://github.com/chille/electricalsymbols','CC-BY-SA-3.0','IEC 工业电气元件、开关、保护、传感器和电机；排除空白文档模板。'),
  'geologic-patterns':('FGDC Geologic Patterns','https://github.com/davenquinn/geologic-patterns','CC0-1.0','USGS / FGDC 地质、岩性、冰川和地层剖面填充图案；可用于地学论文制图。'),
  'gissymbology':('GISsymbology 专题地图符号','https://github.com/GISsymbology/symbols','CC-BY-SA-4.0','选取地震微区划、地质图、FGDC 地质符号和水利防护四个许可明确的子库。'),
- 'openstax-anatomy':('OpenStax 人体解剖与生理历史开放插画','https://github.com/openstax/osbooks-anatomy-physiology','CC-BY-4.0','只收录固定历史 CC BY 4.0 版本中逐图核验的高清人体解剖与生理插画；不套用当前非商业版本许可。'),
- 'openstax-biology':('OpenStax 生物学历史开放插画','https://github.com/openstax/osbooks-biology-bundle','CC-BY-4.0','固定历史CC BY4版本中的生物学、细胞、分子与生态高清原图；保留逐图章节证据。'),
- 'openstax-chemistry':('OpenStax 化学历史开放插画','https://github.com/openstax/osbooks-chemistry-bundle','CC-BY-4.0','固定历史CC BY4版本中许可明确的原始高清化学插图；不将小图放大后计为高清图。'),
+ 'openstax-anatomy':('OpenStax 人体解剖与生理历史开放插画','https://github.com/openstax/osbooks-anatomy-physiology','CC-BY-4.0','固定历史 CC BY 4.0 版本中逐图核验的人体解剖与生理插画；保留真实像素尺寸和章节证据。'),
+ 'openstax-biology':('OpenStax 生物学历史开放插画','https://github.com/openstax/osbooks-biology-bundle','CC-BY-4.0','固定历史CC BY4版本中的生物学、细胞、分子与生态原图；保留实际尺寸和逐图章节证据。'),
+ 'openstax-chemistry':('OpenStax 化学历史开放插画','https://github.com/openstax/osbooks-chemistry-bundle','CC-BY-4.0','固定历史CC BY4版本中的分子、晶体、实验装置与科学曲线原图；按实际尺寸区分标准与高清。'),
  'openstax-microbiology':('OpenStax 微生物学历史开放插画','https://github.com/openstax/osbooks-microbiology','CC-BY-4.0','固定历史CC BY4版本中的微生物、免疫与实验技术原图，保留原始尺寸和逐图来源。'),
- 'openstax-college-physics':('OpenStax 光学开放插画','https://github.com/openstax/osbooks-college-physics-bundle','CC-BY-4.0','固定CC BY4快照中的单缝衍射、透镜及光纤原始高清示意图；保留章节图注和许可。'),
- 'openstax-university-physics':('OpenStax 电子学开放插画','https://github.com/openstax/osbooks-university-physics-bundle','CC-BY-4.0','固定CC BY4快照中的原始高清放大电路图，不含第三方器材照片。'),
+ 'openstax-college-physics':('OpenStax 基础物理开放插画','https://github.com/openstax/osbooks-college-physics-bundle','CC-BY-4.0','固定CC BY4快照中的力学、光学、声学、电磁学与热学示意图；保留实际尺寸和章节证据。'),
+ 'openstax-university-physics':('OpenStax 大学物理开放插画','https://github.com/openstax/osbooks-university-physics-bundle','CC-BY-4.0','固定CC BY4快照中的力学、电路、电磁学、波动及现代物理原图；保留实际尺寸和章节证据。'),
+ 'cpm-labicons':('CPM LabIcons 实验室仪器插画','https://github.com/Center-for-Proteomics-and-Metabolomics/LabIcons','CC-BY-4.0','质谱仪、色谱设备、离心机与耗材透明PNG原图；逐图保留作者和ORCID署名。'),
  'justfig-icons':('JustFig 原创科研图形','https://github.com/BooneAndrewsLab/justfig-icons','CC0-1.0','仅收原创 house 集合中的实验室、细胞、蛋白、免疫和微生物图形，不收聚合库其他来源。')}
 KEYWORDS = {
  'chemistry':'atom molecule molecular chemistry chemical flask beaker test-tube test_pipe vial dna acid nucleic peptides compound amino nanotechnology',
@@ -145,8 +146,13 @@ def main():
                 assert hashlib.sha256(f.read_bytes()).hexdigest()==x['sha256'],'Selected original checksum mismatch'
                 key=x['license'] if x['license'] in LICENSES else lookup[x['license']]
                 details={k:x[k] for k in ['caption','figure_id','credit','reference_url'] if x.get(k)}
+                if f.suffix.lower() in {'.png','.jpg','.jpeg'}:
+                    details['minimum_long_edge']=int(x.get('minimum_long_edge',selection.get('minimum_long_edge',1600)))
+                    details['minimum_short_edge']=int(x.get('minimum_short_edge',selection.get('minimum_short_edge',1)))
+                    assert details['minimum_long_edge']>=600 and details['minimum_short_edge']>=1,'Invalid original resolution policy'
+                    assert details['minimum_long_edge']>=1600 or details['minimum_short_edge']>=200,'Standard-resolution selection requires a 200px short edge'
                 if x.get('evidence_path'):details['evidence_url']=s['repository']+'/blob/'+s['commit']+'/'+quote(x['evidence_path'],safe='/')
-                add(f,x.get('category','biomedical'),x.get('subcategory','科研插画'),key,x['author'],x.get('title',x.get('name')),x.get('tags',[]),details=details)
+                add(f,x.get('category','biomedical'),x.get('subcategory','科研插画'),key,x['author'],x.get('title',x.get('name')),x.get('tags',[]),author_url=x.get('author_url',''),details=details)
             evidence=set(x['evidence_path'] for x in selection['assets'] if x.get('evidence_path'))
             license_paths=selection.get('license_evidence',[])
             for path in license_paths if isinstance(license_paths,list) else []:
@@ -291,11 +297,11 @@ def main():
                 folder=p/'collections'/collection;notice=licdir/collection;notice.mkdir(exist_ok=True);shutil.copyfile(folder/'license',notice/'license')
                 assert 'https://creativecommons.org/licenses/by-sa/4.0/' in (folder/'license').read_text()
                 for f in sorted((folder/'svg').rglob('*.svg')):add(f,'earth-space',sub,'cc-by-sa-4.0',meta[collection]['author'],f'{f.stem} · {sub}',[meta[collection].get('tags',''),meta[collection].get('description',''),sub,'地质','GIS'])
-        elif sid.startswith('openstax-') or sid=='justfig-icons':
+        elif sid.startswith('openstax-') or sid in {'justfig-icons','cpm-labicons'}:
             selected_figures(ROOT/'data/source-selections'/(sid+'.json'))
             if sid.startswith('openstax-'):
                 assert (p/'LICENSE').read_text().lstrip('\ufeff').strip().splitlines()[0].strip()=='Attribution 4.0 International', 'Historical CC BY license evidence required'
-            else:
+            elif sid=='justfig-icons':
                 for path in ['house/meta.yaml','house/STYLE.md','sources/house/source.yaml']:
                     target=licdir/path;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p/path,target)
         before=len(assets)
@@ -308,7 +314,8 @@ def main():
                 if fmt=='svg':root=check_svg(raw,allow_static_html=static_approved)
                 elif fmt in {'png','jpg','jpeg'}:
                     pixel_size=dimensions(raw)
-                    if max(pixel_size)<1600:raise ValueError('Native bitmap below 1600px long-edge threshold')
+                    if max(pixel_size)<details.get('minimum_long_edge',1600):raise ValueError('Native bitmap below declared long-edge threshold')
+                    if min(pixel_size)<details.get('minimum_short_edge',1):raise ValueError('Native bitmap below declared short-edge threshold')
                 else:raise ValueError('Unsupported original image format')
             except (ET.ParseError,ValueError) as e:
                 excluded.append({'source':sid,'path':str(f.relative_to(p)),'reason':str(e)});continue
@@ -321,7 +328,7 @@ def main():
             keywords=' '.join([title,sub]+tags).lower();tags=list(tags)+[SUB.get(sub,sub)]+[zh for term,zh in ALIASES.items() if term in keywords]
             attribution=f'{title} — {author}. Source: {src}. License: {license_name} ({license_url}). Original file redistributed without modification; see licenses/{sid}/ for upstream notices.'
             asset=dict(id=aid,name=title,category=cat,subcategory=sub,source=sid,path=dest.as_posix(),license=license_name,license_url=license_url,author=author,author_url=author_url,source_url=src,attribution=attribution,tags=tags,sha256=raw_hash,bytes=len(raw),original_path=rel.as_posix(),commit=s['commit'],format=fmt,**details)
-            if pixel_size:asset.update(pixel_width=pixel_size[0],pixel_height=pixel_size[1])
+            if pixel_size:asset.update(pixel_width=pixel_size[0],pixel_height=pixel_size[1],quality_tier='native-highres' if max(pixel_size)>=1600 else 'native-standard')
             if static_approved:asset['requires_png_fallback']=True
             if aid in renders:
                 r=renders[aid];png=(ROOT/r['png_path']).resolve()
@@ -349,7 +356,7 @@ def main():
     (ROOT/'data/catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,separators=(',',':'))+'\n')
     (ROOT/'data/excluded.json').write_text(json.dumps(excluded,ensure_ascii=False,indent=2)+'\n')
     with (ROOT/'data/manifest.csv').open('w',newline='',encoding='utf-8-sig') as fp:
-        fields=['id','name','category','subcategory','source','path','format','pixel_width','pixel_height','license','license_url','author','author_url','source_url','sha256','bytes','commit','attribution','ppt_png_path','ppt_png_width','ppt_png_height','ppt_png_sha256','requires_png_fallback','evidence_url'];w=csv.DictWriter(fp,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(assets)
+        fields=['id','name','category','subcategory','source','path','format','pixel_width','pixel_height','quality_tier','minimum_long_edge','minimum_short_edge','license','license_url','author','author_url','source_url','sha256','bytes','commit','attribution','ppt_png_path','ppt_png_width','ppt_png_height','ppt_png_sha256','requires_png_fallback','evidence_url'];w=csv.DictWriter(fp,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(assets)
     print(f'Total: {len(assets)} original images, {sum(x["bytes"] for x in assets)/1e6:.1f} MB; excluded {len(excluded)}')
 
 if __name__=='__main__': main()

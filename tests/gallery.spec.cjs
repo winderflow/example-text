@@ -12,7 +12,8 @@ const crypto = require('node:crypto');
 const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '..');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'data/catalog.json'), 'utf8'));
-const isNativeHighres = asset => /\.(png|jpe?g)$/i.test(asset.path) && Number(asset.pixel_width) > 0 && Number(asset.pixel_height) > 0 && Math.max(Number(asset.pixel_width), Number(asset.pixel_height)) >= 1600;
+const isNativeBitmap = asset => /\.(png|jpe?g)$/i.test(asset.path) && Number(asset.pixel_width) > 0 && Number(asset.pixel_height) > 0;
+const isNativeHighres = asset => isNativeBitmap(asset) && Math.max(Number(asset.pixel_width), Number(asset.pixel_height)) >= 1600;
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg' };
 
 const server = http.createServer((request, response) => {
@@ -164,6 +165,9 @@ const server = http.createServer((request, response) => {
     assert.equal(new URL(page.url()).searchParams.get('format'), 'highres-native');
     assert.equal(await page.locator('.asset-card').count(), Math.min(60, nativeAssets.length));
     assert.ok((await page.locator('.card-type').allTextContents()).every(value => /^高清 (PNG|JPE?G)$/.test(value)), 'Native high-resolution filter requires actual PNG/JPEG originals');
+    for (const id of await page.locator('.asset-card').evaluateAll(cards => cards.map(card => card.dataset.assetId))) {
+      assert.ok(nativeAssets.some(item => item.id === id), 'HD results retain the 1600-pixel minimum long edge');
+    }
     if (nativeAssets.length) {
       const samples = [...new Map([nativeAssets.find(item => /\.jpe?g$/i.test(item.path)), nativeAssets.find(item => /\.png$/i.test(item.path))].filter(Boolean).map(item => [item.id, item])).values()];
       for (const item of samples) {
@@ -193,13 +197,62 @@ const server = http.createServer((request, response) => {
     }
 
     await page.locator('#reset-filters').click();
+    const bitmapAssets = catalog.assets.filter(isNativeBitmap);
+    const standardAssets = bitmapAssets.filter(item => !isNativeHighres(item));
+    await page.locator('#format-filter').selectOption('bitmap-native');
+    assert.equal(new URL(page.url()).searchParams.get('format'), 'bitmap-native');
+    assert.match(await page.locator('#format-filter option[value="bitmap-native"]').textContent(), new RegExp(bitmapAssets.length.toLocaleString('zh-CN')));
+    assert.equal(await page.locator('.asset-card').count(), Math.min(60, bitmapAssets.length));
+    for (const card of await page.locator('.asset-card').all()) {
+      const id = await card.getAttribute('data-asset-id');
+      const item = bitmapAssets.find(asset => asset.id === id);
+      assert.ok(item, 'All-original bitmap filter excludes SVGs and synthetic format variants');
+      const badge = await card.locator('.card-type').textContent();
+      if (!isNativeHighres(item)) {
+        assert.doesNotMatch(badge, /高清/, 'Standard-resolution originals are never labeled HD');
+        assert.match(badge, /^(PNG|JPE?G) 原图$/);
+      }
+    }
+    if (standardAssets.length) {
+      const samples = [...new Map([
+        standardAssets.find(item => /\.jpe?g$/i.test(item.path)),
+        standardAssets.find(item => /\.png$/i.test(item.path))
+      ].filter(Boolean).map(item => [item.id, item])).values()];
+      for (const item of samples) {
+        const params = new URLSearchParams({ q: item.name, source: item.source, format: 'bitmap-native' });
+        await page.goto(url + '?' + params);
+        const exact = page.locator(`[data-asset-id="${item.id}"]`);
+        await exact.waitFor();
+        assert.doesNotMatch(await exact.locator('.card-type').textContent(), /高清/);
+        await exact.locator('img').evaluate(image => image.decode());
+        const actualSize = await exact.locator('img').evaluate(image => [image.naturalWidth, image.naturalHeight].sort((a, b) => a - b));
+        assert.deepEqual(actualSize, [Number(item.pixel_width), Number(item.pixel_height)].sort((a, b) => a - b), 'Standard-original preview preserves native resolution');
+        await exact.click();
+        await page.waitForSelector('dialog[open]');
+        assert.ok(await page.locator('#detail-original-row').isVisible());
+        assert.match(await page.locator('#detail-original-size').textContent(), new RegExp(Number(item.pixel_width).toLocaleString('zh-CN')));
+        assert.match(await page.locator('#detail-format-note').textContent(), /适合小幅图示/);
+        assert.match(await page.locator('#detail-format-note').textContent(), /避免过度放大/);
+        const ready = page.waitForEvent('download');
+        await page.locator('#download-asset').click();
+        const original = await ready;
+        const downloaded = fs.readFileSync(await original.path());
+        assert.equal(crypto.createHash('sha256').update(downloaded).digest('hex'), item.sha256, 'Standard-resolution original download preserves source bytes');
+        await page.keyboard.press('Escape');
+      }
+      console.log(`All-native bitmap filter and honest standard-resolution labels/dimensions/downloads verified (${bitmapAssets.length} originals; ${standardAssets.length} standard-resolution).`);
+    } else {
+      console.log(`All-native bitmap filter verified (${bitmapAssets.length} originals); standard-resolution-specific checks not run (no standard originals yet).`);
+    }
+
+    await page.locator('#reset-filters').click();
     await page.evaluate(() => scrollTo(0, 0));
     await page.screenshot({ path: '/tmp/science-gallery-real.png', fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.screenshot({ path: '/tmp/science-gallery-real-mobile.png', fullPage: true });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'Mobile layout does not overflow');
     assert.deepEqual(errors, [], 'No JavaScript page errors');
-    console.log('PASS: Chinese keyword search, per-source previews, license/category/format filters, pagination, original-file download SHA-256, attribution, native image dimensions, optional PPT PNGs, Escape, responsive layout, zero page errors.');
+    console.log('PASS: Chinese keyword search, per-source previews, license/category/format filters, pagination, original-file download SHA-256, attribution, honest native image resolution, optional PPT PNGs, Escape, responsive layout, zero page errors.');
   } finally {
     if (browser) await browser.close();
     await new Promise(resolve => server.close(resolve));

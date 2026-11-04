@@ -18,6 +18,8 @@
 
 同一个项目也可能有多种许可。例如图标、字体、网站代码可能各用不同许可；不能用网站代码的 MIT 许可替代图标的 CC BY 许可。Bioicons 等聚合库尤其需要逐图查看，不能把平台许可直接套用到每张图。
 
+2026-11-04批量新增的OpenStax插图来自锁定的历史CC BY4.0提交，逐图保存章节及第三方署名排查证据；没有将当前非商业版本的许可替换为历史许可。CPM LabIcons的10张透明实验仪器PNG适用CC BY4.0：9张作者为Manon Zuurmond，`solarix.png`作者为Stefan Ruchti，作者ORCID与具体作品来源已写入清单。[CPM逐图许可及作者表](../licenses/cpm-labicons/evidence/equipment/README.md)与[完整许可](../licenses/cpm-labicons/LICENSE.md)随原图保留。Reactome新增通路SVG继续适用其Apache2.0许可。
+
 ## 论文署名示例
 
 以下是格式示例，请替换为该素材实际提供的信息：

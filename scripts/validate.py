@@ -25,7 +25,11 @@ for asset in data['assets']:
     fmt=file.suffix.lower().lstrip('.')
     if fmt=='svg':assert ET.fromstring(raw).tag.split('}')[-1]=='svg',file
     elif fmt in {'png','jpg','jpeg'}:
-        w,h=dimensions(raw);assert (w,h)==(asset['pixel_width'],asset['pixel_height']);assert max(w,h)>=1600
+        w,h=dimensions(raw);assert (w,h)==(asset['pixel_width'],asset['pixel_height'])
+        minimum=int(asset.get('minimum_long_edge',1600));short=int(asset.get('minimum_short_edge',1))
+        assert minimum>=600 and max(w,h)>=minimum and min(w,h)>=short
+        if max(w,h)<1600:assert asset.get('quality_tier')=='native-standard' and short>=200,'Standard-resolution originals must be clearly labeled and usable'
+        elif 'quality_tier' in asset:assert asset['quality_tier']=='native-highres'
     else:raise AssertionError('Unsupported original image format')
     assert asset['author'] and asset['license'] and asset['license_url'] and asset['attribution']
     source=locks[asset['source']];assert asset['commit']==source['commit']
@@ -37,6 +41,10 @@ for asset in data['assets']:
         assert asset['license']=='CC-BY-4.0' and asset.get('evidence_url')
         assert (root/'licenses'/asset['source']/'evidence').is_dir()
         assert (root/'licenses'/asset['source']/'LICENSE').read_text().lstrip('\ufeff').strip().splitlines()[0].strip()=='Attribution 4.0 International'
+    if asset['source']=='cpm-labicons':
+        assert asset['license']=='CC-BY-4.0' and asset.get('evidence_url')
+        assert asset['author_url'].startswith('https://orcid.org/')
+        assert (root/'licenses'/asset['source']/'evidence/equipment/README.md').is_file()
     if asset['source']=='lucide' and file.stem in {'database','triangle-alert','circle-arrow-up'}:
         assert asset['license']=='ISC AND MIT','Missing inherited Feather MIT conditions'
         assert 'Cole Bemis' in asset['author']

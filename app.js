@@ -88,8 +88,9 @@
   const hasPptPng = asset => Boolean(safeAsset(asset.ppt_png_path));
   const hasNativeDimensions = asset => Number(asset.pixel_width) > 0 && Number(asset.pixel_height) > 0;
   const isNativeBitmap = asset => ['PNG', 'JPG', 'JPEG'].includes(originalFormat(asset));
-  const isHighresNative = asset => isNativeBitmap(asset) && hasNativeDimensions(asset) && Math.max(Number(asset.pixel_width), Number(asset.pixel_height)) >= 1600;
-  const matchesFormat = asset => !state.format || (state.format === 'svg' && originalFormat(asset) === 'SVG') || (state.format === 'ppt-png' && hasPptPng(asset)) || (state.format === 'highres-native' && isHighresNative(asset));
+  const isNativeOriginal = asset => isNativeBitmap(asset) && hasNativeDimensions(asset);
+  const isHighresNative = asset => isNativeOriginal(asset) && Math.max(Number(asset.pixel_width), Number(asset.pixel_height)) >= 1600;
+  const matchesFormat = asset => !state.format || (state.format === 'svg' && originalFormat(asset) === 'SVG') || (state.format === 'ppt-png' && hasPptPng(asset)) || (state.format === 'highres-native' && isHighresNative(asset)) || (state.format === 'bitmap-native' && isNativeOriginal(asset));
   const previewPath = asset => safeAsset(asset.preview_path) || (asset.requires_png_fallback ? safeAsset(asset.ppt_png_path) : '') || safeAsset(asset.path);
   function roundRobin(items, key) {
     const buckets = new Map();
@@ -146,22 +147,34 @@
       tabs.append(button);
     });
     catalog.assets.forEach(asset => {
-      asset._search = normalize([asset.name, asset.author, asset.subcategory, asset.license, asset.collection, sourceName(asset.source), categoryName(asset.category), originalFormat(asset), hasPptPng(asset) ? 'ppt png 高清 演示' : '', isHighresNative(asset) ? '高清 原图 PowerPoint' : '', ...(Array.isArray(asset.tags) ? asset.tags : [])].join(' '));
+      asset._search = normalize([asset.name, asset.author, asset.subcategory, asset.license, asset.collection, sourceName(asset.source), categoryName(asset.category), originalFormat(asset), hasPptPng(asset) ? 'ppt png 高清 演示' : '', isNativeOriginal(asset) ? '原始位图 原图 PowerPoint' : '', isHighresNative(asset) ? '高清' : isNativeOriginal(asset) ? '标准分辨率 小幅图示' : '', ...(Array.isArray(asset.tags) ? asset.tags : [])].join(' '));
     });
     // Lead with presentation-ready illustrations, then established biomedical art.
     const ppt = catalog.assets.filter(hasPptPng);
     const native = catalog.assets.filter(asset => isHighresNative(asset) && !hasPptPng(asset));
     const ready = [...native, ...ppt];
     const readySet = new Set(ready);
-    const featured = catalog.assets.filter(asset => !readySet.has(asset) && /servier|dbcls|swissbiopics/i.test(`${asset.author} ${asset.author_url} ${asset.source}`));
-    const prioritized = new Set([...ready, ...featured]);
+    const standard = catalog.assets.filter(asset => isNativeOriginal(asset) && !readySet.has(asset));
+    const standardSet = new Set(standard);
+    const featured = catalog.assets.filter(asset => !readySet.has(asset) && !standardSet.has(asset) && /servier|dbcls|swissbiopics/i.test(`${asset.author} ${asset.author_url} ${asset.source}`));
+    const readyOrder = roundRobin(ready, asset => `${asset.category}:${asset.source}`);
+    const standardOrder = roundRobin(standard, asset => `${asset.category}:${asset.source}`);
+    const illustrationOrder = [];
+    // Mix one standard-resolution original after two presentation-ready images.
+    // This exposes the broader science collection without replacing HD with upscales.
+    for (let index = 0; index < Math.max(Math.ceil(readyOrder.length / 2), standardOrder.length); index++) {
+      illustrationOrder.push(...readyOrder.slice(index * 2, index * 2 + 2));
+      if (standardOrder[index]) illustrationOrder.push(standardOrder[index]);
+    }
+    const prioritized = new Set([...ready, ...standard, ...featured]);
     state.orderedAssets = [
-      ...roundRobin(ready, asset => `${asset.category}:${asset.source}`),
+      ...illustrationOrder,
       ...roundRobin(featured, asset => asset.author),
       ...roundRobin(catalog.assets.filter(asset => !prioritized.has(asset)), asset => asset.source)
     ];
     elements.format.querySelector('[value="ppt-png"]').textContent = `PPT 高清 PNG (${number(ppt.length)})`;
     elements.format.querySelector('[value="highres-native"]').textContent = `高清原图 PNG/JPG (${number(catalog.assets.filter(isHighresNative).length)})`;
+    elements.format.querySelector('[value="bitmap-native"]').textContent = `原始位图 PNG/JPG（全部） (${number(catalog.assets.filter(isNativeOriginal).length)})`;
     renderSources();
     restoreFilters();
     filterAssets();
@@ -174,7 +187,7 @@
     state.source = sources.has(params.get('source')) ? params.get('source') : '';
     const license = params.get('license') || '';
     state.license = [...elements.license.options].some(item => item.value === license) ? license : '';
-    state.format = ['svg', 'ppt-png', 'highres-native'].includes(params.get('format')) ? params.get('format') : '';
+    state.format = ['svg', 'ppt-png', 'highres-native', 'bitmap-native'].includes(params.get('format')) ? params.get('format') : '';
     elements.search.value = state.query;
     elements.source.value = state.source;
     elements.license.value = state.license;
@@ -236,8 +249,8 @@
       const info = node('span', 'card-info');
       info.append(node('span', 'card-title', text(asset.name).replace(/_/g, ' ')), node('span', 'card-source', sourceName(asset.source)));
       const bottom = node('span', 'card-bottom');
-      const type = node('span', hasPptPng(asset) || isHighresNative(asset) ? 'card-type card-type-ppt' : 'card-type', hasPptPng(asset) ? `PNG + ${originalFormat(asset)}` : `${isHighresNative(asset) ? '高清 ' : ''}${originalFormat(asset)}`);
-      if (isHighresNative(asset)) type.title = `${number(asset.pixel_width)} × ${number(asset.pixel_height)} px`;
+      const type = node('span', hasPptPng(asset) || isHighresNative(asset) ? 'card-type card-type-ppt' : 'card-type', hasPptPng(asset) ? `PNG + ${originalFormat(asset)}` : isHighresNative(asset) ? `高清 ${originalFormat(asset)}` : isNativeOriginal(asset) ? `${originalFormat(asset)} 原图` : originalFormat(asset));
+      if (isNativeOriginal(asset)) type.title = `${number(asset.pixel_width)} × ${number(asset.pixel_height)} px`;
       bottom.append(node('span', 'card-license', asset.license), type);
       info.append(bottom);
       card.append(preview, info);
@@ -307,7 +320,7 @@
     previewNote.hidden = !asset.requires_png_fallback;
     previewNote.textContent = asset.requires_png_fallback ? '这张 SVG 含复杂文字排版，部分演示软件可能无法完整显示。请在 PowerPoint 中使用配套高清 PNG，以保留文字和标注。' : '';
     byId('detail-format-note').textContent = isNativeBitmap(asset)
-      ? 'PNG/JPG 原图可直接插入 PowerPoint。它是位图图片，放大后的细节取决于原始像素，不能拆分为 SVG 矢量路径。'
+      ? `PNG/JPG 原图可直接插入 PowerPoint。它是位图图片，不能拆分为 SVG 矢量路径。${isHighresNative(asset) ? '放大后的细节取决于原始像素。' : '适合小幅图示，建议按原始尺寸使用，避免过度放大。'}`
       : '高清 PNG 可直接插入 PowerPoint；SVG 可保持矢量缩放，是否能拆分编辑取决于图形与软件版本。';
     const license = text(asset.license).toUpperCase();
     byId('license-note').textContent = license.includes('SA')
