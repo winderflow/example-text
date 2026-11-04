@@ -43,6 +43,11 @@ INFO = {
  'geologic-patterns':('FGDC Geologic Patterns','https://github.com/davenquinn/geologic-patterns','CC0-1.0','USGS / FGDC 地质、岩性、冰川和地层剖面填充图案；可用于地学论文制图。'),
  'gissymbology':('GISsymbology 专题地图符号','https://github.com/GISsymbology/symbols','CC-BY-SA-4.0','选取地震微区划、地质图、FGDC 地质符号和水利防护四个许可明确的子库。'),
  'openstax-anatomy':('OpenStax 人体解剖与生理历史开放插画','https://github.com/openstax/osbooks-anatomy-physiology','CC-BY-4.0','只收录固定历史 CC BY 4.0 版本中逐图核验的高清人体解剖与生理插画；不套用当前非商业版本许可。'),
+ 'openstax-biology':('OpenStax 生物学历史开放插画','https://github.com/openstax/osbooks-biology-bundle','CC-BY-4.0','固定历史CC BY4版本中的生物学、细胞、分子与生态高清原图；保留逐图章节证据。'),
+ 'openstax-chemistry':('OpenStax 化学历史开放插画','https://github.com/openstax/osbooks-chemistry-bundle','CC-BY-4.0','固定历史CC BY4版本中许可明确的原始高清化学插图；不将小图放大后计为高清图。'),
+ 'openstax-microbiology':('OpenStax 微生物学历史开放插画','https://github.com/openstax/osbooks-microbiology','CC-BY-4.0','固定历史CC BY4版本中的微生物、免疫与实验技术原图，保留原始尺寸和逐图来源。'),
+ 'openstax-college-physics':('OpenStax 光学开放插画','https://github.com/openstax/osbooks-college-physics-bundle','CC-BY-4.0','固定CC BY4快照中的单缝衍射、透镜及光纤原始高清示意图；保留章节图注和许可。'),
+ 'openstax-university-physics':('OpenStax 电子学开放插画','https://github.com/openstax/osbooks-university-physics-bundle','CC-BY-4.0','固定CC BY4快照中的原始高清放大电路图，不含第三方器材照片。'),
  'justfig-icons':('JustFig 原创科研图形','https://github.com/BooneAndrewsLab/justfig-icons','CC0-1.0','仅收原创 house 集合中的实验室、细胞、蛋白、免疫和微生物图形，不收聚合库其他来源。')}
 KEYWORDS = {
  'chemistry':'atom molecule molecular chemistry chemical flask beaker test-tube test_pipe vial dna acid nucleic peptides compound amino nanotechnology',
@@ -55,6 +60,7 @@ KEYWORDS = {
 RX = {k:re.compile(r'(?<![a-z])(?:'+ '|'.join(map(re.escape,v.split())) +r')(?:s)?(?![a-z])', re.I) for k,v in KEYWORDS.items()}
 ALIASES={'dna':'DNA 脱氧核糖核酸','rna':'RNA 核糖核酸','protein':'蛋白质','virus':'病毒','bacter':'细菌','cell':'细胞','heart':'心脏','lung':'肺','brain':'大脑 神经','antibod':'抗体','blood':'血液','immun':'免疫','microscope':'显微镜','flask':'烧瓶','test-tube':'试管','atom':'原子','molecul':'分子','gene':'基因','tree':'树木','plant':'植物','fish':'鱼','bird':'鸟','cloud':'云','rain':'降雨','sun':'太阳','moon':'月亮','wind':'风','water':'水','earth':'地球','map':'地图','server':'服务器','database':'数据库','chart':'图表','network':'网络','circuit':'电路','pump':'泵','valve':'阀门','receptor':'受体','mitochond':'线粒体','neuron':'神经元','cancer':'癌症 肿瘤','tissue':'组织','lab':'实验室'}
 ALIASES.update({'resistor':'电阻','capacitor':'电容','diode':'二极管','transistor':'晶体管','inductor':'电感','transformer':'变压器','switch':'开关','relay':'继电器','motor':'电机','geolog':'地质','litholog':'岩性','stratigraph':'地层','seismic':'地震','hydrolog':'水文','sensor':'传感器','battery':'电池','solar':'太阳能','telescope':'望远镜','radiation':'辐射','magnet':'磁场 磁铁','flow':'流程','data':'数据'})
+ALIASES.update({'embryo':'胚胎','placenta':'胎盘','pregnancy':'妊娠 怀孕','uterus':'子宫','neonatal':'新生儿','lymph':'淋巴','complement':'补体','cloning':'克隆','membrane':'细胞膜','photosynth':'光合作用','chloroplast':'叶绿体','mitosis':'有丝分裂','meiosis':'减数分裂','titration':'滴定','covalent':'共价键','ionic':'离子'})
 
 def classify(text, default='general'):
     for c in KEYWORDS:
@@ -118,7 +124,7 @@ def main():
     renders=json.loads((ROOT/'data/ppt-renders.json').read_text()).get('renders',{}) if (ROOT/'data/ppt-renders.json').exists() else {}
     for s in lock['sources']:
         if args.only and s['id'] not in args.only:continue
-        sid=s['id']; p=args.sources/sid
+        sid=s['id']; p=(args.sources/sid).resolve()
         actual=subprocess.check_output(['git','-C',str(p),'rev-parse','HEAD'],text=True).strip()
         if actual!=s['commit']: raise SystemExit(f'Commit mismatch: {sid}')
         if subprocess.check_output(['git','-C',str(p),'status','--porcelain'],text=True).strip():raise SystemExit(f'Upstream checkout is dirty: {sid}')
@@ -285,10 +291,10 @@ def main():
                 folder=p/'collections'/collection;notice=licdir/collection;notice.mkdir(exist_ok=True);shutil.copyfile(folder/'license',notice/'license')
                 assert 'https://creativecommons.org/licenses/by-sa/4.0/' in (folder/'license').read_text()
                 for f in sorted((folder/'svg').rglob('*.svg')):add(f,'earth-space',sub,'cc-by-sa-4.0',meta[collection]['author'],f'{f.stem} · {sub}',[meta[collection].get('tags',''),meta[collection].get('description',''),sub,'地质','GIS'])
-        elif sid in {'openstax-anatomy','justfig-icons'}:
+        elif sid.startswith('openstax-') or sid=='justfig-icons':
             selected_figures(ROOT/'data/source-selections'/(sid+'.json'))
-            if sid=='openstax-anatomy':
-                assert 'Attribution 4.0 International' in (p/'LICENSE').read_text(), 'Historical CC BY license evidence required'
+            if sid.startswith('openstax-'):
+                assert (p/'LICENSE').read_text().lstrip('\ufeff').strip().splitlines()[0].strip()=='Attribution 4.0 International', 'Historical CC BY license evidence required'
             else:
                 for path in ['house/meta.yaml','house/STYLE.md','sources/house/source.yaml']:
                     target=licdir/path;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p/path,target)

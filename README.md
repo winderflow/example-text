@@ -1,10 +1,12 @@
 # 科研绘图开放素材库
 
-为论文示意图、实验流程图、科研海报和课件整理的开放素材库。现有 **16,452 张原始图片，来自25个上游仓库**：16,335个SVG和117张原生高清JPEG。另保留418张长边2400像素的PNG兼容版本，以及72图、20页的PowerPoint素材板；格式转换不重复计为新图片。
+为论文示意图、实验流程图、科研海报和课件整理的开放素材库。现有 **16,548 张原始图片，来自30个上游仓库**：16,335个SVG、193张JPEG和20张原始PNG。另保留418张长边2400像素的PNG兼容版本，以及72图、20页的PowerPoint素材板；格式转换不重复计为新图片。
 
 首批检索：2026-11-02；PPT质量整理：2026-11-03；本轮新图扩展：2026-11-04。素材原始字节保持不变，逐图保存作者、许可证、固定版本来源及 SHA-256。**本库没有统一的素材许可证**；详见 [许可与署名指南](docs/LICENSES.md)。
 
 ## 浏览与下载
+
+- **[本轮再加96张原生高清图：按名称直接下载](docs/MORE-OPEN-IMAGES-2026-11-04.md)**，包括解剖、生物、化学、微生物、光学和电子学。
 
 - **[本轮新增316张科研图片：按图名直接下载](docs/NEW-OPEN-ART-2026-11-04.md)**，包括117张原生高清解剖图、164张完整生物通路图和35张实验室原创图形。
 
@@ -19,11 +21,11 @@
 
 | 学科分类 | 原图文件数 |
 | --- | ---: |
-| [生物医学](assets/biomedical/) | 7,319 |
-| [化学与分子](assets/chemistry/) | 684 |
-| [生态与物种](assets/ecology/) | 1,062 |
+| [生物医学](assets/biomedical/) | 7,403 |
+| [化学与分子](assets/chemistry/) | 689 |
+| [生态与物种](assets/ecology/) | 1,065 |
 | [地理、气象与空间](assets/earth-space/) | 3,379 |
-| [工程与物理](assets/engineering/) | 1,061 |
+| [工程与物理](assets/engineering/) | 1,065 |
 | [计算与数据流程](assets/computing/) | 2,509 |
 | [科研交流与通用](assets/general/) | 438 |
 
@@ -54,8 +56,13 @@
 | [Electricalsymbols 工业电气符号](https://github.com/chille/electricalsymbols) | 科研专题 | 32 | CC-BY-SA-3.0 | IEC 工业电气元件、开关、保护、传感器和电机；排除空白文档模板。 |
 | [FGDC Geologic Patterns](https://github.com/davenquinn/geologic-patterns) | 科研专题 | 471 | CC0-1.0 | USGS / FGDC 地质、岩性、冰川和地层剖面填充图案；可用于地学论文制图。 |
 | [GISsymbology 专题地图符号](https://github.com/GISsymbology/symbols) | 科研专题 | 453 | CC-BY-SA-4.0 | 选取地震微区划、地质图、FGDC 地质符号和水利防护四个许可明确的子库。 |
-| [OpenStax 人体解剖与生理历史开放插画](https://github.com/openstax/osbooks-anatomy-physiology) | 科研专题 | 117 | CC-BY-4.0 | 只收录固定历史 CC BY 4.0 版本中逐图核验的高清人体解剖与生理插画；不套用当前非商业版本许可。 |
+| [OpenStax 人体解剖与生理历史开放插画](https://github.com/openstax/osbooks-anatomy-physiology) | 科研专题 | 184 | CC-BY-4.0 | 只收录固定历史 CC BY 4.0 版本中逐图核验的高清人体解剖与生理插画；不套用当前非商业版本许可。 |
 | [JustFig 原创科研图形](https://github.com/BooneAndrewsLab/justfig-icons) | 科研专题 | 35 | CC0-1.0 | 仅收原创 house 集合中的实验室、细胞、蛋白、免疫和微生物图形，不收聚合库其他来源。 |
+| [OpenStax 生物学历史开放插画](https://github.com/openstax/osbooks-biology-bundle) | 科研专题 | 20 | CC-BY-4.0 | 固定历史CC BY4版本中的生物学、细胞、分子与生态高清原图；保留逐图章节证据。 |
+| [OpenStax 化学历史开放插画](https://github.com/openstax/osbooks-chemistry-bundle) | 科研专题 | 2 | CC-BY-4.0 | 固定历史CC BY4版本中许可明确的原始高清化学插图；不将小图放大后计为高清图。 |
+| [OpenStax 微生物学历史开放插画](https://github.com/openstax/osbooks-microbiology) | 科研专题 | 3 | CC-BY-4.0 | 固定历史CC BY4版本中的微生物、免疫与实验技术原图，保留原始尺寸和逐图来源。 |
+| [OpenStax 光学开放插画](https://github.com/openstax/osbooks-college-physics-bundle) | 科研专题 | 3 | CC-BY-4.0 | 固定CC BY4快照中的单缝衍射、透镜及光纤原始高清示意图；保留章节图注和许可。 |
+| [OpenStax 电子学开放插画](https://github.com/openstax/osbooks-university-physics-bundle) | 科研专题 | 1 | CC-BY-4.0 | 固定CC BY4快照中的原始高清放大电路图，不含第三方器材照片。 |
 
 Bioicons 子集中含 **1,374 个署名 Servier**、**630 个署名 DBCLS** 的文件；这是通过 Bioicons 取得的具体历史素材，不是对 Servier / Togo 当前官网的全站镜像或完整性声明。上游原始说明、完整许可及元数据见 [licenses/](licenses/)。
 
@@ -84,6 +91,12 @@ Bioicons 子集中含 **1,374 个署名 Servier**、**630 个署名 DBCLS** 的�
 
 [新增图片下载索引](docs/NEW-OPEN-ART-2026-11-04.md) 提供预览、名称、专题、尺寸和逐图下载。OpenStax当前非商业版本没有混入本库，历史授权证据与章节图注保存在 `licenses/openstax-anatomy/`。原有418张PNG及PPT文件保持不变。
 
+## 2026-11-04 继续新增高清原件
+
+本轮再增96张原始高清图：解剖与生理67张、生物学20张、化学2张、微生物3张、光学及电子学4张。每张原生长边至少1600像素，完整解码、保留图注并去除重复原文件。各图适用固定版本的CC BY4.0；当前非商业版本不作为这些图形的来源。
+
+[本轮原图下载目录](docs/MORE-OPEN-IMAGES-2026-11-04.md) 提供预览与逐图尺寸。图库的“高清原图PNG/JPG”筛选涵盖这些可直接插入PPT的原件。
+
 ## 更多资源与检索边界
 
 [检索记录](docs/RESEARCH.md) 列出 SciDraw、PhyloPic、IAN、NIH BioArt、Wikimedia Commons 等继续检索入口；[扩展库清单](docs/LICENSES.md#其他官方资源及收录状态) 仍列出 Material Icons 和 Simple Icons 等未导入来源。Lucide、Font Awesome、Bootstrap 和 IconPark 已在本轮从链接清单转为实际入库，具体范围见上表；**仅列链接的来源不计入下载数量**。
@@ -102,7 +115,7 @@ python3 -m http.server 8000
 
 在浏览器通过本地 HTTP 打开页面（直接双击 HTML 时浏览器可能禁止读取 JSON）。`validate.py` 验证全部文件的存在性、哈希、XML 格式、许可/作者覆盖、来源提交、Reactome 元数据及 CSV/JSON 数量一致性。
 
-可选的真实浏览器验收需要 Node.js：`npm ci`、`npx playwright install chromium`、`npm run test:browser`。它检查全部来源的抽样渲染、中英文检索、筛选、分页、署名、原图下载哈希和移动布局；不影响无依赖的页面使用。
+可选的真实浏览器验收需要 Node.js：`npm ci`、`npx playwright install chromium`、`npm run test:browser`。它检查全部来源的抽样渲染、中英文检索、筛选、分页、署名、原图下载哈希和移动布局；不影响无依赖的页面使用。发布包的固定版本图片链接与原字节下载另可用 `npm run test:delivery` 验证，测试采用本地夹具和模拟CORS响应，不要求访问外部图库。
 
 ## 固定版本重建
 
@@ -119,9 +132,11 @@ python3 scripts/build_site.py
 
 只重建本轮来源时可用 `python3 scripts/build_catalog.py --sources .cache/sources --only reactome openstax-anatomy justfig-icons`，其余已验证原图会保留。
 
-重建不自动跟随上游最新版本。修改锁文件前应重新核实许可和导入范围；构建器拒绝脏的上游工作区，并只移除上次清单管理且未被用户修改的旧素材。`dist/` 是可直接部署的静态站点。
+重建不自动跟随上游最新版本。修改锁文件前应重新核实许可和导入范围；构建器拒绝脏的上游工作区，并只移除上次清单管理且未被用户修改的旧素材。`dist/` 是可直接部署的静态站点。为控制发布体积，超过256KiB的图片由当前已提交版本的GitHub原文件提供；原图仍完整保留在仓库，只有发布包中的目录附加传递信息。图片增加或修改后需先提交再构建，避免生成指向旧提交的失效链接。
 
 ## GitHub Pages 部署
+
+大图使用当前提交的固定GitHub原文件地址，网页包只包含较小图片及本地许可、索引和PPT文件。源目录、作者和许可信息不会被删减，站点下载通过原文件字节生成下载内容；此机制没有绕过外部图库的网络限制。
 
 仓库提供 [.github/workflows/pages.yml](.github/workflows/pages.yml)：普通推送只校验素材、PNG、PPTX 和脚本，不要求启用 Pages。需要网站时，先在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，再手动运行 **Validate gallery (Pages optional)** 并勾选 `deploy_pages`。是否已上线以部署成功记录及实际站点响应为准；校验成功不等于网页已发布。
 

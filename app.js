@@ -6,6 +6,8 @@
   const state = { catalog: null, orderedAssets: [], category: '', query: '', source: '', license: '', format: '', page: 1, filtered: [] };
   const sources = new Map();
   const categories = new Map();
+  let deliveryBase = '';
+  const externalPaths = new Set();
   const elements = {
     grid: byId('asset-grid'), loading: byId('load-state'), count: byId('result-count'),
     search: byId('search'), source: byId('source-filter'), license: byId('license-filter'), format: byId('format-filter'),
@@ -28,11 +30,60 @@
       return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '';
     } catch { return ''; }
   };
-  const safeAsset = value => {
+  const localAsset = value => {
     const path = text(value);
-    if (!path.startsWith('assets/') || path.split('/').some(part => part === '..') || /[\\\u0000-\u001f?#]/.test(path)) return '';
+    if (!path.startsWith('assets/') || path.split('/').some(part => !part || part === '.' || part === '..') || /[\\\u0000-\u001f?#]/.test(path)) return '';
     return path.split('/').map(encodeURIComponent).join('/');
   };
+  const configureDelivery = delivery => {
+    deliveryBase = '';
+    externalPaths.clear();
+    const base = text(delivery?.base_url);
+    const match = /^https:\/\/raw\.githubusercontent\.com\/([A-Za-z0-9][A-Za-z0-9-]*)\/([A-Za-z0-9_.-]+)\/[0-9a-f]{40}\/$/.exec(base);
+    if (!match || ['.', '..'].includes(match[2]) || !Array.isArray(delivery.external_paths)) return;
+    deliveryBase = base;
+    delivery.external_paths.forEach(path => { if (typeof path === 'string' && localAsset(path)) externalPaths.add(path); });
+  };
+  const safeAsset = value => {
+    const encoded = localAsset(value);
+    return encoded && deliveryBase && externalPaths.has(value) ? deliveryBase + encoded : encoded;
+  };
+  const downloadStatus = node('p', 'copy-status');
+  downloadStatus.id = 'download-status';
+  downloadStatus.setAttribute('role', 'status');
+  downloadStatus.hidden = true;
+  byId('download-asset').parentElement.after(downloadStatus);
+
+  async function downloadExternal(event) {
+    const anchor = event.currentTarget;
+    const href = anchor.getAttribute('href') || '';
+    const filename = anchor.download;
+    if (!deliveryBase || !href.startsWith(deliveryBase)) return;
+    event.preventDefault();
+    if (anchor.getAttribute('aria-busy') === 'true') return;
+    anchor.setAttribute('aria-busy', 'true');
+    downloadStatus.hidden = false;
+    downloadStatus.textContent = '正在准备下载…';
+    try {
+      const response = await fetch(href, { mode: 'cors', credentials: 'omit', redirect: 'error' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const download = document.createElement('a');
+      download.href = url;
+      download.download = filename;
+      download.hidden = true;
+      document.body.append(download);
+      download.click();
+      download.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      downloadStatus.textContent = '下载已开始。';
+    } catch {
+      downloadStatus.replaceChildren(document.createTextNode('暂时无法下载。可打开原图后另存为：'), link('打开原图 ↗', href));
+    } finally {
+      anchor.removeAttribute('aria-busy');
+    }
+  }
   const originalFormat = asset => text(asset.path).split('.').pop().toUpperCase();
   const hasPptPng = asset => Boolean(safeAsset(asset.ppt_png_path));
   const hasNativeDimensions = asset => Number(asset.pixel_width) > 0 && Number(asset.pixel_height) > 0;
@@ -75,6 +126,7 @@
   function initialize(catalog) {
     if (!catalog || !Array.isArray(catalog.assets) || !Array.isArray(catalog.sources) || !Array.isArray(catalog.categories)) throw new Error('目录格式不正确');
     state.catalog = catalog;
+    configureDelivery(catalog.delivery);
     catalog.sources.forEach(source => sources.set(source.id, source));
     catalog.categories.forEach(category => categories.set(category.id, category));
     byId('asset-total').textContent = number(catalog.assets.length);
@@ -267,6 +319,8 @@
           : '需按该素材的具体许可证使用。CC BY 通常要求保留作者、来源和许可证链接，并注明是否修改；请阅读原始条款。';
     byId('attribution').value = asset.attribution || `${asset.name} — ${asset.author || source.name || asset.source}. ${asset.source_url || source.homepage || ''}. ${asset.license || ''} ${asset.license_url || ''}`;
     byId('copy-status').textContent = '';
+    downloadStatus.hidden = true;
+    downloadStatus.replaceChildren();
     const download = byId('download-asset');
     download.href = safeAsset(asset.path);
     download.download = text(asset.path).split('/').pop();
@@ -317,6 +371,8 @@
   elements.previous.addEventListener('click', () => changePage(-1));
   elements.next.addEventListener('click', () => changePage(1));
   byId('close-dialog').addEventListener('click', () => elements.dialog.close());
+  byId('download-asset').addEventListener('click', downloadExternal);
+  byId('download-ppt-png').addEventListener('click', downloadExternal);
   elements.dialog.addEventListener('click', event => { if (event.target === elements.dialog) { const rect = elements.dialog.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) elements.dialog.close(); } });
   document.addEventListener('keydown', event => { if (event.key === '/' && !event.ctrlKey && !event.metaKey && !event.altKey && !elements.dialog.open && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) { event.preventDefault(); elements.search.focus(); } });
   byId('copy-attribution').addEventListener('click', async () => {

@@ -32,10 +32,11 @@ for asset in data['assets']:
     assert asset['source_url'].startswith(source['repository']+'/blob/'+source['commit']+'/')
     assert (root/'licenses'/asset['source']).is_dir()
     if asset['source']=='reactome' and asset['original_path'].startswith('icons/'):assert file.with_suffix('.xml').exists()
-    if asset['source']=='openstax-anatomy':
-        assert asset['commit']=='b0058a743bdd2cc08196abaaa7d5469970c0d80c'
+    if asset['source'].startswith('openstax-'):
+        if asset['source']=='openstax-anatomy':assert asset['commit']=='b0058a743bdd2cc08196abaaa7d5469970c0d80c'
         assert asset['license']=='CC-BY-4.0' and asset.get('evidence_url')
-        assert (root/'licenses/openstax-anatomy/evidence').is_dir()
+        assert (root/'licenses'/asset['source']/'evidence').is_dir()
+        assert (root/'licenses'/asset['source']/'LICENSE').read_text().lstrip('\ufeff').strip().splitlines()[0].strip()=='Attribution 4.0 International'
     if asset['source']=='lucide' and file.stem in {'database','triangle-alert','circle-arrow-up'}:
         assert asset['license']=='ISC AND MIT','Missing inherited Feather MIT conditions'
         assert 'Cole Bemis' in asset['author']
