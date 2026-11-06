@@ -116,6 +116,35 @@ const server = http.createServer((request, response) => {
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('dialog[open]').count(), 0);
 
+    const lgplAssets = catalog.assets.filter(item => item.license === 'LGPL-2.1-or-later');
+    if (lgplAssets.length) {
+      const item = lgplAssets[0];
+      const params = new URLSearchParams({ q: item.name, source: item.source, license: item.license });
+      await page.goto(url + '?' + params);
+      const exact = page.locator(`[data-asset-id="${item.id}"]`);
+      await exact.waitFor();
+      await exact.click();
+      await page.waitForSelector('dialog[open]');
+      assert.equal(await page.locator('#detail-license').textContent(), item.license);
+      const note = await page.locator('#license-note').textContent();
+      assert.match(note, /LGPL/);
+      assert.match(note, /SVG 源文件/);
+      assert.match(note, /原版权声明/);
+      assert.match(note, /2\.1/);
+      assert.doesNotMatch(note, /CC BY 通常/, 'LGPL assets must show their own source and license requirements');
+      assert.equal(await page.locator('#attribution').inputValue(), item.attribution);
+      assert.equal(decodeURIComponent(new URL(await page.locator('#download-asset').getAttribute('href'), url).pathname).slice(1), item.path);
+      const svgReady = page.waitForEvent('download');
+      await page.locator('#download-asset').click();
+      const svgDownload = await svgReady;
+      const originalSvg = fs.readFileSync(await svgDownload.path());
+      assert.equal(crypto.createHash('sha256').update(originalSvg).digest('hex'), item.sha256, 'LGPL SVG download retains its original copyright metadata and bytes');
+      assert.deepEqual(originalSvg, fs.readFileSync(path.join(root, item.path)));
+      await page.keyboard.press('Escape');
+      await page.locator('#reset-filters').click();
+      console.log(`LGPL source-file notice, attribution and original SVG download/hash verified (${lgplAssets.length} assets).`);
+    }
+
     const pptAssets = catalog.assets.filter(item => item.ppt_png_path);
     await page.locator('#format-filter').selectOption('svg');
     assert.ok((await page.locator('.card-type').allTextContents()).every(value => value.includes('SVG')), 'SVG format filter only shows SVG originals');

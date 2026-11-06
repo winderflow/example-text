@@ -3,6 +3,7 @@
 import csv
 import hashlib
 import json
+import re
 import struct
 import zipfile
 import xml.etree.ElementTree as ET
@@ -52,6 +53,25 @@ for asset in data['assets']:
         assert asset['metadata_url']==expected and len(asset['metadata_sha256'])==64
         assert asset['organism'] and asset['pathway_revision']
         assert 'CC0 1.0 Universal' in (root/'licenses/wikipathways/LICENSE').read_text()
+    if asset['source']=='freecad-science':
+        declaration=asset['original_license_declaration']
+        rights=[' '.join(''.join(n.itertext()).split()) for n in ET.fromstring(raw).iter() if n.tag.split('}')[-1]=='rights']
+        assert declaration in rights,'Original SVG rights declaration must be preserved'
+        references=set()
+        for node in ET.fromstring(raw).iter():
+            if node.tag.split('}')[-1].lower()=='license':
+                references.update(v for k,v in node.attrib.items() if k.split('}')[-1] in {'resource','about'} and v.startswith(('http://','https://')))
+                references.update(re.findall(r'https?://[^\s<>]+',' '.join(node.itertext())))
+        assert set(asset.get('original_license_references',[]))==references,'Original SVG license links must be preserved'
+        assert asset['license'] in {'LGPL-2.1-or-later','CC-BY-SA-4.0'}
+        if asset['license']=='LGPL-2.1-or-later':
+            assert 'LGPL2+' in declaration
+            assert 'Version 2.1, February 1999' in (root/'licenses/freecad-science/LICENSE').read_text()
+    if asset['source']=='noto-science':
+        assert asset['license']=='Apache-2.0'
+        assert asset['evidence_url'].endswith('/2D/svg/LICENSE')
+        assert 'Apache License' in (root/'licenses/noto-science/evidence/2D/svg/LICENSE').read_text()
+        assert 'TERMS AND CONDITIONS FOR USE' in (root/'licenses/noto-science/Apache-2.0.txt').read_text()
     if asset['source']=='lucide' and file.stem in {'database','triangle-alert','circle-arrow-up'}:
         assert asset['license']=='ISC AND MIT','Missing inherited Feather MIT conditions'
         assert 'Cole Bemis' in asset['author']

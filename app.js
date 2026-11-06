@@ -323,7 +323,9 @@
       ? `PNG/JPG 原图可直接插入 PowerPoint。它是位图图片，不能拆分为 SVG 矢量路径。${isHighresNative(asset) ? '放大后的细节取决于原始像素。' : '适合小幅图示，建议按原始尺寸使用，避免过度放大。'}`
       : '高清 PNG 可直接插入 PowerPoint；SVG 可保持矢量缩放，是否能拆分编辑取决于图形与软件版本。';
     const license = text(asset.license).toUpperCase();
-    byId('license-note').textContent = license.includes('SA')
+    byId('license-note').textContent = license.includes('LGPL')
+      ? '请保留 SVG 源文件、原版权声明和完整 LGPL 许可；修改后再分发时须遵守对应的源文件与许可要求。本合集选择 LGPL 2.1 或更新版本分发，原图中的许可声明保持不变。'
+      : license.includes('SA')
       ? '需署名：保留作者、来源和许可证链接；修改时注明修改。改编素材还需遵守相同方式共享（ShareAlike）要求。'
       : license.includes('CC0') || license.includes('CC-0') || license.includes('PUBLIC DOMAIN')
         ? '该记录标记为公共领域或 CC0；通常无需署名，仍建议在科研作品中保留来源。具体范围以链接中的原始条款为准。'

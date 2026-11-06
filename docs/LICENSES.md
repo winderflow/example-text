@@ -15,12 +15,15 @@
 | MIT | 保留上游著作权声明与许可文本；在再分发副本或重要部分时随附。不要只写“MIT”而删除原声明。 |
 | BSD | 按具体 BSD 版本保留著作权声明、许可条件与免责声明；涉及二进制再分发时在随附文档中保留要求的信息。若为 BSD 3-Clause，不得未经许可利用作者或组织名称背书。 |
 | Apache 2.0 | 保留许可文本和适用声明；上游存在相关 NOTICE 时一并保留。修改文件需作显著说明。其专利授权仅在条款范围内适用，不表示图示技术均可自由实施，也不授权使用商标。 |
+| LGPL 2.1 or later | 本批FreeCAD图形保留原SVG中的LGPL2+版权声明，明确选择随附的2.1作为允许的后续分发版本。请保留SVG源文件、原版权声明与完整许可；修改后再分发时遵守相应源文件及许可义务，参见[具体版本与逐图范围](EXPANSION-SYMBOLS-2026-11-06.md)。 |
 
 同一个项目也可能有多种许可。例如图标、字体、网站代码可能各用不同许可；不能用网站代码的 MIT 许可替代图标的 CC BY 许可。Bioicons 等聚合库尤其需要逐图查看，不能把平台许可直接套用到每张图。
 
 2026-11-04批量新增的OpenStax插图来自锁定的历史CC BY4.0提交，逐图保存章节及第三方署名排查证据；没有将当前非商业版本的许可替换为历史许可。CPM LabIcons的10张透明实验仪器PNG适用CC BY4.0：9张作者为Manon Zuurmond，`solarix.png`作者为Stefan Ruchti，作者ORCID与具体作品来源已写入清单。[CPM逐图许可及作者表](../licenses/cpm-labicons/evidence/equipment/README.md)与[完整许可](../licenses/cpm-labicons/LICENSE.md)随原图保留。Reactome新增通路SVG继续适用其Apache2.0许可。
 
 2026-11-05新增的[WikiPathways完整通路SVG](WIKIPATHWAYS-SOURCE-NOTES.md)由官方CC0资产库发布，仍保留编辑者、物种、WP编号和revision；JSON中引用的第三方长篇叙述不另行镜像或套用图像CC0。[SBOL Visual](SBOL-VISUAL-SOURCE-NOTES.md)区分CC0标准符号与CC BY4示例。EMBL-EBI Anatomogram的图像明确CC BY4，与Apache2软件代码许可分开；新增显微光学原图的CC BY4保留论文全部作者及对应图注。新教材图仍按固定CC BY4版本和逐图证据核验。每张具体许可见[新增下载目录](MORE-OPEN-ART-2026-11-05.md)。
+
+2026-11-06新增Fritzing图形按CC BY-SA3.0保留器件作者及相同方式共享条件；FreeCAD按逐SVG声明分为LGPL版本选择和1张CC BY-SA4图。Noto的图像许可来自`2D/svg/LICENSE`中的Apache2声明，当前根OFL是字体许可；原图像版权声明和完整Apache文本随图保留，不能混为全库OFL。Fluent彩色原件为MIT；其他生物与神经原图按各来源的MIT或CC BY4处理。[最新下载目录](MORE-OPEN-ART-2026-11-06.md)可逐图核对作者、许可与固定证据。
 
 ## 论文署名示例
 

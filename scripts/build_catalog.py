@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CATEGORIES = {'biomedical':'生物医学','chemistry':'化学与分子','ecology':'生态与物种','earth-space':'地理、气象与空间','engineering':'工程与物理','computing':'计算与数据流程','general':'科研交流与通用'}
 SUB = {'Animals':'动物','Plants_Algae':'植物与藻类','Viruses':'病毒','Microbiology':'微生物','Lab_apparatus':'实验仪器','Blood_Immunology':'血液与免疫','Human_physiology':'人体生理','Cell_types':'细胞类型','Cell_membrane':'细胞膜','Intracellular_components':'细胞内组分','Genetics':'遗传学','Genomics':'基因组学','Nucleic_acids':'核酸','Neuroscience':'神经科学','Chemistry':'化学','Amino-Acids':'氨基酸','Molecular_modelling':'分子建模','Computer_hardware':'计算机硬件','Machine_Learning':'机器学习','Scientific_graphs':'科学图表','protein':'蛋白质','compound':'化合物','cell_element':'细胞组分','receptor':'受体','cell_type':'细胞类型','transporter':'转运蛋白','human_tissue':'人体组织','therapeutic':'治疗','bacteria':'细菌','viruses':'病毒','fungi':'真菌','parasites':'寄生虫与媒介','immune-cells':'免疫细胞','molecules':'分子','organs':'器官','clinical':'临床与实验室'}
 LICENSES = {'cc-0':('CC0-1.0','https://creativecommons.org/publicdomain/zero/1.0/'),'cc-by-3.0':('CC-BY-3.0','https://creativecommons.org/licenses/by/3.0/'),'cc-by-4.0':('CC-BY-4.0','https://creativecommons.org/licenses/by/4.0/'),'cc-by-sa-3.0':('CC-BY-SA-3.0','https://creativecommons.org/licenses/by-sa/3.0/'),'cc-by-sa-4.0':('CC-BY-SA-4.0','https://creativecommons.org/licenses/by-sa/4.0/'),'mit':('MIT','https://opensource.org/license/mit/'),'bsd':('BSD-3-Clause','https://opensource.org/license/bsd-3-clause/'),'apache':('Apache-2.0','https://www.apache.org/licenses/LICENSE-2.0'),'isc':('ISC','https://opensource.org/license/isc/'),'isc-mit':('ISC AND MIT','https://github.com/lucide-icons/lucide/blob/main/LICENSE')}
+LICENSES['lgpl-2.1-or-later']=('LGPL-2.1-or-later','https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html')
 INFO = {
  'bioicons':('Bioicons（含 Servier / Togo）','https://bioicons.com/','逐图授权','生物、医学、植物、实验器材；含经 Bioicons 分发的 Servier 与 DBCLS 素材，保留其历史逐图许可。'),
  'bioicons-id':('ID & Immunology Icons','https://github.com/apsmunro/bioicons-id','CC0-1.0','病原体、免疫细胞、器官与感染传播，含彩色和单色版本。'),
@@ -139,6 +140,12 @@ def main():
                 raise SystemExit(f'Source {sid} requires data/source-selections/{sid}.json')
             name,homepage,summary,desc=info['name'],info.get('homepage',s['repository']),info['license'],info['description']
         licdir=ROOT/'licenses'/sid;licdir.mkdir(parents=True,exist_ok=True)
+        for notice in s.get('supplemental_license_files',[]):
+            filename=notice['filename']
+            assert Path(filename).name==filename,'Invalid supplemental license filename'
+            original=ROOT/'licenses/common'/filename
+            assert hashlib.sha256(original.read_bytes()).hexdigest()==notice['sha256'],'Supplemental license checksum mismatch'
+            shutil.copyfile(original,licdir/filename)
         for f in p.iterdir():
             if sid=='electrical-symbol-library' and f.name=='README.md':continue
             if f.is_file() and (f.name.lower().startswith(('license','licence','notice','readme','copying','authors'))): shutil.copyfile(f,licdir/f.name)
@@ -160,7 +167,7 @@ def main():
                     assert pathway['id'] in {pid,'http://identifiers.org/wikipathways/'+pid,'https://identifiers.org/wikipathways/'+pid},'Pathway identity mismatch'
                     assert pathway['organism']==x['organism'] and pathway['dataSourceVersion']==x['pathway_revision'],'Pathway organism or revision mismatch'
                 key=x['license'] if x['license'] in LICENSES else lookup[x['license']]
-                details={k:x[k] for k in ['caption','figure_id','credit','reference_url','metadata_url','metadata_sha256','pathway_revision','pathway_id','organism','cited_source_urls'] if x.get(k)}
+                details={k:x[k] for k in ['caption','figure_id','credit','reference_url','metadata_url','metadata_sha256','pathway_revision','pathway_id','organism','cited_source_urls','original_license_declaration','original_license_references','unicode'] if x.get(k)}
                 if f.suffix.lower() in {'.png','.jpg','.jpeg'}:
                     details['minimum_long_edge']=int(x.get('minimum_long_edge',selection.get('minimum_long_edge',1600)))
                     details['minimum_short_edge']=int(x.get('minimum_short_edge',selection.get('minimum_short_edge',1)))
@@ -371,7 +378,7 @@ def main():
     (ROOT/'data/catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,separators=(',',':'))+'\n')
     (ROOT/'data/excluded.json').write_text(json.dumps(excluded,ensure_ascii=False,indent=2)+'\n')
     with (ROOT/'data/manifest.csv').open('w',newline='',encoding='utf-8-sig') as fp:
-        fields=['id','name','category','subcategory','source','path','format','pixel_width','pixel_height','quality_tier','minimum_long_edge','minimum_short_edge','license','license_url','author','author_url','source_url','sha256','bytes','commit','attribution','ppt_png_path','ppt_png_width','ppt_png_height','ppt_png_sha256','requires_png_fallback','evidence_url','reference_url','metadata_url','metadata_sha256','pathway_id','pathway_revision','organism'];w=csv.DictWriter(fp,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(assets)
+        fields=['id','name','category','subcategory','source','path','format','pixel_width','pixel_height','quality_tier','minimum_long_edge','minimum_short_edge','license','license_url','author','author_url','source_url','sha256','bytes','commit','attribution','ppt_png_path','ppt_png_width','ppt_png_height','ppt_png_sha256','requires_png_fallback','evidence_url','reference_url','metadata_url','metadata_sha256','pathway_id','pathway_revision','organism','original_license_declaration','unicode'];w=csv.DictWriter(fp,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(assets)
     print(f'Total: {len(assets)} original images, {sum(x["bytes"] for x in assets)/1e6:.1f} MB; excluded {len(excluded)}')
 
 if __name__=='__main__': main()
